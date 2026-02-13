@@ -94,7 +94,7 @@ aetherlink-website/
 │       ├── defensie.svg
 │       ├── droidor.png
 │       ├── pitcrew.png
-│       ├── welllaw.jpeg
+│       ├── welllaw.png
 │       ├── cfx.png
 │       ├── van-diemen.png
 │       ├── mark-dierenarts.png

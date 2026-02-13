@@ -342,16 +342,39 @@
     background: linear-gradient(90deg, transparent, rgba(139,92,246,0.12), transparent) !important;
 }
 
-/* ── CTA Gradient Section — dramatic depth ── */
+/* ── CTA Gradient Section — dark cinematic in both modes ── */
 [data-theme="light"] .cta-gradient {
-    background: linear-gradient(180deg, #EDEAF2 0%, #DDD8E8 35%, #D5CFE3 50%, #DDD8E8 65%, #EDEAF2 100%) !important;
+    background: linear-gradient(180deg, #0a0c18 0%, #0f1228 40%, #141835 60%, #0a0c18 100%) !important;
 }
 [data-theme="light"] .cta-video-bg {
-    opacity: 0.25 !important;
-    filter: saturate(0.6) brightness(0.9) !important;
+    opacity: 0.4 !important;
+    filter: none !important;
 }
 [data-theme="light"] .cta-video-overlay {
-    background: linear-gradient(180deg, rgba(237,234,242,0.7) 0%, rgba(213,207,227,0.45) 50%, rgba(237,234,242,0.7) 100%) !important;
+    background: linear-gradient(180deg, rgba(10,12,24,0.65) 0%, rgba(15,18,40,0.4) 50%, rgba(10,12,24,0.65) 100%) !important;
+}
+[data-theme="light"] .cta-gradient .text-light {
+    color: #e4e8f1 !important;
+}
+[data-theme="light"] .cta-gradient .text-muted {
+    color: rgba(228,232,241,0.7) !important;
+}
+[data-theme="light"] .cta-gradient .gradient-text {
+    background: linear-gradient(135deg, #00d4ff, #8b5cf6, #00dfa2) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+}
+[data-theme="light"] .cta-gradient .btn-secondary {
+    color: #e4e8f1 !important;
+    border-color: rgba(255,255,255,0.15) !important;
+    background: rgba(255,255,255,0.05) !important;
+}
+[data-theme="light"] .cta-gradient .btn-secondary:hover {
+    background: rgba(255,255,255,0.1) !important;
+    border-color: rgba(255,255,255,0.25) !important;
+}
+[data-theme="light"] .cta-gradient::before {
+    background: linear-gradient(90deg, transparent, rgba(0,212,255,0.3), rgba(139,92,246,0.3), transparent) !important;
 }
 
 /* ── Footer — subtle warmth ── */

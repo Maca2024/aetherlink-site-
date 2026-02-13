@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AetherLink - AI-Assistent, Consultancy & Ontwikkeling</title>
-    <meta name="description" content="Van kant-en-klare AI-assistenten tot maatwerk ontwikkeling. AetherLink maakt AI toegankelijk voor elk bedrijf. Ontdek AetherBot, AetherMIND en AetherDEV.">
-    <link rel="canonical" href="https://aetherlink.ai/nl/">
+    <title>AetherLink - AI Assistant, Consultancy & Development</title>
+    <meta name="description" content="From ready-to-use AI assistants to custom development. AetherLink makes AI accessible for every business. Discover AetherBot, AetherMIND and AetherDEV.">
+    <link rel="canonical" href="https://aetherlink.ai/en/">
     <link rel="icon" type="image/png" href="../images/favicon.png">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="AetherLink - AI-Assistent, Consultancy & Ontwikkeling">
-    <meta property="og:description" content="Van kant-en-klare AI-assistenten tot maatwerk ontwikkeling. AetherLink maakt AI toegankelijk voor elk bedrijf.">
+    <meta property="og:title" content="AetherLink - AI Assistant, Consultancy & Development">
+    <meta property="og:description" content="From ready-to-use AI assistants to custom development. AetherLink makes AI accessible for every business.">
     <meta property="og:image" content="https://aetherlink.ai/images/og-image-en.png">
-    <meta property="og:url" content="https://aetherlink.ai/nl/">
+    <meta property="og:url" content="https://aetherlink.ai/en/">
     <meta property="og:type" content="website">
-    <meta property="og:locale" content="nl_NL">
+    <meta property="og:locale" content="en_GB">
 
     <!-- Hreflang -->
     <link rel="alternate" hreflang="nl" href="https://aetherlink.ai/nl/">
@@ -30,22 +30,25 @@
         "name": "AetherLink",
         "url": "https://aetherlink.ai",
         "logo": "https://aetherlink.ai/images/logo-color.png",
-        "description": "Europa's AI One-Stop-Shop. AI-assistenten, consultancy en maatwerk ontwikkeling.",
+        "description": "Europe's AI One-Stop-Shop. AI assistants, consultancy, and custom development.",
         "foundingDate": "2019",
         "sameAs": [
             "https://www.linkedin.com/company/aetherlink/",
-            "https://twitter.com/aetherlink"
+            "https://twitter.com/aetherlink",
+            "https://www.youtube.com/@Aetherlink"
         ]
     }
     </script>
 
-    <!-- Fonts -->
+    <!-- Performance: DNS prefetch & preload -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
-    <link rel="preload" href="../images/logo-white.png" as="image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="../images/logo-white.png" as="image">
+
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
     <!-- Tailwind CDN -->
@@ -149,18 +152,186 @@
             80% { transform: translate(-40px, 40px) scale(0.97); }
         }
 
-        /* ── Logo Watermark ── */
-        .ae-watermark {
+        /* ── Orbital Animation ── */
+        .orbit-wrap {
+            position: relative;
+            width: 540px;
+            height: 540px;
+            flex-shrink: 0;
+        }
+
+        .orbit-center {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: clamp(300px, 45vw, 650px);
-            height: auto;
-            opacity: 0.035;
-            user-select: none;
-            pointer-events: none;
-            filter: blur(1px);
+            top: 50%; left: 50%;
+            width: 92px; height: 92px;
+            margin: -46px 0 0 -46px;
+            border-radius: 50%;
+            background: rgba(10,13,26,0.9);
+            border: 2px solid rgba(140,79,218,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            box-shadow: 0 0 40px rgba(140,79,218,0.2), 0 0 80px rgba(185,0,255,0.08);
+        }
+        .orbit-center img { height: 50px; width: auto; }
+        .orbit-center-pulse {
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: 1px solid rgba(140,79,218,0.15);
+            animation: center-pulse 3s ease-in-out infinite;
+        }
+        @keyframes center-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.15); opacity: 0; }
+        }
+
+        /* Ring tracks */
+        .orbit-track {
+            position: absolute;
+            border-radius: 50%;
+            top: 50%; left: 50%;
+            border: 1px solid rgba(140,79,218,0.06);
+        }
+        .track-o { width: 480px; height: 480px; margin: -240px 0 0 -240px; }
+        .track-m { width: 350px; height: 350px; margin: -175px 0 0 -175px; }
+        .track-i { width: 230px; height: 230px; margin: -115px 0 0 -115px; }
+
+        /* Arcs (semi-circle decorations) */
+        .orbit-arc {
+            position: absolute;
+            border-radius: 50%;
+            top: 50%; left: 50%;
+        }
+        .arc-o {
+            width: 480px; height: 480px; margin: -240px 0 0 -240px;
+            border: 1.5px solid transparent;
+            border-top-color: rgba(140,79,218,0.45);
+            border-right-color: rgba(140,79,218,0.45);
+            animation: spin-cw 37.5s linear infinite;
+        }
+        .arc-m {
+            width: 350px; height: 350px; margin: -175px 0 0 -175px;
+            border: 1.5px solid transparent;
+            border-bottom-color: rgba(140,79,218,0.35);
+            border-left-color: rgba(140,79,218,0.35);
+            animation: spin-ccw 30s linear infinite;
+        }
+        .arc-i {
+            width: 230px; height: 230px; margin: -115px 0 0 -115px;
+            border: 1px solid transparent;
+            border-top-color: rgba(140,79,218,0.25);
+            border-right-color: rgba(140,79,218,0.25);
+            animation: spin-cw 22.5s linear infinite;
+        }
+
+        @keyframes spin-cw { to { transform: rotate(360deg); } }
+        @keyframes spin-ccw { to { transform: rotate(-360deg); } }
+
+        /* Orbiting icons */
+        .oi {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 52px; height: 52px;
+            margin: -26px 0 0 -26px;
+            z-index: 5;
+        }
+        .oi-face {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            background: rgba(10,13,26,0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1.5px solid rgba(140,79,218,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(185,0,255,0.15);
+            transition: box-shadow 0.3s ease;
+        }
+        .oi-face:hover { box-shadow: 0 0 30px rgba(185,0,255,0.3); }
+        .oi-face svg { width: 22px; height: 22px; }
+        .oi-face img { width: 28px; height: 28px; object-fit: contain; filter: grayscale(100%) brightness(1.2) drop-shadow(0 0 4px rgba(185,0,255,0.2)); }
+        .oi-color .oi-face img { filter: drop-shadow(0 0 6px rgba(185,0,255,0.25)); }
+
+        /* Outer ring orbit: radius 240px, 37.5s CW */
+        .oi-o { animation: orb-o 37.5s linear infinite; }
+        @keyframes orb-o {
+            from { transform: rotate(0deg) translateX(240px) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(240px) rotate(-360deg); }
+        }
+
+        /* Middle ring orbit: radius 175px, 30s CCW */
+        .oi-m { animation: orb-m 30s linear infinite; }
+        @keyframes orb-m {
+            from { transform: rotate(0deg) translateX(175px) rotate(0deg); }
+            to { transform: rotate(-360deg) translateX(175px) rotate(360deg); }
+        }
+
+        /* Inner ring orbit: radius 115px, 22.5s CW */
+        .oi-i { animation: orb-i 22.5s linear infinite; }
+        @keyframes orb-i {
+            from { transform: rotate(0deg) translateX(115px) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(115px) rotate(-360deg); }
+        }
+
+        /* Orbit responsive scaling */
+        @media (max-width: 1280px) {
+            .orbit-wrap { transform: scale(0.82); margin: -48px; }
+        }
+        @media (max-width: 1024px) {
+            .orbit-wrap { transform: scale(0.7); margin: -80px; }
+        }
+
+        /* ── Mobile: simplified orbital (4 satellites, larger logo) ── */
+        @media (max-width: 768px) {
+            .orbit-wrap {
+                width: 300px;
+                height: 300px;
+                transform: none;
+                margin: 0 auto;
+            }
+            .orbit-center {
+                width: 110px; height: 110px;
+                margin: -55px 0 0 -55px;
+                box-shadow: 0 0 50px rgba(140,79,218,0.3), 0 0 100px rgba(185,0,255,0.12);
+            }
+            .orbit-center img { height: 62px; }
+            .orbit-center-pulse { inset: -12px; }
+
+            /* Hide middle and inner rings */
+            .oi-m, .oi-i,
+            .track-m, .track-i,
+            .arc-m, .arc-i { display: none; }
+
+            /* Resize outer ring */
+            .track-o { width: 270px; height: 270px; margin: -135px 0 0 -135px; }
+            .arc-o { width: 270px; height: 270px; margin: -135px 0 0 -135px; }
+
+            /* Smaller satellite bubbles */
+            .oi { width: 46px; height: 46px; margin: -23px 0 0 -23px; }
+            .oi-face img { width: 24px; height: 24px; }
+
+            @keyframes orb-o {
+                from { transform: rotate(0deg) translateX(135px) rotate(0deg); }
+                to { transform: rotate(360deg) translateX(135px) rotate(-360deg); }
+            }
+        }
+
+        @media (max-width: 480px) {
+            .orbit-wrap { width: 260px; height: 260px; }
+            .orbit-center { width: 100px; height: 100px; margin: -50px 0 0 -50px; }
+            .orbit-center img { height: 56px; }
+            .track-o { width: 230px; height: 230px; margin: -115px 0 0 -115px; }
+            .arc-o { width: 230px; height: 230px; margin: -115px 0 0 -115px; }
+            .oi { width: 40px; height: 40px; margin: -20px 0 0 -20px; }
+            .oi-face img { width: 20px; height: 20px; }
+
+            @keyframes orb-o {
+                from { transform: rotate(0deg) translateX(115px) rotate(0deg); }
+                to { transform: rotate(360deg) translateX(115px) rotate(-360deg); }
+            }
         }
 
         /* ── Glass Card ── */
@@ -198,6 +369,21 @@
         .accent-cyan { background: linear-gradient(90deg, transparent, #00d4ff, transparent); }
         .accent-violet { background: linear-gradient(90deg, transparent, #8b5cf6, transparent); }
         .accent-emerald { background: linear-gradient(90deg, transparent, #00dfa2, transparent); }
+
+        /* ── Partner Logos ── */
+        .partner-logo {
+            height: 40px;
+            width: 140px;
+            object-fit: contain;
+            filter: grayscale(100%) brightness(0) invert(1);
+            opacity: 0.3;
+            transition: all 0.4s ease;
+            flex-shrink: 0;
+        }
+        .partner-logo:hover {
+            opacity: 0.6;
+            filter: grayscale(100%) brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,0.1));
+        }
 
         /* ── Buttons ── */
         .btn-primary {
@@ -330,19 +516,7 @@
         }
         .marquee-track:hover { animation-play-state: paused; }
 
-        .partner-logo {
-            height: 40px;
-            width: 140px;
-            object-fit: contain;
-            filter: grayscale(100%) brightness(0) invert(1);
-            opacity: 0.3;
-            transition: all 0.4s ease;
-            flex-shrink: 0;
-        }
-        .partner-logo:hover {
-            opacity: 0.6;
-            filter: grayscale(100%) brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,0.1));
-        }
+        /* (partner logos use .partner-logo class) */
 
         /* ── USP Icon ── */
         .usp-icon {
@@ -358,18 +532,99 @@
         }
 
         /* ── Nav ── */
-        .nav-glass{background:rgba(5,6,15,0.75);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,0.05);box-shadow:0 4px 30px rgba(0,0,0,0.2)}
-        .nav-link{font-family:'Syne',sans-serif;font-weight:500;font-size:.85rem;color:#8892a8;text-decoration:none;padding:8px 16px;border-radius:8px;transition:color .3s ease;position:relative;letter-spacing:.02em}
-        .nav-link::after{content:'';position:absolute;bottom:2px;left:50%;right:50%;height:2px;background:linear-gradient(90deg,#00d4ff,#8b5cf6);border-radius:1px;transition:all .35s cubic-bezier(.16,1,.3,1);opacity:0}
-        .nav-link:hover{color:#e4e8f1}.nav-link:hover::after{left:16px;right:16px;opacity:1}
-        .btn-login{font-family:'Syne',sans-serif;font-weight:500;font-size:.85rem;color:#b8bfcf;padding:9px 20px;border-radius:10px;border:1px solid rgba(140,79,218,0.2);background:rgba(140,79,218,0.06);text-decoration:none;transition:all .3s ease}
-        .btn-login:hover{border-color:rgba(140,79,218,0.4);background:rgba(140,79,218,0.12);color:#e4e8f1}
-        .btn-cta-nav{font-family:'Syne',sans-serif;font-weight:600;font-size:.85rem;color:#fff;padding:9px 22px;border-radius:10px;background:linear-gradient(135deg,#00C2CB,#8C4FDA);text-decoration:none;transition:all .35s cubic-bezier(.16,1,.3,1);box-shadow:0 0 20px rgba(0,194,203,0.15)}
-        .btn-cta-nav:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(0,194,203,0.25),0 8px 24px -8px rgba(140,79,218,0.3)}
-        .mobile-overlay{position:fixed;inset:0;z-index:45;background:rgba(5,6,15,0.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;pointer-events:none;transition:opacity .4s ease}
-        .mobile-overlay.open{opacity:1;pointer-events:auto}
-        .mobile-overlay .nav-link{font-size:1.4rem;padding:12px 24px}
-        .mobile-overlay .nav-link::after{display:none}
+        .nav-glass {
+            background: rgba(5,6,15,0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+        }
+        .nav-link {
+            font-family: 'Syne', sans-serif;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #8892a8;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: color 0.3s ease;
+            position: relative;
+            letter-spacing: 0.02em;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%; right: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, #00d4ff, #8b5cf6);
+            border-radius: 1px;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+        }
+        .nav-link:hover { color: #e4e8f1; }
+        .nav-link:hover::after { left: 16px; right: 16px; opacity: 1; }
+        .nav-link.active { color: #e4e8f1; }
+        .nav-link.active::after { left: 16px; right: 16px; opacity: 1; }
+
+        .btn-login {
+            font-family: 'Syne', sans-serif;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #b8bfcf;
+            padding: 9px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(140,79,218,0.2);
+            background: rgba(140,79,218,0.06);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .btn-login:hover {
+            border-color: rgba(140,79,218,0.4);
+            background: rgba(140,79,218,0.12);
+            color: #e4e8f1;
+        }
+
+        .btn-cta-nav {
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #fff;
+            padding: 9px 22px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #00C2CB, #8C4FDA);
+            text-decoration: none;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 20px rgba(0,194,203,0.15);
+        }
+        .btn-cta-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0,194,203,0.25), 0 8px 24px -8px rgba(140,79,218,0.3);
+        }
+
+        /* Mobile overlay menu */
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 45;
+            background: rgba(5,6,15,0.96);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .mobile-overlay.open { opacity: 1; pointer-events: auto; }
+        .mobile-overlay .nav-link {
+            font-size: 1.4rem;
+            padding: 12px 24px;
+        }
+        .mobile-overlay .nav-link::after { display: none; }
 
         /* ── Scroll indicator ── */
         .scroll-indicator {
@@ -431,61 +686,27 @@
             .orb-emerald { width: 280px; height: 280px; }
         }
 
-        /* ── Orbital Animation ── */
-        .orbit-wrap{position:relative;width:540px;height:540px;flex-shrink:0}
-        .orbit-center{position:absolute;top:50%;left:50%;width:92px;height:92px;margin:-46px 0 0 -46px;border-radius:50%;background:rgba(10,13,26,0.9);border:2px solid rgba(140,79,218,0.3);display:flex;align-items:center;justify-content:center;z-index:10;box-shadow:0 0 40px rgba(140,79,218,0.2),0 0 80px rgba(185,0,255,0.08)}
-        .orbit-center img{height:50px;width:auto}
-        .orbit-center-pulse{position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(140,79,218,0.15);animation:center-pulse 3s ease-in-out infinite}
-        @keyframes center-pulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.15);opacity:0}}
-        .orbit-track{position:absolute;border-radius:50%;top:50%;left:50%;border:1px solid rgba(140,79,218,0.06)}
-        .track-o{width:480px;height:480px;margin:-240px 0 0 -240px}.track-m{width:350px;height:350px;margin:-175px 0 0 -175px}.track-i{width:230px;height:230px;margin:-115px 0 0 -115px}
-        .orbit-arc{position:absolute;border-radius:50%;top:50%;left:50%}
-        .arc-o{width:480px;height:480px;margin:-240px 0 0 -240px;border:1.5px solid transparent;border-top-color:rgba(140,79,218,0.45);border-right-color:rgba(140,79,218,0.45);animation:spin-cw 37.5s linear infinite}
-        .arc-m{width:350px;height:350px;margin:-175px 0 0 -175px;border:1.5px solid transparent;border-bottom-color:rgba(140,79,218,0.35);border-left-color:rgba(140,79,218,0.35);animation:spin-ccw 30s linear infinite}
-        .arc-i{width:230px;height:230px;margin:-115px 0 0 -115px;border:1px solid transparent;border-top-color:rgba(140,79,218,0.25);border-right-color:rgba(140,79,218,0.25);animation:spin-cw 22.5s linear infinite}
-        @keyframes spin-cw{to{transform:rotate(360deg)}}@keyframes spin-ccw{to{transform:rotate(-360deg)}}
-        .oi{position:absolute;top:50%;left:50%;width:52px;height:52px;margin:-26px 0 0 -26px;z-index:5}
-        .oi-face{width:100%;height:100%;border-radius:50%;background:rgba(10,13,26,0.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1.5px solid rgba(140,79,218,0.4);display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(185,0,255,0.15)}
-        .oi-face svg{width:22px;height:22px}
-        .oi-face img { width: 28px; height: 28px; object-fit: contain; filter: grayscale(100%) brightness(1.2) drop-shadow(0 0 4px rgba(185,0,255,0.2)); }
-        .oi-color .oi-face img { filter: drop-shadow(0 0 6px rgba(185,0,255,0.25)); }
-        .oi-o{animation:orb-o 37.5s linear infinite}@keyframes orb-o{from{transform:rotate(0deg) translateX(240px) rotate(0deg)}to{transform:rotate(360deg) translateX(240px) rotate(-360deg)}}
-        .oi-m{animation:orb-m 30s linear infinite}@keyframes orb-m{from{transform:rotate(0deg) translateX(175px) rotate(0deg)}to{transform:rotate(-360deg) translateX(175px) rotate(360deg)}}
-        .oi-i{animation:orb-i 22.5s linear infinite}@keyframes orb-i{from{transform:rotate(0deg) translateX(115px) rotate(0deg)}to{transform:rotate(360deg) translateX(115px) rotate(-360deg)}}
-        @media(max-width:1280px){.orbit-wrap{transform:scale(.82);margin:-48px}}
-        @media(max-width:1024px){.orbit-wrap{transform:scale(.7);margin:-80px}}
+        /* ── Hero layout ── */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 40px;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 0;
+            }
+            .hero-orbit-col { order: -1; }
+        }
 
-        /* ── Mobile: simplified orbital (4 satellites, larger logo) ── */
-        @media (max-width: 768px) {
-            .orbit-wrap { width: 300px; height: 300px; transform: none; margin: 0 auto; }
-            .orbit-center { width: 110px; height: 110px; margin: -55px 0 0 -55px; box-shadow: 0 0 50px rgba(140,79,218,0.3), 0 0 100px rgba(185,0,255,0.12); }
-            .orbit-center img { height: 62px; }
-            .orbit-center-pulse { inset: -12px; }
-            .oi-m, .oi-i, .track-m, .track-i, .arc-m, .arc-i { display: none; }
-            .track-o { width: 270px; height: 270px; margin: -135px 0 0 -135px; }
-            .arc-o { width: 270px; height: 270px; margin: -135px 0 0 -135px; }
-            .oi { width: 46px; height: 46px; margin: -23px 0 0 -23px; }
-            .oi-face img { width: 24px; height: 24px; }
-            @keyframes orb-o {
-                from { transform: rotate(0deg) translateX(135px) rotate(0deg); }
-                to { transform: rotate(360deg) translateX(135px) rotate(-360deg); }
-            }
-        }
-        @media (max-width: 480px) {
-            .orbit-wrap { width: 260px; height: 260px; }
-            .orbit-center { width: 100px; height: 100px; margin: -50px 0 0 -50px; }
-            .orbit-center img { height: 56px; }
-            .track-o { width: 230px; height: 230px; margin: -115px 0 0 -115px; }
-            .arc-o { width: 230px; height: 230px; margin: -115px 0 0 -115px; }
-            .oi { width: 40px; height: 40px; margin: -20px 0 0 -20px; }
-            .oi-face img { width: 20px; height: 20px; }
-            @keyframes orb-o {
-                from { transform: rotate(0deg) translateX(115px) rotate(0deg); }
-                to { transform: rotate(360deg) translateX(115px) rotate(-360deg); }
-            }
-        }
-        .hero-grid{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px;max-width:1280px;margin:0 auto;padding:0 24px}
-        @media(max-width:1024px){.hero-grid{grid-template-columns:1fr;text-align:center;gap:0}.hero-orbit-col{order:-1}}
+        /* ── Content visibility for performance ── */
+        #services, #social-proof, #why { content-visibility: auto; }
     </style>
 </head>
 
@@ -497,24 +718,31 @@
     <nav id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
         <div class="max-w-[1400px] mx-auto px-6 lg:px-8">
             <div class="flex items-center justify-between h-[72px]">
-                <a href="/nl/" class="flex items-center group relative z-50">
+                <!-- Logo -->
+                <a href="/en/" class="flex items-center group relative z-50">
                     <img src="../images/logo-white.png" alt="AetherLink" class="h-8 lg:h-9 w-auto transition-transform duration-300 group-hover:scale-105">
                 </a>
+
+                <!-- Desktop Nav (centered) -->
                 <div class="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
                     <a href="aetherbot.html" class="nav-link">AetherBot</a>
                     <a href="aethermind.html" class="nav-link">AetherMIND</a>
                     <a href="aetherdev.html" class="nav-link">AetherDEV</a>
-                    <a href="#why" class="nav-link">Over ons</a>
+                    <a href="#why" class="nav-link">About</a>
                 </div>
+
+                <!-- Right side: Lang + Login + CTA -->
                 <div class="hidden lg:flex items-center gap-3 relative z-50">
                     <div class="flex items-center gap-0.5 text-xs text-muted mr-1">
-                        <a href="index.html" class="text-light font-semibold px-2 py-1 rounded-md bg-white/[0.07]">NL</a>
-                        <a href="../en/index.html" class="hover:text-light px-2 py-1 rounded-md transition-colors">EN</a>
+                        <a href="../nl/index.html" class="hover:text-light px-2 py-1 rounded-md transition-colors">NL</a>
+                        <a href="index.html" class="text-light font-semibold px-2 py-1 rounded-md bg-white/[0.07]">EN</a>
                         <a href="../fi/index.html" class="hover:text-light px-2 py-1 rounded-md transition-colors">FI</a>
                     </div>
-                    <a href="https://www.aetherlink.ai/auth/login" class="btn-login">Inloggen</a>
-                    <a href="https://calendly.com/aetherlink" class="btn-cta-nav">Aan de slag</a>
+                    <a href="https://www.aetherlink.ai/auth/login" class="btn-login">Log in</a>
+                    <a href="https://calendly.com/aetherlink" class="btn-cta-nav">Get started</a>
                 </div>
+
+                <!-- Mobile menu button -->
                 <button id="mobile-toggle" class="lg:hidden flex flex-col gap-1.5 p-2 relative z-50" aria-label="Menu">
                     <span class="w-6 h-0.5 bg-light rounded-full transition-all duration-300 origin-center" id="bar1"></span>
                     <span class="w-6 h-0.5 bg-light rounded-full transition-all duration-300" id="bar2"></span>
@@ -523,19 +751,21 @@
             </div>
         </div>
     </nav>
+
+    <!-- Mobile overlay menu -->
     <div id="mobile-menu" class="mobile-overlay lg:hidden">
         <a href="aetherbot.html" class="nav-link">AetherBot</a>
         <a href="aethermind.html" class="nav-link">AetherMIND</a>
         <a href="aetherdev.html" class="nav-link">AetherDEV</a>
-        <a href="#why" class="nav-link" data-close-menu>Over ons</a>
+        <a href="#why" class="nav-link" data-close-menu>About</a>
         <div class="flex items-center gap-3 mt-6">
-            <a href="index.html" class="text-light font-semibold text-sm px-3 py-1.5 rounded-md bg-white/[0.07]">NL</a>
-            <a href="../en/index.html" class="text-muted hover:text-light text-sm px-3 py-1.5 rounded-md transition-colors">EN</a>
+            <a href="../nl/index.html" class="text-muted hover:text-light text-sm px-3 py-1.5 rounded-md transition-colors">NL</a>
+            <a href="index.html" class="text-light font-semibold text-sm px-3 py-1.5 rounded-md bg-white/[0.07]">EN</a>
             <a href="../fi/index.html" class="text-muted hover:text-light text-sm px-3 py-1.5 rounded-md transition-colors">FI</a>
         </div>
         <div class="flex flex-col items-center gap-3 mt-4 w-full max-w-xs">
-            <a href="https://www.aetherlink.ai/auth/login" class="btn-login w-full text-center">Inloggen</a>
-            <a href="https://calendly.com/aetherlink" class="btn-cta-nav w-full text-center">Aan de slag</a>
+            <a href="https://www.aetherlink.ai/auth/login" class="btn-login w-full text-center">Log in</a>
+            <a href="https://calendly.com/aetherlink" class="btn-cta-nav w-full text-center">Get started</a>
         </div>
     </div>
 
@@ -545,62 +775,59 @@
         <!-- ═══════════════════════════════════════════ -->
         <!-- HERO SECTION                                -->
         <!-- ═══════════════════════════════════════════ -->
-        <section id="hero" class="relative min-h-screen flex items-center overflow-hidden pt-20">
+        <section id="hero" class="relative min-h-screen flex items-center overflow-hidden pt-20 pb-12">
 
             <!-- Background Orbs -->
             <div class="orb orb-cyan" style="top: 15%; left: -5%;"></div>
             <div class="orb orb-violet" style="top: 40%; right: -8%;"></div>
             <div class="orb orb-emerald" style="bottom: 10%; left: 30%;"></div>
 
-            <!-- Logo Watermark -->
-            <img src="../images/logo-white.png" class="ae-watermark" aria-hidden="true" alt="">
-
-            <!-- Hero Grid -->
-            <div class="relative z-10 hero-grid">
+            <!-- Hero Grid: Text Left / Orbital Right -->
+            <div class="hero-grid relative z-10 w-full">
 
                 <!-- Text Column -->
-                <div>
+                <div class="flex flex-col justify-center">
                     <!-- Badge -->
-                    <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-white/8 bg-white/[0.03] backdrop-blur-sm mb-10 reveal">
+                    <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-white/8 bg-white/[0.03] backdrop-blur-sm mb-8 reveal w-fit mx-auto lg:mx-0">
                         <span class="w-2 h-2 rounded-full bg-accent-emerald animate-pulse"></span>
-                        <span class="text-sm text-muted font-medium tracking-wide">AI-Gestuurde Oplossingen</span>
+                        <span class="text-sm text-muted font-medium tracking-wide">AI-Powered Solutions</span>
                     </div>
 
                     <!-- Headline -->
-                    <h1 class="font-display font-800 leading-[0.95] mb-8 reveal reveal-delay-1">
-                        <span class="block text-[clamp(2.5rem,6.5vw,5.5rem)] text-light">
-                            De kracht van
+                    <h1 class="font-display font-800 leading-[0.95] mb-7 reveal reveal-delay-1">
+                        <span class="block text-[clamp(2.2rem,5vw,4.5rem)] text-light">
+                            The power of
                             <span class="gradient-text">AI.</span>
                         </span>
-                        <span class="block text-[clamp(2rem,5vw,4.2rem)] text-light/60 mt-2">
-                            Toegankelijk voor elk bedrijf.
+                        <span class="block text-[clamp(1.6rem,3.5vw,3.2rem)] text-light/60 mt-2">
+                            Accessible for every business.
                         </span>
                     </h1>
 
                     <!-- Subtitle -->
-                    <p class="max-w-2xl text-lg md:text-xl text-muted leading-relaxed mb-12 reveal reveal-delay-2">
-                        AetherLink brengt kunstmatige intelligentie naar jouw organisatie — van kant-en-klare AI-assistenten tot strategisch advies en maatwerkontwikkeling.
+                    <p class="max-w-xl text-base lg:text-lg text-muted leading-relaxed mb-10 reveal reveal-delay-2">
+                        AetherLink brings artificial intelligence to your organisation — from ready-to-use AI assistants to strategic consulting and custom development.
                     </p>
 
                     <!-- CTAs -->
-                    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 reveal reveal-delay-3">
+                    <div class="flex flex-col sm:flex-row items-center lg:items-start gap-4 reveal reveal-delay-3">
                         <a href="aetherbot.html" class="btn-primary">
-                            <span>Ontdek AetherBot</span>
+                            <span>Discover AetherBot</span>
                             <span class="relative z-[1]">&rarr;</span>
                         </a>
                         <a href="#services" class="btn-secondary">
-                            Bekijk onze diensten
+                            View our services
                         </a>
                     </div>
                 </div>
 
-                <!-- Orbital Column -->
+                <!-- Orbital Animation Column -->
                 <div class="hero-orbit-col flex items-center justify-center">
-                    <div class="orbit-wrap">
+                    <div class="orbit-wrap" aria-hidden="true">
                         <!-- Center Logo -->
                         <div class="orbit-center">
                             <div class="orbit-center-pulse"></div>
-                            <img src="../images/logo-white.png" alt="" aria-hidden="true">
+                            <img src="../images/logo-white.png" alt="" loading="eager">
                         </div>
 
                         <!-- Ring Tracks (faint circles) -->
@@ -613,7 +840,7 @@
                         <div class="orbit-arc arc-m"></div>
                         <div class="orbit-arc arc-i"></div>
 
-                        <!-- Outer Ring (4 AI assistants, 25s CW) -->
+                        <!-- Outer Ring (4 AI assistants, 37.5s CW) -->
                         <div class="oi oi-o oi-color" style="animation-delay:0s">
                             <div class="oi-face"><img src="../images/animation/claude.svg" alt="Claude" loading="eager"></div>
                         </div>
@@ -627,7 +854,7 @@
                             <div class="oi-face"><img src="../images/animation/grok.svg" alt="Grok" loading="eager"></div>
                         </div>
 
-                        <!-- Middle Ring (4 dev tools, 20s CCW) -->
+                        <!-- Middle Ring (4 dev tools, 30s CCW) -->
                         <div class="oi oi-m" style="animation-delay:0s">
                             <div class="oi-face"><img src="../images/animation/github-copilot.svg" alt="GitHub Copilot" loading="eager"></div>
                         </div>
@@ -641,7 +868,7 @@
                             <div class="oi-face"><img src="../images/animation/ollama.svg" alt="Ollama" loading="eager"></div>
                         </div>
 
-                        <!-- Inner Ring (3 platforms, 15s CW) -->
+                        <!-- Inner Ring (3 platforms, 22.5s CW) -->
                         <div class="oi oi-i" style="animation-delay:0s">
                             <div class="oi-face"><img src="../images/animation/anthropic.svg" alt="Anthropic" loading="eager"></div>
                         </div>
@@ -673,9 +900,9 @@
 
                 <!-- Section Header -->
                 <div class="text-center mb-20 reveal">
-                    <span class="inline-block font-display font-600 text-xs tracking-[0.25em] uppercase text-accent-cyan/60 mb-4">Wat wij doen</span>
+                    <span class="inline-block font-display font-600 text-xs tracking-[0.25em] uppercase text-accent-cyan/60 mb-4">What we do</span>
                     <h2 class="font-display font-800 text-3xl md:text-5xl text-light leading-tight">
-                        Drie manieren waarop wij<br>u helpen slagen
+                        Three ways we help<br>you succeed
                     </h2>
                 </div>
 
@@ -696,29 +923,29 @@
                         </div>
 
                         <h3 class="font-display font-700 text-xl text-light mb-1">AetherBot</h3>
-                        <p class="text-accent-cyan text-sm font-medium mb-5">Uw AI-Assistent</p>
+                        <p class="text-accent-cyan text-sm font-medium mb-5">Your AI Assistant</p>
 
                         <p class="text-muted leading-relaxed mb-8 text-[0.95rem]">
-                            Een slimme AI-chatbot voor uw website — vandaag nog live. Beantwoordt klantvragen 24/7, getraind op uw kennis, in uw stijl.
+                            A smart AI chatbot for your website — live today. Answers customer questions 24/7, trained on your knowledge, in your style.
                         </p>
 
                         <div class="space-y-2.5 mb-8">
                             <div class="feature-check">
                                 <span class="check check-cyan">&#10003;</span>
-                                <span>Direct inzetbaar</span>
+                                <span>Ready to deploy</span>
                             </div>
                             <div class="feature-check">
                                 <span class="check check-cyan">&#10003;</span>
-                                <span>Vanaf &euro;49/maand</span>
+                                <span>From &euro;49/month</span>
                             </div>
                             <div class="feature-check">
                                 <span class="check check-cyan">&#10003;</span>
-                                <span>Geen technische kennis nodig</span>
+                                <span>No technical knowledge required</span>
                             </div>
                         </div>
 
                         <a href="aetherbot.html" class="cta-link cta-cyan">
-                            Ontdek AetherBot <span class="arrow">&rarr;</span>
+                            Explore AetherBot <span class="arrow">&rarr;</span>
                         </a>
                     </div>
 
@@ -738,26 +965,26 @@
                         <p class="text-accent-violet text-sm font-medium mb-5">Consultancy & Training</p>
 
                         <p class="text-muted leading-relaxed mb-8 text-[0.95rem]">
-                            Weet u niet waar u moet beginnen met AI? Wij helpen u met strategie, advies en training. Van eerste verkenning tot volledige implementatie.
+                            Don't know where to start with AI? We help you with strategy, advice, and training. From initial exploration to full implementation.
                         </p>
 
                         <div class="space-y-2.5 mb-8">
                             <div class="feature-check">
                                 <span class="check check-violet">&#10003;</span>
-                                <span>AI Consultancy & Advies</span>
+                                <span>AI Consultancy & Advisory</span>
                             </div>
                             <div class="feature-check">
                                 <span class="check check-violet">&#10003;</span>
-                                <span>Training, Workshops & Lezingen</span>
+                                <span>Training, Workshops & Lectures</span>
                             </div>
                             <div class="feature-check">
                                 <span class="check check-violet">&#10003;</span>
-                                <span>Op maat voor uw organisatie</span>
+                                <span>Tailored to your organisation</span>
                             </div>
                         </div>
 
                         <a href="aethermind.html" class="cta-link cta-violet">
-                            Ontdek AetherMIND <span class="arrow">&rarr;</span>
+                            Discover AetherMIND <span class="arrow">&rarr;</span>
                         </a>
                     </div>
 
@@ -774,29 +1001,29 @@
                         </div>
 
                         <h3 class="font-display font-700 text-xl text-light mb-1">AetherDEV</h3>
-                        <p class="text-accent-emerald text-sm font-medium mb-5">Maatwerk AI-Ontwikkeling</p>
+                        <p class="text-accent-emerald text-sm font-medium mb-5">Custom AI Development</p>
 
                         <p class="text-muted leading-relaxed mb-8 text-[0.95rem]">
-                            Heeft u een unieke uitdaging? Wij bouwen op maat gemaakte AI-oplossingen — van automatiseringen tot complete AI-platforms.
+                            Have a unique challenge? We build custom AI solutions — from automations to complete AI platforms.
                         </p>
 
                         <div class="space-y-2.5 mb-8">
                             <div class="feature-check">
                                 <span class="check check-emerald">&#10003;</span>
-                                <span>Maatwerk AI-applicaties</span>
+                                <span>Custom AI applications</span>
                             </div>
                             <div class="feature-check">
                                 <span class="check check-emerald">&#10003;</span>
-                                <span>AI-automatiseringen & integraties</span>
+                                <span>AI automations & integrations</span>
                             </div>
                             <div class="feature-check">
                                 <span class="check check-emerald">&#10003;</span>
-                                <span>Van concept tot werkend product</span>
+                                <span>From concept to working product</span>
                             </div>
                         </div>
 
                         <a href="aetherdev.html" class="cta-link cta-emerald">
-                            Ontdek AetherDEV <span class="arrow">&rarr;</span>
+                            Explore AetherDEV <span class="arrow">&rarr;</span>
                         </a>
                     </div>
 
@@ -814,7 +1041,7 @@
         <section id="social-proof" class="py-24 overflow-hidden">
             <div class="max-w-7xl mx-auto px-6 lg:px-8">
                 <p class="text-center text-sm tracking-[0.2em] uppercase text-muted/50 font-display font-500 mb-14 reveal">
-                    Vertrouwd door vooruitstrevende organisaties
+                    Trusted by forward-thinking organisations
                 </p>
             </div>
 
@@ -825,6 +1052,7 @@
 
                 <div class="overflow-hidden">
                     <div class="marquee-track" style="gap: 64px;">
+                        <!-- First set -->
                         <img src="../images/partners/solvari.svg" alt="Solvari" class="partner-logo" loading="lazy">
                         <img src="../images/partners/defensie.svg" alt="Defensie" class="partner-logo" loading="lazy">
                         <img src="../images/partners/droidor.png" alt="Droidor" class="partner-logo" loading="lazy">
@@ -835,6 +1063,7 @@
                         <img src="../images/partners/mark-dierenarts.png" alt="Mark Dierenarts" class="partner-logo" loading="lazy">
                         <img src="../images/partners/growing-emmen.png" alt="Growing Emmen" class="partner-logo" loading="lazy">
                         <img src="../images/partners/doama.webp" alt="Doama" class="partner-logo" loading="lazy">
+                        <!-- Duplicate for seamless loop -->
                         <img src="../images/partners/solvari.svg" alt="Solvari" class="partner-logo" loading="lazy">
                         <img src="../images/partners/defensie.svg" alt="Defensie" class="partner-logo" loading="lazy">
                         <img src="../images/partners/droidor.png" alt="Droidor" class="partner-logo" loading="lazy">
@@ -865,9 +1094,9 @@
 
                 <!-- Section Header -->
                 <div class="text-center mb-20 reveal">
-                    <span class="inline-block font-display font-600 text-xs tracking-[0.25em] uppercase text-accent-violet/60 mb-4">Waarom wij</span>
+                    <span class="inline-block font-display font-600 text-xs tracking-[0.25em] uppercase text-accent-violet/60 mb-4">Why us</span>
                     <h2 class="font-display font-800 text-3xl md:text-5xl text-light leading-tight">
-                        Waarom bedrijven kiezen<br>voor AetherLink
+                        Why businesses choose<br>AetherLink
                     </h2>
                 </div>
 
@@ -885,9 +1114,9 @@
                                 <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>
                             </svg>
                         </div>
-                        <h3 class="font-display font-700 text-lg text-light mb-3">5+ Jaar AI-Ervaring</h3>
+                        <h3 class="font-display font-700 text-lg text-light mb-3">5+ Years of AI Experience</h3>
                         <p class="text-muted leading-relaxed text-[0.95rem]">
-                            Wij werkten met AI lang voordat het mainstream werd. Nu delen wij die expertise met u.
+                            We worked with AI long before it went mainstream. Now we share that expertise with you.
                         </p>
                     </div>
 
@@ -898,9 +1127,9 @@
                                 <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
                             </svg>
                         </div>
-                        <h3 class="font-display font-700 text-lg text-light mb-3">Van Freelancer tot Corporate</h3>
+                        <h3 class="font-display font-700 text-lg text-light mb-3">From Freelancer to Corporate</h3>
                         <p class="text-muted leading-relaxed text-[0.95rem]">
-                            Het maakt niet uit hoe groot u bent. Elk bedrijf kan profiteren van AI. Wij hebben het track record om het te bewijzen.
+                            It doesn't matter how big you are. Every business can benefit from AI. We have the track record to prove it.
                         </p>
                     </div>
 
@@ -911,9 +1140,9 @@
                                 <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
                             </svg>
                         </div>
-                        <h3 class="font-display font-700 text-lg text-light mb-3">Onze Eigen Technologie</h3>
+                        <h3 class="font-display font-700 text-lg text-light mb-3">Our Own Technology</h3>
                         <p class="text-muted leading-relaxed text-[0.95rem]">
-                            Met AetherBot hebben wij ons eigen AI-platform. Wij praten niet alleen over AI — wij bouwen het.
+                            With AetherBot, we have our own AI platform. We don't just talk about AI — we build it.
                         </p>
                     </div>
 
@@ -927,7 +1156,7 @@
                         </div>
                         <h3 class="font-display font-700 text-lg text-light mb-3">EU AI Act Compliant</h3>
                         <p class="text-muted leading-relaxed text-[0.95rem]">
-                            Wij zorgen ervoor dat uw AI-toepassingen voldoen aan alle Europese regelgeving. Vandaag en morgen.
+                            We ensure your AI applications meet all European regulations. Today and tomorrow.
                         </p>
                     </div>
 
@@ -947,21 +1176,21 @@
 
             <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
                 <h2 class="font-display font-800 text-3xl md:text-5xl text-light leading-tight mb-8 reveal">
-                    Klaar om te ontdekken wat<br>
-                    <span class="gradient-text">AI voor u kan betekenen?</span>
+                    Ready to discover what<br>
+                    <span class="gradient-text">AI can do for you?</span>
                 </h2>
 
                 <p class="text-lg text-muted leading-relaxed mb-12 reveal reveal-delay-1">
-                    Of u nu een kant-en-klare AI-assistent wilt, advies nodig heeft of op zoek bent naar een maatwerkoplossing — wij staan voor u klaar.
+                    Whether you want a ready-to-use AI assistant, need consulting, or are looking for a custom solution — we're here to help.
                 </p>
 
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal reveal-delay-2">
                     <a href="https://www.aetherbot.dev/auth/login" class="btn-primary">
-                        <span>Start met AetherBot</span>
+                        <span>Start with AetherBot</span>
                         <span class="relative z-[1]">&rarr;</span>
                     </a>
                     <a href="https://calendly.com/aetherlink" class="btn-secondary">
-                        Plan een gesprek
+                        Schedule a call
                     </a>
                 </div>
             </div>
@@ -975,59 +1204,104 @@
     <!-- ═══════════════════════════════════════════ -->
     <footer class="border-t border-white/5 py-16 lg:py-20">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
+
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 mb-16">
+
+                <!-- Brand -->
                 <div class="sm:col-span-2 lg:col-span-1">
-                    <a href="index.html" class="inline-block mb-6"><img src="../images/logo-white.png" alt="AetherLink" class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity" loading="lazy"></a>
-                    <p class="text-muted text-sm leading-relaxed mb-6">De kracht van AI, toegankelijk voor elk bedrijf.</p>
+                    <a href="/en/" class="inline-block mb-6">
+                        <img src="../images/logo-white.png" alt="AetherLink" class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity" loading="lazy">
+                    </a>
+                    <p class="text-muted text-sm leading-relaxed mb-6">
+                        The power of AI, accessible for every business.
+                    </p>
                     <div class="flex items-center gap-3">
-                        <a href="https://www.linkedin.com/company/aetherlink/" class="w-9 h-9 rounded-lg border border-white/8 flex items-center justify-center text-muted hover:text-light hover:border-white/15 transition-all" aria-label="LinkedIn"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                        <a href="https://twitter.com/aetherlink" class="w-9 h-9 rounded-lg border border-white/8 flex items-center justify-center text-muted hover:text-light hover:border-white/15 transition-all" aria-label="X / Twitter"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                        <a href="https://www.linkedin.com/company/aetherlink/" class="w-9 h-9 rounded-lg border border-white/8 flex items-center justify-center text-muted hover:text-light hover:border-white/15 transition-all" aria-label="LinkedIn">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        </a>
+                        <a href="https://twitter.com/aetherlink" class="w-9 h-9 rounded-lg border border-white/8 flex items-center justify-center text-muted hover:text-light hover:border-white/15 transition-all" aria-label="X / Twitter">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
                         <a href="https://www.youtube.com/@Aetherlink" class="w-9 h-9 rounded-lg border border-white/8 flex items-center justify-center text-muted hover:text-light hover:border-white/15 transition-all" aria-label="YouTube">
                             <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                         </a>
                     </div>
                 </div>
+
+                <!-- Products -->
                 <div>
-                    <h4 class="font-display font-600 text-sm text-light mb-5 tracking-wide">Producten</h4>
+                    <h4 class="font-display font-600 text-sm text-light mb-5 tracking-wide">Products</h4>
                     <ul class="space-y-3">
                         <li><a href="aetherbot.html" class="text-sm text-muted hover:text-light transition-colors">AetherBot</a></li>
-                        <li><a href="aetherbot.html#pricing" class="text-sm text-muted hover:text-light transition-colors">Prijzen</a></li>
-                        <li><a href="aetherbot.html#features" class="text-sm text-muted hover:text-light transition-colors">Functies</a></li>
+                        <li><a href="aetherbot.html#pricing" class="text-sm text-muted hover:text-light transition-colors">Pricing</a></li>
+                        <li><a href="aetherbot.html#features" class="text-sm text-muted hover:text-light transition-colors">Features</a></li>
+                        <li><a href="https://calendly.com/aetherlink" class="text-sm text-muted hover:text-light transition-colors">Request Demo</a></li>
                     </ul>
                 </div>
+
+                <!-- Services -->
                 <div>
-                    <h4 class="font-display font-600 text-sm text-light mb-5 tracking-wide">Diensten</h4>
+                    <h4 class="font-display font-600 text-sm text-light mb-5 tracking-wide">Services</h4>
                     <ul class="space-y-3">
                         <li><a href="aethermind.html" class="text-sm text-muted hover:text-light transition-colors">AetherMIND</a></li>
                         <li><a href="aetherdev.html" class="text-sm text-muted hover:text-light transition-colors">AetherDEV</a></li>
                         <li><a href="aethermind.html#training" class="text-sm text-muted hover:text-light transition-colors">AI Training</a></li>
+                        <li><a href="aethermind.html#consultancy" class="text-sm text-muted hover:text-light transition-colors">AI Consultancy</a></li>
                     </ul>
                 </div>
+
+                <!-- Contact -->
                 <div>
                     <h4 class="font-display font-600 text-sm text-light mb-5 tracking-wide">Contact</h4>
                     <ul class="space-y-3">
-                        <li class="flex items-start gap-2 text-sm text-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>+31 6 1377 2333</span></li>
-                        <li class="flex items-start gap-2 text-sm text-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><a href="mailto:info@aetherlink.ai" class="hover:text-light transition-colors">info@aetherlink.ai</a></li>
-                        <li class="flex items-start gap-2 text-sm text-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>24/7 beschikbaar</span></li>
+                        <li class="flex items-start gap-2 text-sm text-muted">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            <span>+31 6 1377 2333</span>
+                        </li>
+                        <li class="flex items-start gap-2 text-sm text-muted">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                            <a href="mailto:info@aetherlink.ai" class="hover:text-light transition-colors">info@aetherlink.ai</a>
+                        </li>
+                        <li class="flex items-start gap-2 text-sm text-muted">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            <span>24/7 available</span>
+                        </li>
                     </ul>
                 </div>
+
+                <!-- Locations -->
                 <div>
-                    <h4 class="font-display font-600 text-sm text-light mb-5 tracking-wide">Locaties</h4>
+                    <h4 class="font-display font-600 text-sm text-light mb-5 tracking-wide">Locations</h4>
                     <ul class="space-y-3">
-                        <li class="flex items-start gap-2 text-sm text-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Nederland</span></li>
-                        <li class="flex items-start gap-2 text-sm text-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Finland</span></li>
-                        <li class="flex items-start gap-2 text-sm text-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Verenigde Arabische Emiraten</span></li>
+                        <li class="flex items-start gap-2 text-sm text-muted">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <span>Netherlands</span>
+                        </li>
+                        <li class="flex items-start gap-2 text-sm text-muted">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <span>Finland</span>
+                        </li>
+                        <li class="flex items-start gap-2 text-sm text-muted">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <span>United Arab Emirates</span>
+                        </li>
                     </ul>
                 </div>
             </div>
+
+            <!-- Bottom bar -->
             <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
-                <p class="text-xs text-muted/60">&copy; 2026 AetherLink. Alle rechten voorbehouden.</p>
+                <p class="text-xs text-muted/60">&copy; 2026 AetherLink. All rights reserved.</p>
                 <div class="flex items-center gap-6">
-                    <a href="/nl/privacy" class="text-xs text-muted/50 hover:text-muted transition-colors">Privacybeleid</a>
-                    <a href="/nl/voorwaarden" class="text-xs text-muted/50 hover:text-muted transition-colors">Algemene voorwaarden</a>
-                    <span class="flex items-center gap-2 text-xs text-muted/50"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>EU AI Act &amp; AVG</span>
+                    <a href="/en/privacy" class="text-xs text-muted/50 hover:text-muted transition-colors">Privacy Policy</a>
+                    <a href="/en/terms" class="text-xs text-muted/50 hover:text-muted transition-colors">Terms of Service</a>
+                    <span class="flex items-center gap-2 text-xs text-muted/50">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        EU AI Act &amp; GDPR
+                    </span>
                 </div>
             </div>
+
         </div>
     </footer>
 

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AetherMIND - AI Consultancy & Training | AetherLink</title>
+    <meta name="description" content="AI strategy, advisory and training for your organisation. From first exploration to implementation. Schedule a free consultation.">
+    <link rel="canonical" href="https://aetherlink.ai/en/aethermind">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <meta property="og:title" content="AetherMIND - AI Consultancy & Training | AetherLink">
+    <meta property="og:description" content="AI strategy, advisory and training for your organisation. From first exploration to implementation.">
+    <meta property="og:url" content="https://aetherlink.ai/en/aethermind">
+    <meta property="og:type" content="website">
+
+    <link rel="alternate" hreflang="en" href="https://aetherlink.ai/en/aethermind">
+    <link rel="alternate" hreflang="nl" href="https://aetherlink.ai/nl/aethermind">
+    <link rel="alternate" hreflang="x-default" href="https://aetherlink.ai/en/aethermind">
+
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="preload" href="images/logo-white.png" as="image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { display: ['Syne','sans-serif'], body: ['Plus Jakarta Sans','sans-serif'] },
+                    colors: {
+                        void: '#05060f', surface: { DEFAULT:'#0a0d1a', 2:'#111527', 3:'#181d35' },
+                        accent: { cyan:'#00d4ff', violet:'#8b5cf6', emerald:'#00dfa2' },
+                        muted: '#6b7394', light: '#e4e8f1',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        *,*::before,*::after{box-sizing:border-box}html{scroll-behavior:smooth}
+        body{font-family:'Plus Jakarta Sans',sans-serif;background:#05060f;color:#e4e8f1;overflow-x:hidden;margin:0}
+        .font-display{font-family:'Syne',sans-serif}
+        body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.4}
+        .grid-bg{background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);background-size:72px 72px}
+        .orb{position:absolute;border-radius:50%;filter:blur(100px);will-change:transform}
+        @keyframes orbit-1{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(80px,-60px) scale(1.1)}50%{transform:translate(-40px,80px) scale(.9)}75%{transform:translate(60px,40px) scale(1.05)}}
+        @keyframes orbit-2{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-70px,50px) scale(1.08)}66%{transform:translate(50px,-70px) scale(.95)}}
+        .glass-card{background:rgba(255,255,255,0.025);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.06);border-radius:20px;transition:all .5s cubic-bezier(.16,1,.3,1)}
+        .glass-card:hover{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.12);transform:translateY(-8px);box-shadow:0 32px 64px -16px rgba(0,0,0,0.5)}
+        .btn-primary{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:#fff;padding:15px 32px;border-radius:14px;font-family:'Syne',sans-serif;font-weight:600;font-size:.95rem;text-decoration:none;border:none;cursor:pointer;transition:all .4s cubic-bezier(.16,1,.3,1);box-shadow:0 0 24px rgba(139,92,246,0.15),0 8px 32px -8px rgba(139,92,246,0.2);position:relative;overflow:hidden}
+        .btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#7c3aed,#8b5cf6);opacity:0;transition:opacity .4s ease}
+        .btn-primary:hover{transform:translateY(-3px);box-shadow:0 0 48px rgba(139,92,246,0.25),0 16px 48px -8px rgba(139,92,246,0.3)}
+        .btn-primary:hover::before{opacity:1}
+        .btn-primary span{position:relative;z-index:1}
+        .btn-secondary{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#e4e8f1;padding:15px 32px;border-radius:14px;font-family:'Syne',sans-serif;font-weight:500;font-size:.95rem;text-decoration:none;border:1px solid rgba(255,255,255,0.12);cursor:pointer;transition:all .4s cubic-bezier(.16,1,.3,1)}
+        .btn-secondary:hover{border-color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.05);transform:translateY(-2px)}
+        .reveal{opacity:0;transform:translateY(40px);transition:all .9s cubic-bezier(.16,1,.3,1)}
+        .reveal.revealed{opacity:1;transform:translateY(0)}
+        .reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}.reveal-delay-4{transition-delay:.4s}
+        .nav-glass{background:rgba(5,6,15,0.75);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,0.05);box-shadow:0 4px 30px rgba(0,0,0,0.2)}
+        .nav-link{font-family:'Syne',sans-serif;font-weight:500;font-size:.85rem;color:#8892a8;text-decoration:none;padding:8px 16px;border-radius:8px;transition:color .3s ease;position:relative;letter-spacing:.02em}
+        .nav-link::after{content:'';position:absolute;bottom:2px;left:50%;right:50%;height:2px;background:linear-gradient(90deg,#00d4ff,#8b5cf6);border-radius:1px;transition:all .35s cubic-bezier(.16,1,.3,1);opacity:0}
+        .nav-link:hover{color:#e4e8f1}.nav-link:hover::after{left:16px;right:16px;opacity:1}
+        .btn-login{font-family:'Syne',sans-serif;font-weight:500;font-size:.85rem;color:#b8bfcf;padding:9px 20px;border-radius:10px;border:1px solid rgba(140,79,218,0.2);background:rgba(140,79,218,0.06);text-decoration:none;transition:all .3s ease}
+        .btn-login:hover{border-color:rgba(140,79,218,0.4);background:rgba(140,79,218,0.12);color:#e4e8f1}
+        .btn-cta-nav{font-family:'Syne',sans-serif;font-weight:600;font-size:.85rem;color:#fff;padding:9px 22px;border-radius:10px;background:linear-gradient(135deg,#00C2CB,#8C4FDA);text-decoration:none;transition:all .35s cubic-bezier(.16,1,.3,1);box-shadow:0 0 20px rgba(0,194,203,0.15)}
+        .btn-cta-nav:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(0,194,203,0.25),0 8px 24px -8px rgba(140,79,218,0.3)}
+        .mobile-overlay{position:fixed;inset:0;z-index:45;background:rgba(5,6,15,0.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;pointer-events:none;transition:opacity .4s ease}
+        .mobile-overlay.open{opacity:1;pointer-events:auto}
+        .mobile-overlay .nav-link{font-size:1.4rem;padding:12px 24px}
+        .mobile-overlay .nav-link::after{display:none}
+        .nav-link.active{color:#8b5cf6}.nav-link.active::after{left:16px;right:16px;opacity:1}
+        .section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent);margin:0 auto;max-width:1200px}
+        .gradient-text-violet{background:linear-gradient(135deg,#8b5cf6,#a78bfa,#7c3aed);-webkit-background-clip:text;background-clip:text;color:transparent}
+        ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#05060f}::-webkit-scrollbar-thumb{background:#1e2444;border-radius:3px}
+
+        .service-icon{width:60px;height:60px;border-radius:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .4s ease}
+        .step-number{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;flex-shrink:0}
+
+        /* Training table */
+        .training-table{width:100%;border-collapse:separate;border-spacing:0}
+        .training-table th{font-family:'Syne',sans-serif;font-weight:700;color:#e4e8f1;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;padding:16px 20px;text-align:left;border-bottom:1px solid rgba(139,92,246,0.2)}
+        .training-table td{padding:18px 20px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:.9rem;color:#8892a8}
+        .training-table td:first-child{color:#e4e8f1;font-weight:500}
+        .training-table tbody tr{transition:background .2s ease}
+        .training-table tbody tr:hover{background:rgba(139,92,246,0.03)}
+        .training-table tbody tr:last-child td{border-bottom:none}
+
+        /* Service detail card */
+        .service-detail{border:1px solid rgba(255,255,255,0.06);border-radius:20px;padding:40px;background:rgba(255,255,255,0.015);transition:all .4s ease;position:relative;overflow:hidden}
+        .service-detail:hover{border-color:rgba(139,92,246,0.15);background:rgba(139,92,246,0.02)}
+        .service-detail::before{content:'';position:absolute;top:0;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,rgba(139,92,246,0.25),transparent);opacity:0;transition:opacity .4s ease}
+        .service-detail:hover::before{opacity:1}
+
+        .bullet-violet{display:flex;align-items:flex-start;gap:12px;font-size:.95rem;color:#8892a8;padding:6px 0}
+        .bullet-violet::before{content:'';width:8px;height:8px;border-radius:3px;background:rgba(139,92,246,0.4);border:1px solid rgba(139,92,246,0.6);flex-shrink:0;margin-top:6px}
+
+        .cta-gradient{background:linear-gradient(180deg,#05060f 0%,#0c0a20 40%,#120e30 60%,#05060f 100%);position:relative}
+        .cta-gradient::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:80%;height:1px;background:linear-gradient(90deg,transparent,rgba(139,92,246,0.3),transparent)}
+    </style>
+</head>
+
+<body class="grid-bg">
+
+    <!-- NAV -->
+    <nav id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+        <div class="max-w-[1400px] mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-[72px]">
+                <a href="index.html" class="flex items-center group relative z-50">
+                    <img src="images/logo-white.png" alt="AetherLink" class="h-8 lg:h-9 w-auto transition-transform duration-300 group-hover:scale-105">
+                </a>
+                <div class="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+                    <a href="aetherbot.html" class="nav-link">AetherBot</a>
+                    <a href="aethermind.html" class="nav-link active">AetherMIND</a>
+                    <a href="aetherdev.html" class="nav-link">AetherDEV</a>
+                    <a href="index.html#why" class="nav-link">About</a>
+                </div>
+                <div class="hidden lg:flex items-center gap-3 relative z-50">
+                    <div class="flex items-center gap-0.5 text-xs text-muted mr-1">
+                        <a href="aethermind.html" class="text-light font-semibold px-2 py-1 rounded-md bg-white/[0.07]">EN</a>
+                        <a href="nl/aethermind.html" class="hover:text-light px-2 py-1 rounded-md transition-colors">NL</a>
+                        <a href="fi/aethermind.html" class="hover:text-light px-2 py-1 rounded-md transition-colors">FI</a>
+                    </div>
+                    <a href="#login" class="btn-login">Log in</a>
+                    <a href="#contact" class="btn-cta-nav">Book a consultation</a>
+                </div>
+                <button id="mobile-toggle" class="lg:hidden flex flex-col gap-1.5 p-2 relative z-50" aria-label="Menu">
+                    <span class="w-6 h-0.5 bg-light rounded-full transition-all duration-300 origin-center" id="bar1"></span>
+                    <span class="w-6 h-0.5 bg-light rounded-full transition-all duration-300" id="bar2"></span>
+                    <span class="w-4 h-0.5 bg-light rounded-full transition-all duration-300 origin-center" id="bar3"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div id="mobile-menu" class="mobile-overlay lg:hidden">
+        <a href="aetherbot.html" class="nav-link">AetherBot</a>
+        <a href="aethermind.html" class="nav-link active">AetherMIND</a>
+        <a href="aetherdev.html" class="nav-link">AetherDEV</a>
+        <a href="index.html#why" class="nav-link">About</a>
+        <div class="flex items-center gap-3 mt-6">
+            <a href="aethermind.html" class="text-light font-semibold text-sm px-3 py-1.5 rounded-md bg-white/[0.07]">EN</a>
+            <a href="nl/aethermind.html" class="text-muted hover:text-light text-sm px-3 py-1.5 rounded-md transition-colors">NL</a>
+            <a href="fi/aethermind.html" class="text-muted hover:text-light text-sm px-3 py-1.5 rounded-md transition-colors">FI</a>
+        </div>
+        <div class="flex flex-col items-center gap-3 mt-4 w-full max-w-xs">
+            <a href="#login" class="btn-login w-full text-center">Log in</a>
+            <a href="#contact" class="btn-cta-nav w-full text-center">Book a consultation</a>
+        </div>
+    </div>
+
+    <main>
+
+        <!-- ═══ HERO ═══ -->
+        <section class="relative min-h-[85vh] flex items-center overflow-hidden pt-24 pb-20">
+            <div class="orb" style="width:550px;height:550px;background:radial-gradient(circle,rgba(139,92,246,0.28),transparent 70%);top:10%;right:-10%;animation:orbit-1 25s ease-in-out infinite"></div>
+            <div class="orb" style="width:400px;height:400px;background:radial-gradient(circle,rgba(139,92,246,0.12),transparent 70%);bottom:5%;left:-5%;animation:orbit-2 30s ease-in-out infinite"></div>
+
+            <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+                <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-accent-violet/20 bg-accent-violet/5 mb-8 reveal">
+                    <span class="font-display font-700 text-xs tracking-widest uppercase text-accent-violet">Services</span>
+                </div>
+
+                <h1 class="font-display font-800 text-[clamp(3rem,8vw,6rem)] leading-[0.95] mb-6 reveal reveal-delay-1">
+                    <span class="gradient-text-violet">AetherMIND</span>
+                </h1>
+
+                <p class="font-display font-600 text-xl md:text-2xl text-light/70 mb-6 reveal reveal-delay-1">
+                    AI Consultancy & Training
+                </p>
+
+                <p class="max-w-2xl mx-auto text-lg text-muted leading-relaxed mb-12 reveal reveal-delay-2">
+                    Don't know where to start with AI? Or want to prepare your team for the future? AetherMIND helps you with strategy, advice, training, and guidance. From initial exploration to successful implementation.
+                </p>
+
+                <div class="reveal reveal-delay-3">
+                    <a href="/en/contact?service=aethermind" class="btn-primary"><span>Schedule an introduction</span><span class="relative z-[1]">&rarr;</span></a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ═══ SERVICES OVERVIEW ═══ -->
+        <section id="services" class="py-32 lg:py-40">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <div class="text-center mb-20 reveal">
+                    <span class="inline-block font-display font-600 text-xs tracking-[0.25em] uppercase text-accent-violet/60 mb-4">What we do</span>
+                    <h2 class="font-display font-800 text-3xl md:text-5xl text-light">What AetherMIND<br>does for you</h2>
+                </div>
+
+                <div class="space-y-8">
+
+                    <!-- Consultancy -->
+                    <div class="service-detail reveal reveal-delay-1">
+                        <div class="flex flex-col lg:flex-row gap-8">
+                            <div class="flex-1">
+                                <div class="service-icon bg-accent-violet/10 border border-accent-violet/20 mb-6">
+                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+                                </div>
+                                <h3 class="font-display font-700 text-2xl text-light mb-1">AI Consultancy</h3>
+                                <p class="text-accent-violet text-sm font-medium mb-5">From strategy to implementation</p>
+                                <p class="text-muted leading-relaxed mb-8">We help you develop a clear AI strategy that fits your organisation. No vague advice, but a concrete roadmap with clear steps.</p>
+                            </div>
+                            <div class="flex-1 space-y-3 lg:pt-20">
+                                <div class="bullet-violet">AI Readiness Scan — Where do you stand?</div>
+                                <div class="bullet-violet">AI Strategy & Roadmap — Where are you going?</div>
+                                <div class="bullet-violet">Implementation guidance — How do you get there?</div>
+                                <div class="bullet-violet">Governance & Compliance — How do you stay compliant?</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Training -->
+                    <div class="service-detail reveal reveal-delay-2">
+                        <div class="flex flex-col lg:flex-row gap-8">
+                            <div class="flex-1">
+                                <div class="service-icon bg-accent-violet/10 border border-accent-violet/20 mb-6">
+                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                                </div>
+                                <h3 class="font-display font-700 text-2xl text-light mb-1">AI Training & Courses</h3>
+                                <p class="text-accent-violet text-sm font-medium mb-5">Make your team AI-proficient</p>
+                                <p class="text-muted leading-relaxed mb-8">AI tools are only powerful when your team knows how to use them. We offer practical training that's immediately applicable.</p>
+                            </div>
+                            <div class="flex-1 space-y-3 lg:pt-20">
+                                <div class="bullet-violet">AI Courses — Intensive, hands-on, results-focused</div>
+                                <div class="bullet-violet">AI Workshops — Compact and to-the-point</div>
+                                <div class="bullet-violet">AI Lectures — Inspiring for larger groups</div>
+                                <div class="bullet-violet">Custom AI Education — Longer trajectories, structural development</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advisory -->
+                    <div class="service-detail reveal reveal-delay-3">
+                        <div class="flex flex-col lg:flex-row gap-8">
+                            <div class="flex-1">
+                                <div class="service-icon bg-accent-violet/10 border border-accent-violet/20 mb-6">
+                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 3 2 5.5 4 7.5.6.6 1 1.5 1 2.5h4c0-1 .4-1.9 1-2.5 2-2 4-4.5 4-7.5a7 7 0 0 0-7-7Z"/><path d="M9 22h6"/><path d="M10 19h4"/></svg>
+                                </div>
+                                <h3 class="font-display font-700 text-2xl text-light mb-1">AI Advisory & Sparring</h3>
+                                <p class="text-accent-violet text-sm font-medium mb-5">An expert by your side</p>
+                                <p class="text-muted leading-relaxed mb-8">Sometimes you don't need a full trajectory, just someone to think along. Our AI experts help you with choices, opportunities, and challenges.</p>
+                            </div>
+                            <div class="flex-1 space-y-3 lg:pt-20">
+                                <div class="bullet-violet">Advisory sessions on hourly basis</div>
+                                <div class="bullet-violet">Second opinion on AI plans</div>
+                                <div class="bullet-violet">Vendor selection support</div>
+                                <div class="bullet-violet">EU AI Act compliance check</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- ═══ TRAINING TOPICS ═══ -->
+        <section id="training" class="py-32 lg:py-40">
+            <div class="max-w-5xl mx-auto px-6 lg:px-8">
+                <div class="text-center mb-16 reveal">
+                    <span class="inline-block font-display font-600 text-xs tracking-[0.25em] uppercase text-accent-violet/60 mb-4">Curriculum</span>
+                    <h2 class="font-display font-800 text-3xl md:text-4xl text-light">What we train</h2>
+                </div>
+
+                <div class="glass-card overflow-hidden reveal reveal-delay-1">
+                    <div class="overflow-x-auto">
+                        <table class="training-table">
+                            <thead>
+                                <tr>
+                                    <th class="min-w-[200px]">Topic</th>
+                                    <th class="min-w-[160px]">For whom</th>
+                                    <th class="min-w-[120px]">Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>AI Basics</td><td>Everyone</td><td>Half day</td></tr>
+                                <tr><td>Prompt Engineering</td><td>Teams working with ChatGPT/Claude</td><td>1 day</td></tr>
+                                <tr><td>AI for Developers</td><td>Development teams</td><td>2-5 days</td></tr>
+                                <tr><td>AI Strategy for Management</td><td>Directors, managers</td><td>1 day</td></tr>
+                                <tr><td>AI Automation</td><td>Operations, marketing</td><td>1 day</td></tr>
+                                <tr><td>EU AI Act & Compliance</td><td>Management, legal, HR</td><td>Half day</td></tr>
+                                <tr>
+                                    <td class="font-medium" style="color:#8b5cf6">Custom Training</td>
+                                    <td style="color:#8b5cf6">Custom</td>
+                                    <td style="color:#8b5cf6">Custom</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- ═══ OUR APPROACH ═══ -->
+        <section class="py-32 lg:py-40 relative">
+            <div class="orb" style="width:350px;height:350px;background:radial-gradient(circle,rgba(139,92,246,0.1),transparent 70%);top:20%;right:-8%;filter:blur(80px)"></div>
+
+            <div class="max-w-4xl mx-auto px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-20 reveal">
+                    <span class="inline-block font-display font-600 text-xs tracking-[0.25em] uppercase text-accent-violet/60 mb-4">Our approach</span>
+                    <h2 class="font-display font-800 text-3xl md:text-5xl text-light">How we work</h2>
+                </div>
+
+                <div class="space-y-8">
+                    <div class="flex flex-col sm:flex-row gap-6 items-start reveal reveal-delay-1">
+                        <div class="step-number bg-accent-violet/10 border border-accent-violet/25 text-accent-violet">1</div>
+                        <div>
+                            <h3 class="font-display font-700 text-xl text-light mb-2">Introduction & Inventory</h3>
+                            <p class="text-muted leading-relaxed">We start by listening. What are your goals, challenges, and opportunities? Only then can we advise effectively.</p>
+                        </div>
+                    </div>
+                    <div class="w-px h-8 bg-accent-violet/15 ml-7 hidden sm:block"></div>
+                    <div class="flex flex-col sm:flex-row gap-6 items-start reveal reveal-delay-2">
+                        <div class="step-number bg-accent-violet/10 border border-accent-violet/25 text-accent-violet">2</div>
+                        <div>
+                            <h3 class="font-display font-700 text-xl text-light mb-2">Custom Proposal</h3>
+                            <p class="text-muted leading-relaxed">You receive a clear proposal: what we're going to do, what it delivers, what it costs, and how long it takes.</p>
+                        </div>
+                    </div>
+                    <div class="w-px h-8 bg-accent-violet/15 ml-7 hidden sm:block"></div>
+                    <div class="flex flex-col sm:flex-row gap-6 items-start reveal reveal-delay-3">
+                        <div class="step-number bg-accent-violet/10 border border-accent-violet/25 text-accent-violet">3</div>
+                        <div>
+                            <h3 class="font-display font-700 text-xl text-light mb-2">Execution & Guidance</h3>
+                            <p class="text-muted leading-relaxed">We don't just deliver a plan or training — we stay involved until you can continue independently.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ═══ FOOTER CTA ═══ -->
+        <section class="cta-gradient py-32 lg:py-40 relative overflow-hidden">
+            <div class="orb" style="width:350px;height:350px;background:radial-gradient(circle,rgba(139,92,246,0.15),transparent 70%);bottom:10%;right:-5%;filter:blur(80px)"></div>
+            <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
+                <h2 class="font-display font-800 text-3xl md:text-5xl text-light leading-tight mb-8 reveal">
+                    Curious what AetherMIND<br>can do <span class="gradient-text-violet">for you?</span>
+                </h2>
+                <p class="text-lg text-muted leading-relaxed mb-12 reveal reveal-delay-1">
+                    Schedule a no-obligation introduction. We'll discuss your situation and give you an honest picture of the possibilities right away.
+                </p>
+                <div class="reveal reveal-delay-2">
+                    <a href="/en/contact?service=aethermind" class="btn-primary"><span>Schedule a call</span><span class="relative z-[1]">&rarr;</span></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-white/5 py-16 lg:py-20">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 mb-16">
+                <div class="sm:col-span-2 lg:col-span-1">
+                    <a href="index.html" class="inline-block mb-6">
+                        <img src="images/logo-white.png" alt="AetherLink" class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity" loading="lazy">
+                    </a>
+                    <p class="text-muted text-sm leading-relaxed mb-6">The power of AI, accessible for every business.</p>
+                    <div class="flex items-center gap-3">
+                        <a href="https://linkedin.com/company/aetherlink" class="w-9 h-9 rounded-lg border border-white/8 flex items-center justify-center text-muted hover:text-light hover:border-white/15 transition-all" aria-label="LinkedIn"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                        <a href="https://twitter.com/aetherlink" class="w-9 h-9 rounded-lg border border-white/8 flex items-center justify-center text-muted hover:text-light hover:border-white/15 transition-all" aria-label="X / Twitter"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-display font-600 text-sm text-light mb-5 tracking-wide">Products</h4>
+                    <ul class="space-y-3">
+                        <li><a href="aetherbot.html" class="text-sm text-muted hover:text-light transition-colors">AetherBot</a></li>
+                        <li><a href="aetherbot.html#pricing" class="text-sm text-muted hover:text-light transition-colors">Pricing</a></li>
+                        <li><a href="aetherbot.html#features" class="text-sm text-muted hover:text-light transition-colors">Features</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-display font-600 text-sm text-light mb-5 tracking-wide">Services</h4>
+                    <ul class="space-y-3">
+                        <li><a href="aethermind.html" class="text-sm text-muted hover:text-light transition-colors">AetherMIND</a></li>
+                        <li><a href="aetherdev.html" class="text-sm text-muted hover:text-light transition-colors">AetherDEV</a></li>
+                        <li><a href="aethermind.html#training" class="text-sm text-muted hover:text-light transition-colors">AI Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-display font-600 text-sm text-light mb-5 tracking-wide">Contact</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-2 text-sm text-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>+31 6 1377 2333</span></li>
+                        <li class="flex items-start gap-2 text-sm text-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><a href="mailto:info@aetherlink.ai" class="hover:text-light transition-colors">info@aetherlink.ai</a></li>
+                        <li class="flex items-start gap-2 text-sm text-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>24/7 available</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-display font-600 text-sm text-light mb-5 tracking-wide">Locations</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-2 text-sm text-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Netherlands</span></li>
+                        <li class="flex items-start gap-2 text-sm text-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Finland</span></li>
+                        <li class="flex items-start gap-2 text-sm text-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>United Arab Emirates</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-muted/60">&copy; 2026 AetherLink. All rights reserved.</p>
+                <div class="flex items-center gap-6">
+                    <a href="/en/privacy" class="text-xs text-muted/50 hover:text-muted transition-colors">Privacy Policy</a>
+                    <a href="/en/terms" class="text-xs text-muted/50 hover:text-muted transition-colors">Terms of Service</a>
+                    <span class="flex items-center gap-2 text-xs text-muted/50"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>EU AI Act &amp; GDPR</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const ro=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting)e.target.classList.add('revealed')})},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+        document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+        const nav=document.getElementById('nav');let ticking=false;
+        window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(()=>{nav.classList.toggle('nav-glass',window.scrollY>50);ticking=false});ticking=true}},{passive:true});
+        const mobileToggle=document.getElementById('mobile-toggle'),mobileMenu=document.getElementById('mobile-menu'),bar1=document.getElementById('bar1'),bar2=document.getElementById('bar2'),bar3=document.getElementById('bar3');let menuOpen=false;
+        function toggleMenu(){menuOpen=!menuOpen;mobileMenu.classList.toggle('open',menuOpen);document.body.style.overflow=menuOpen?'hidden':'';nav.classList.toggle('nav-glass',menuOpen||window.scrollY>50);if(menuOpen){bar1.style.transform='rotate(45deg) translate(4px, 4px)';bar2.style.opacity='0';bar3.style.transform='rotate(-45deg) translate(4px, -4px)';bar3.style.width='24px'}else{bar1.style.transform='';bar2.style.opacity='';bar3.style.transform='';bar3.style.width=''}}
+        mobileToggle.addEventListener('click',toggleMenu);
+        document.querySelectorAll('#mobile-menu a[href^="#"]').forEach(a=>{a.addEventListener('click',()=>{if(menuOpen)toggleMenu()})});
+        document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){const h=this.getAttribute('href');if(h==='#'||h==='#login')return;e.preventDefault();const t=document.querySelector(h);if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});
+    </script>
+</body>
+</html>

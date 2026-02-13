@@ -1,0 +1,12 @@
+# Vercel
+.vercel/
+
+# Screenshots & temp files
+preview-*.png
+screenshot-*.png
+source.html
+animations.txt
+
+# OS
+.DS_Store
+Thumbs.db

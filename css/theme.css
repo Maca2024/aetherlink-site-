@@ -276,12 +276,12 @@
 
 /* ── Partner Logos ── */
 [data-theme="light"] .partner-logo {
-    filter: grayscale(100%) !important;
-    opacity: 0.35 !important;
+    filter: grayscale(100%) brightness(0) invert(0) !important;
+    opacity: 0.55 !important;
 }
 [data-theme="light"] .partner-logo:hover {
-    filter: grayscale(50%) !important;
-    opacity: 0.7 !important;
+    filter: grayscale(50%) brightness(0) invert(0) drop-shadow(0 0 8px rgba(0,0,0,0.1)) !important;
+    opacity: 0.85 !important;
 }
 
 /* ── Marquee / Partner Section ── */
@@ -291,6 +291,12 @@
 [data-theme="light"] .marquee-fade-right {
     background: linear-gradient(to left, #f4f6fb 5%, transparent) !important;
 }
+[data-theme="light"] .from-void {
+    --tw-gradient-from: #f4f6fb !important;
+}
+[data-theme="light"] #social-proof .text-muted\/50 {
+    color: rgba(30, 40, 60, 0.5) !important;
+}
 
 /* ── Section Divider ── */
 [data-theme="light"] .section-divider {
@@ -299,7 +305,13 @@
 
 /* ── CTA Gradient Section ── */
 [data-theme="light"] .cta-gradient {
-    background: linear-gradient(180deg, transparent, rgba(0,180,230,0.04), rgba(139,92,246,0.04)) !important;
+    background: linear-gradient(180deg, #f4f6fb 0%, #e8ecf4 40%, #e0e6f0 60%, #f4f6fb 100%) !important;
+}
+[data-theme="light"] .cta-video-bg {
+    opacity: 0.2 !important;
+}
+[data-theme="light"] .cta-video-overlay {
+    background: linear-gradient(180deg, rgba(244,246,251,0.75) 0%, rgba(232,236,244,0.55) 50%, rgba(244,246,251,0.75) 100%) !important;
 }
 
 /* ── Footer ── */

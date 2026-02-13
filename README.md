@@ -190,7 +190,7 @@ No build configuration needed — Vercel serves the static files directly.
 - **Website:** [https://aetherlink.ai](https://aetherlink.ai)
 - **Email:** info@aetherlink.ai
 - **Phone:** +31 6 1377 2333
-- **LinkedIn:** [AetherLink](https://linkedin.com/company/aetherlink)
+- **LinkedIn:** [AetherLink](https://www.linkedin.com/company/aetherlink/)
 
 ## License
 

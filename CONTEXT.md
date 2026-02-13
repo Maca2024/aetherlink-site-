@@ -16,7 +16,7 @@
 - **Website:** https://aetherlink.ai
 - **Email:** info@aetherlink.ai
 - **Phone:** +31 6 1377 2333
-- **LinkedIn:** https://linkedin.com/company/aetherlink
+- **LinkedIn:** https://www.linkedin.com/company/aetherlink/
 - **Availability:** 24/7 support
 
 ### Locations

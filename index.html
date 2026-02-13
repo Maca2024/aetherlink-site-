@@ -283,11 +283,55 @@
         @media (max-width: 1024px) {
             .orbit-wrap { transform: scale(0.7); margin: -80px; }
         }
+
+        /* ── Mobile: simplified orbital (4 satellites, larger logo) ── */
         @media (max-width: 768px) {
-            .orbit-wrap { transform: scale(0.58); margin: -110px; }
+            .orbit-wrap {
+                width: 300px;
+                height: 300px;
+                transform: none;
+                margin: 0 auto;
+            }
+            .orbit-center {
+                width: 110px; height: 110px;
+                margin: -55px 0 0 -55px;
+                box-shadow: 0 0 50px rgba(140,79,218,0.3), 0 0 100px rgba(185,0,255,0.12);
+            }
+            .orbit-center img { height: 62px; }
+            .orbit-center-pulse { inset: -12px; }
+
+            /* Hide middle and inner rings */
+            .oi-m, .oi-i,
+            .track-m, .track-i,
+            .arc-m, .arc-i { display: none; }
+
+            /* Resize outer ring */
+            .track-o { width: 270px; height: 270px; margin: -135px 0 0 -135px; }
+            .arc-o { width: 270px; height: 270px; margin: -135px 0 0 -135px; }
+
+            /* Smaller satellite bubbles */
+            .oi { width: 46px; height: 46px; margin: -23px 0 0 -23px; }
+            .oi-face img { width: 24px; height: 24px; }
+
+            @keyframes orb-o {
+                from { transform: rotate(0deg) translateX(135px) rotate(0deg); }
+                to { transform: rotate(360deg) translateX(135px) rotate(-360deg); }
+            }
         }
+
         @media (max-width: 480px) {
-            .orbit-wrap { transform: scale(0.48); margin: -140px; }
+            .orbit-wrap { width: 260px; height: 260px; }
+            .orbit-center { width: 100px; height: 100px; margin: -50px 0 0 -50px; }
+            .orbit-center img { height: 56px; }
+            .track-o { width: 230px; height: 230px; margin: -115px 0 0 -115px; }
+            .arc-o { width: 230px; height: 230px; margin: -115px 0 0 -115px; }
+            .oi { width: 40px; height: 40px; margin: -20px 0 0 -20px; }
+            .oi-face img { width: 20px; height: 20px; }
+
+            @keyframes orb-o {
+                from { transform: rotate(0deg) translateX(115px) rotate(0deg); }
+                to { transform: rotate(360deg) translateX(115px) rotate(-360deg); }
+            }
         }
 
         /* ── Glass Card ── */
@@ -329,8 +373,7 @@
         /* ── Partner Logos ── */
         .partner-logo {
             height: 40px;
-            width: auto;
-            max-width: 160px;
+            width: 140px;
             object-fit: contain;
             filter: grayscale(100%) brightness(0) invert(1);
             opacity: 0.3;
@@ -696,7 +739,7 @@
                         <a href="fi/index.html" class="hover:text-light px-2 py-1 rounded-md transition-colors">FI</a>
                     </div>
                     <a href="#login" class="btn-login">Log in</a>
-                    <a href="/en/contact" class="btn-cta-nav">Get started</a>
+                    <a href="https://calendly.com/aetherlink" class="btn-cta-nav">Get started</a>
                 </div>
 
                 <!-- Mobile menu button -->
@@ -722,7 +765,7 @@
         </div>
         <div class="flex flex-col items-center gap-3 mt-4 w-full max-w-xs">
             <a href="#login" class="btn-login w-full text-center">Log in</a>
-            <a href="/en/contact" class="btn-cta-nav w-full text-center">Get started</a>
+            <a href="https://calendly.com/aetherlink" class="btn-cta-nav w-full text-center">Get started</a>
         </div>
     </div>
 
@@ -1146,7 +1189,7 @@
                         <span>Start with AetherBot</span>
                         <span class="relative z-[1]">&rarr;</span>
                     </a>
-                    <a href="/en/contact" class="btn-secondary">
+                    <a href="https://calendly.com/aetherlink" class="btn-secondary">
                         Schedule a call
                     </a>
                 </div>
@@ -1192,7 +1235,7 @@
                         <li><a href="aetherbot.html" class="text-sm text-muted hover:text-light transition-colors">AetherBot</a></li>
                         <li><a href="aetherbot.html#pricing" class="text-sm text-muted hover:text-light transition-colors">Pricing</a></li>
                         <li><a href="aetherbot.html#features" class="text-sm text-muted hover:text-light transition-colors">Features</a></li>
-                        <li><a href="/en/contact?demo=aetherbot" class="text-sm text-muted hover:text-light transition-colors">Request Demo</a></li>
+                        <li><a href="https://calendly.com/aetherlink" class="text-sm text-muted hover:text-light transition-colors">Request Demo</a></li>
                     </ul>
                 </div>
 

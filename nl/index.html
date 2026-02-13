@@ -332,8 +332,7 @@
 
         .partner-logo {
             height: 40px;
-            width: auto;
-            max-width: 160px;
+            width: 140px;
             object-fit: contain;
             filter: grayscale(100%) brightness(0) invert(1);
             opacity: 0.3;
@@ -455,8 +454,36 @@
         .oi-i{animation:orb-i 22.5s linear infinite}@keyframes orb-i{from{transform:rotate(0deg) translateX(115px) rotate(0deg)}to{transform:rotate(360deg) translateX(115px) rotate(-360deg)}}
         @media(max-width:1280px){.orbit-wrap{transform:scale(.82);margin:-48px}}
         @media(max-width:1024px){.orbit-wrap{transform:scale(.7);margin:-80px}}
-        @media(max-width:768px){.orbit-wrap{transform:scale(.58);margin:-110px}}
-        @media(max-width:480px){.orbit-wrap{transform:scale(.48);margin:-140px}}
+
+        /* ── Mobile: simplified orbital (4 satellites, larger logo) ── */
+        @media (max-width: 768px) {
+            .orbit-wrap { width: 300px; height: 300px; transform: none; margin: 0 auto; }
+            .orbit-center { width: 110px; height: 110px; margin: -55px 0 0 -55px; box-shadow: 0 0 50px rgba(140,79,218,0.3), 0 0 100px rgba(185,0,255,0.12); }
+            .orbit-center img { height: 62px; }
+            .orbit-center-pulse { inset: -12px; }
+            .oi-m, .oi-i, .track-m, .track-i, .arc-m, .arc-i { display: none; }
+            .track-o { width: 270px; height: 270px; margin: -135px 0 0 -135px; }
+            .arc-o { width: 270px; height: 270px; margin: -135px 0 0 -135px; }
+            .oi { width: 46px; height: 46px; margin: -23px 0 0 -23px; }
+            .oi-face img { width: 24px; height: 24px; }
+            @keyframes orb-o {
+                from { transform: rotate(0deg) translateX(135px) rotate(0deg); }
+                to { transform: rotate(360deg) translateX(135px) rotate(-360deg); }
+            }
+        }
+        @media (max-width: 480px) {
+            .orbit-wrap { width: 260px; height: 260px; }
+            .orbit-center { width: 100px; height: 100px; margin: -50px 0 0 -50px; }
+            .orbit-center img { height: 56px; }
+            .track-o { width: 230px; height: 230px; margin: -115px 0 0 -115px; }
+            .arc-o { width: 230px; height: 230px; margin: -115px 0 0 -115px; }
+            .oi { width: 40px; height: 40px; margin: -20px 0 0 -20px; }
+            .oi-face img { width: 20px; height: 20px; }
+            @keyframes orb-o {
+                from { transform: rotate(0deg) translateX(115px) rotate(0deg); }
+                to { transform: rotate(360deg) translateX(115px) rotate(-360deg); }
+            }
+        }
         .hero-grid{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px;max-width:1280px;margin:0 auto;padding:0 24px}
         @media(max-width:1024px){.hero-grid{grid-template-columns:1fr;text-align:center;gap:0}.hero-orbit-col{order:-1}}
     </style>
@@ -486,7 +513,7 @@
                         <a href="../fi/index.html" class="hover:text-light px-2 py-1 rounded-md transition-colors">FI</a>
                     </div>
                     <a href="#login" class="btn-login">Inloggen</a>
-                    <a href="/nl/contact" class="btn-cta-nav">Aan de slag</a>
+                    <a href="https://calendly.com/aetherlink" class="btn-cta-nav">Aan de slag</a>
                 </div>
                 <button id="mobile-toggle" class="lg:hidden flex flex-col gap-1.5 p-2 relative z-50" aria-label="Menu">
                     <span class="w-6 h-0.5 bg-light rounded-full transition-all duration-300 origin-center" id="bar1"></span>
@@ -508,7 +535,7 @@
         </div>
         <div class="flex flex-col items-center gap-3 mt-4 w-full max-w-xs">
             <a href="#login" class="btn-login w-full text-center">Inloggen</a>
-            <a href="/nl/contact" class="btn-cta-nav w-full text-center">Aan de slag</a>
+            <a href="https://calendly.com/aetherlink" class="btn-cta-nav w-full text-center">Aan de slag</a>
         </div>
     </div>
 
@@ -933,7 +960,7 @@
                         <span>Start met AetherBot</span>
                         <span class="relative z-[1]">&rarr;</span>
                     </a>
-                    <a href="/nl/contact" class="btn-secondary">
+                    <a href="https://calendly.com/aetherlink" class="btn-secondary">
                         Plan een gesprek
                     </a>
                 </div>

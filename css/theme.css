@@ -268,10 +268,7 @@
     box-shadow: 0 0 16px rgba(139,92,246,0.1), 0 2px 8px rgba(0,0,0,0.06) !important;
 }
 [data-theme="light"] .oi-face img {
-    filter: grayscale(100%) brightness(0.8) drop-shadow(0 0 3px rgba(139,92,246,0.15)) !important;
-}
-[data-theme="light"] .oi-color .oi-face img {
-    filter: drop-shadow(0 0 4px rgba(139,92,246,0.15)) !important;
+    filter: drop-shadow(0 0 4px rgba(139,92,246,0.2)) !important;
 }
 
 /* ── Partner Logos ── */

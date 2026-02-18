@@ -1,8 +1,7 @@
 /**
- * AETHER-ASSIST v2.0 — Premium AI Chat Widget
- * Fully integrated with AetherLink Luminous Void design system
- * Features: markdown rendering, suggested questions, page context,
- *           session persistence, clear chat, smart suggestions
+ * AETHER-ASSIST v2.1 — Premium AI Chat Widget
+ * Features: ElevenLabs TTS, markdown + autolinks, suggested questions,
+ *           page context, session persistence, clear chat
  * Vanilla JS — no dependencies
  */
 (function () {
@@ -10,8 +9,9 @@
 
   // ─── Config ───
   const API_URL = '/api/chat';
+  const TTS_URL = '/api/tts';
   const STORAGE_KEY = 'aether-assist-session';
-  const SESSION_TTL = 30 * 60 * 1000; // 30 min session expiry
+  const SESSION_TTL = 30 * 60 * 1000;
 
   // ─── i18n ───
   const i18n = {
@@ -135,6 +135,9 @@
   let isLoading = false;
   let messages = [];
   let suggestionsShown = true;
+  let currentAudio = null;
+  let ttsPlayingIdx = -1;
+  let ttsLoadingIdx = -1;
 
   // ─── Session Persistence ───
   function saveSession() {
@@ -173,18 +176,28 @@
   }
   initMessages();
 
-  // ─── Markdown Renderer (lightweight) ───
+  // ─── Markdown Renderer ───
   function renderMarkdown(text) {
     let html = escapeHtml(text);
 
     // Bold: **text**
     html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    // Italic: *text*
+    // Italic: *text* (not inside bold)
     html = html.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
-    // Links: [text](url)
+    // Markdown links: [text](url)
     html = html.replace(
       /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
       '<a href="$2" target="_blank" rel="noopener" class="aether-link">$1</a>'
+    );
+    // Autolink plain URLs (not already inside href="...")
+    html = html.replace(
+      /(?<!href=&quot;|href=")(https?:\/\/[^\s<,)]+)/g,
+      '<a href="$1" target="_blank" rel="noopener" class="aether-link">$1</a>'
+    );
+    // Email links
+    html = html.replace(
+      /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g,
+      '<a href="mailto:$1" class="aether-link">$1</a>'
     );
     // Inline code: `code`
     html = html.replace(/`([^`]+)`/g, '<code class="aether-code">$1</code>');
@@ -195,7 +208,7 @@
 
     // Paragraphs: double newlines
     html = html.replace(/\n\n/g, '</p><p>');
-    // Single newlines in remaining text
+    // Single newlines
     html = html.replace(/\n/g, '<br>');
 
     return '<p>' + html + '</p>';
@@ -207,10 +220,88 @@
     return div.innerHTML;
   }
 
+  // ─── TTS ───
+  function stopAudio() {
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.src = '';
+      currentAudio = null;
+    }
+    ttsPlayingIdx = -1;
+    ttsLoadingIdx = -1;
+  }
+
+  async function playTTS(msgIdx) {
+    const msg = messages[msgIdx];
+    if (!msg || msg.role !== 'assistant' || !msg.content) return;
+
+    // Toggle off if already playing this message
+    if (ttsPlayingIdx === msgIdx) {
+      stopAudio();
+      renderMessages();
+      return;
+    }
+
+    // Stop any current playback
+    stopAudio();
+
+    ttsLoadingIdx = msgIdx;
+    renderMessages();
+
+    try {
+      const response = await fetch(TTS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: msg.content }),
+      });
+
+      if (!response.ok) {
+        ttsLoadingIdx = -1;
+        renderMessages();
+        return;
+      }
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+
+      audio.addEventListener('ended', () => {
+        URL.revokeObjectURL(url);
+        ttsPlayingIdx = -1;
+        currentAudio = null;
+        renderMessages();
+      });
+
+      audio.addEventListener('error', () => {
+        URL.revokeObjectURL(url);
+        ttsPlayingIdx = -1;
+        ttsLoadingIdx = -1;
+        currentAudio = null;
+        renderMessages();
+      });
+
+      currentAudio = audio;
+      ttsLoadingIdx = -1;
+      ttsPlayingIdx = msgIdx;
+      renderMessages();
+      await audio.play();
+    } catch {
+      ttsLoadingIdx = -1;
+      ttsPlayingIdx = -1;
+      currentAudio = null;
+      renderMessages();
+    }
+  }
+
+  // ─── SVG Icons ───
+  const ICON_SPEAKER = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>';
+  const ICON_STOP = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M6 6h12v12H6z"/></svg>';
+  const ICON_LOADING = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" class="aether-tts-spin"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>';
+
   // ─── Inject Styles ───
   const style = document.createElement('style');
   style.textContent = `
-    /* ═══════ AETHER-ASSIST v2.0 Widget Styles ═══════ */
+    /* ═══════ AETHER-ASSIST v2.1 Widget Styles ═══════ */
 
     /* Chat FAB Button */
     .aether-assist-btn {
@@ -327,14 +418,14 @@
       border-radius: 16px 16px 16px 4px; color: #c8cee0;
     }
 
-    /* Markdown elements in bubbles */
+    /* Markdown elements */
     .aether-msg-bubble strong { color: #e4e8f1; font-weight: 600; }
     .aether-msg-bubble em { font-style: italic; }
     .aether-link {
       color: #00d4ff; text-decoration: none; border-bottom: 1px solid rgba(0,212,255,0.3);
-      transition: border-color 0.2s;
+      transition: all 0.2s; cursor: pointer;
     }
-    .aether-link:hover { border-color: #00d4ff; }
+    .aether-link:hover { border-color: #00d4ff; color: #4de5ff; }
     .aether-code {
       background: rgba(0,212,255,0.08); padding: 1px 6px; border-radius: 4px;
       font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00d4ff;
@@ -355,6 +446,28 @@
       from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    /* TTS Button */
+    .aether-msg-actions {
+      display: flex; gap: 4px; margin-top: 6px;
+    }
+    .aether-tts-btn {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px; padding: 4px 10px; cursor: pointer;
+      color: #6b7394; font-size: 11px; display: flex; align-items: center; gap: 5px;
+      font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.2s;
+      line-height: 1;
+    }
+    .aether-tts-btn:hover { color: #00d4ff; border-color: rgba(0,212,255,0.25); background: rgba(0,212,255,0.06); }
+    .aether-tts-btn.playing { color: #00dfa2; border-color: rgba(0,223,162,0.3); background: rgba(0,223,162,0.06); }
+    .aether-tts-btn.loading { color: #8b5cf6; border-color: rgba(139,92,246,0.25); }
+    .aether-tts-btn svg { flex-shrink: 0; }
+
+    @keyframes aether-tts-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .aether-tts-spin { animation: aether-tts-spin 1s linear infinite; }
 
     /* Suggested Questions */
     .aether-suggestions {
@@ -451,6 +564,8 @@
     [data-theme="light"] .aether-suggest-chip:hover {
       background: rgba(0,212,255,0.08); border-color: rgba(0,212,255,0.25); color: #0090b0;
     }
+    [data-theme="light"] .aether-tts-btn { color: #6b7394; border-color: rgba(0,0,0,0.1); }
+    [data-theme="light"] .aether-tts-btn:hover { color: #0077cc; background: rgba(0,119,204,0.04); }
     [data-theme="light"] .aether-assist-input { background: rgba(255,255,255,0.5); border-top-color: rgba(0,0,0,0.06); }
     [data-theme="light"] .aether-assist-textarea {
       background: rgba(255,255,255,0.7); border-color: rgba(0,0,0,0.1); color: #1a1f35;
@@ -458,6 +573,7 @@
     [data-theme="light"] .aether-assist-textarea::placeholder { color: #8b91a8; }
     [data-theme="light"] .aether-assist-footer { color: #a0a5b8; }
     [data-theme="light"] .aether-link { color: #0077cc; border-color: rgba(0,119,204,0.3); }
+    [data-theme="light"] .aether-link:hover { color: #005fa3; }
     [data-theme="light"] .aether-code { background: rgba(0,119,204,0.06); color: #0077cc; }
 
     /* Mobile */
@@ -521,14 +637,28 @@
       div.className = `aether-msg aether-msg-${msg.role}`;
 
       if (msg.role === 'assistant') {
-        div.innerHTML = `<div class="aether-msg-bubble">${renderMarkdown(msg.content)}</div>`;
+        const bubbleHtml = renderMarkdown(msg.content);
+
+        // Build TTS button for completed assistant messages (not empty, not loading chat)
+        let actionsHtml = '';
+        if (msg.content && msg.content.length > 5 && !isLoading) {
+          const isPlaying = ttsPlayingIdx === idx;
+          const isTtsLoading = ttsLoadingIdx === idx;
+          const btnClass = isPlaying ? 'playing' : isTtsLoading ? 'loading' : '';
+          const icon = isTtsLoading ? ICON_LOADING : isPlaying ? ICON_STOP : ICON_SPEAKER;
+          const label = isPlaying ? 'Stop' : isTtsLoading ? '...' : (lang === 'fi' ? 'Kuuntele' : lang === 'en' ? 'Listen' : 'Luister');
+
+          actionsHtml = `<div class="aether-msg-actions"><button class="aether-tts-btn ${btnClass}" data-tts-idx="${idx}">${icon}<span>${label}</span></button></div>`;
+        }
+
+        div.innerHTML = `<div class="aether-msg-bubble">${bubbleHtml}</div>${actionsHtml}`;
       } else {
         div.innerHTML = `<div class="aether-msg-bubble">${escapeHtml(msg.content)}</div>`;
       }
       messagesEl.appendChild(div);
     });
 
-    // Show suggestions after welcome message only
+    // Suggestions
     if (suggestionsShown && messages.length === 1 && messages[0].role === 'assistant') {
       const suggestionsDiv = document.createElement('div');
       suggestionsDiv.className = 'aether-suggestions';
@@ -556,6 +686,14 @@
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
+  // ─── TTS Click Delegation ───
+  messagesEl.addEventListener('click', (e) => {
+    const ttsBtn = e.target.closest('.aether-tts-btn');
+    if (!ttsBtn) return;
+    const idx = parseInt(ttsBtn.dataset.ttsIdx, 10);
+    if (!isNaN(idx)) playTTS(idx);
+  });
+
   // ─── Auto-resize textarea ───
   inputEl.addEventListener('input', () => {
     inputEl.style.height = 'auto';
@@ -576,6 +714,7 @@
 
   // ─── Clear Chat ───
   clearBtn.addEventListener('click', () => {
+    stopAudio();
     messages = [{ role: 'assistant', content: t.welcome }];
     suggestionsShown = true;
     isLoading = false;
@@ -597,7 +736,6 @@
     renderMessages();
 
     try {
-      // Filter out the welcome message for API (it's synthetic)
       const apiMessages = messages
         .filter((m, i) => !(i === 0 && m.role === 'assistant'))
         .map((m) => ({ role: m.role, content: m.content }));

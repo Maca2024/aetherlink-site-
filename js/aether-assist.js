@@ -1,7 +1,7 @@
 /**
- * AETHER-ASSIST v2.1 — Premium AI Chat Widget
- * Features: ElevenLabs TTS, markdown + autolinks, suggested questions,
- *           page context, session persistence, clear chat
+ * AETHER-ASSIST v3.0 — Premium AI Chat Widget
+ * Features: ElevenLabs TTS, voice input (STT), streaming without flicker,
+ *           markdown + autolinks, suggested questions, page context, session persistence
  * Vanilla JS — no dependencies
  */
 (function () {
@@ -21,6 +21,7 @@
       poweredBy: 'Powered by AetherLink.ai',
       clearChat: 'Nieuw gesprek',
       errorGeneric: 'Sorry, er ging iets mis. Probeer het opnieuw of neem contact op via info@aetherlink.ai.',
+      listening: 'Luisteren...',
       suggestions: {
         index: [
           'Wat doet AetherLink precies?',
@@ -54,6 +55,7 @@
       poweredBy: 'Powered by AetherLink.ai',
       clearChat: 'New chat',
       errorGeneric: 'Sorry, something went wrong. Please try again or contact us at info@aetherlink.ai.',
+      listening: 'Listening...',
       suggestions: {
         index: [
           'What does AetherLink do?',
@@ -87,6 +89,7 @@
       poweredBy: 'Powered by AetherLink.ai',
       clearChat: 'Uusi keskustelu',
       errorGeneric: 'Anteeksi, jokin meni pieleen. Yrita uudelleen tai ota yhteytta: info@aetherlink.ai.',
+      listening: 'Kuuntelee...',
       suggestions: {
         index: [
           'Mita AetherLink tekee?',
@@ -132,12 +135,69 @@
 
   // ─── State ───
   let isOpen = false;
-  let isLoading = false;
+  let isStreaming = false;
   let messages = [];
   let suggestionsShown = true;
   let currentAudio = null;
   let ttsPlayingIdx = -1;
   let ttsLoadingIdx = -1;
+  let isListening = false;
+  let recognition = null;
+
+  // Streaming render optimization
+  let streamRAF = null;
+  let streamDirty = false;
+  let streamBubbleEl = null;
+
+  // ─── Self-Learning Loop ───
+  const LEARNING_KEY = 'aether-learning-v1';
+  const MAX_LEARNINGS = 20;
+
+  function getLearnings() {
+    try {
+      const raw = localStorage.getItem(LEARNING_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch { return []; }
+  }
+
+  function saveLearning(userMsg, assistantMsg) {
+    if (!userMsg || !assistantMsg || userMsg.length < 5) return;
+    try {
+      const learnings = getLearnings();
+      // Extract topic from user message (first 80 chars)
+      const topic = userMsg.slice(0, 80);
+      // Extract insight: what the user was interested in
+      const insight = extractInsight(userMsg, assistantMsg);
+      learnings.push({ topic, insight, ts: Date.now() });
+      // Keep only recent learnings
+      const trimmed = learnings.slice(-MAX_LEARNINGS);
+      localStorage.setItem(LEARNING_KEY, JSON.stringify(trimmed));
+    } catch {}
+  }
+
+  function extractInsight(userMsg, assistantMsg) {
+    const msg = userMsg.toLowerCase();
+    if (msg.includes('prijs') || msg.includes('kost') || msg.includes('price') || msg.includes('cost') || msg.includes('euro') || msg.includes('€'))
+      return 'Geinteresseerd in prijzen/kosten';
+    if (msg.includes('bot') || msg.includes('chatbot'))
+      return 'Geinteresseerd in AetherBot chatbot platform';
+    if (msg.includes('consult') || msg.includes('train') || msg.includes('workshop') || msg.includes('mind'))
+      return 'Geinteresseerd in AetherMIND consultancy/training';
+    if (msg.includes('dev') || msg.includes('bouw') || msg.includes('build') || msg.includes('custom') || msg.includes('maatwerk'))
+      return 'Geinteresseerd in AetherDEV maatwerk ontwikkeling';
+    if (msg.includes('team') || msg.includes('wie') || msg.includes('who'))
+      return 'Vroeg over het team/wie erachter zit';
+    if (msg.includes('technolog') || msg.includes('stack') || msg.includes('claude') || msg.includes('ai'))
+      return 'Geinteresseerd in technologie/AI architectuur';
+    if (msg.includes('contact') || msg.includes('afspraak') || msg.includes('bel') || msg.includes('call') || msg.includes('meeting'))
+      return 'Wil contact opnemen/afspraak maken';
+    if (msg.includes('integra') || msg.includes('wordpress') || msg.includes('shopify'))
+      return 'Geinteresseerd in integraties';
+    if (msg.includes('eu ai') || msg.includes('avg') || msg.includes('gdpr') || msg.includes('complian'))
+      return 'Vraagt naar compliance/AVG/EU AI Act';
+    // Default: use truncated message as insight
+    return 'Vroeg: ' + userMsg.slice(0, 60);
+  }
 
   // ─── Session Persistence ───
   function saveSession() {
@@ -179,38 +239,27 @@
   // ─── Markdown Renderer ───
   function renderMarkdown(text) {
     let html = escapeHtml(text);
-
-    // Bold: **text**
     html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    // Italic: *text* (not inside bold)
     html = html.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
-    // Markdown links: [text](url)
     html = html.replace(
       /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
       '<a href="$2" target="_blank" rel="noopener" class="aether-link">$1</a>'
     );
-    // Autolink plain URLs (not already inside href="...")
     html = html.replace(
       /(?<!href=&quot;|href=")(https?:\/\/[^\s<,)]+)/g,
       '<a href="$1" target="_blank" rel="noopener" class="aether-link">$1</a>'
     );
-    // Email links
     html = html.replace(
       /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g,
       '<a href="mailto:$1" class="aether-link">$1</a>'
     );
-    // Inline code: `code`
     html = html.replace(/`([^`]+)`/g, '<code class="aether-code">$1</code>');
-
-    // Unordered lists: lines starting with - or *
     html = html.replace(/^(?:- |\* )(.+)$/gm, '<li>$1</li>');
     html = html.replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul class="aether-list">$1</ul>');
-
-    // Paragraphs: double newlines
+    // ## Headings
+    html = html.replace(/^## (.+)$/gm, '<strong class="aether-heading">$1</strong>');
     html = html.replace(/\n\n/g, '</p><p>');
-    // Single newlines
     html = html.replace(/\n/g, '<br>');
-
     return '<p>' + html + '</p>';
   }
 
@@ -234,19 +283,14 @@
   async function playTTS(msgIdx) {
     const msg = messages[msgIdx];
     if (!msg || msg.role !== 'assistant' || !msg.content) return;
-
-    // Toggle off if already playing this message
     if (ttsPlayingIdx === msgIdx) {
       stopAudio();
-      renderMessages();
+      updateTTSButtons();
       return;
     }
-
-    // Stop any current playback
     stopAudio();
-
     ttsLoadingIdx = msgIdx;
-    renderMessages();
+    updateTTSButtons();
 
     try {
       const response = await fetch(TTS_URL, {
@@ -254,43 +298,112 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: msg.content }),
       });
-
       if (!response.ok) {
         ttsLoadingIdx = -1;
-        renderMessages();
+        updateTTSButtons();
         return;
       }
-
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
       const audio = new Audio(url);
-
       audio.addEventListener('ended', () => {
         URL.revokeObjectURL(url);
         ttsPlayingIdx = -1;
         currentAudio = null;
-        renderMessages();
+        updateTTSButtons();
       });
-
       audio.addEventListener('error', () => {
         URL.revokeObjectURL(url);
         ttsPlayingIdx = -1;
         ttsLoadingIdx = -1;
         currentAudio = null;
-        renderMessages();
+        updateTTSButtons();
       });
-
       currentAudio = audio;
       ttsLoadingIdx = -1;
       ttsPlayingIdx = msgIdx;
-      renderMessages();
+      updateTTSButtons();
       await audio.play();
     } catch {
       ttsLoadingIdx = -1;
       ttsPlayingIdx = -1;
       currentAudio = null;
-      renderMessages();
+      updateTTSButtons();
     }
+  }
+
+  // Update only TTS button states — no full re-render
+  function updateTTSButtons() {
+    document.querySelectorAll('.aether-tts-btn').forEach((btn) => {
+      const idx = parseInt(btn.dataset.ttsIdx, 10);
+      const isPlaying = ttsPlayingIdx === idx;
+      const isTtsLoading = ttsLoadingIdx === idx;
+      btn.className = 'aether-tts-btn' + (isPlaying ? ' playing' : isTtsLoading ? ' loading' : '');
+      const iconEl = btn.querySelector('.aether-tts-icon');
+      const labelEl = btn.querySelector('span');
+      if (iconEl) iconEl.innerHTML = isTtsLoading ? ICON_LOADING : isPlaying ? ICON_STOP : ICON_SPEAKER;
+      if (labelEl) labelEl.textContent = isPlaying ? 'Stop' : isTtsLoading ? '...' : (lang === 'fi' ? 'Kuuntele' : lang === 'en' ? 'Listen' : 'Luister');
+    });
+  }
+
+  // ─── Voice Input (STT) ───
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const hasSTT = !!SpeechRecognition;
+
+  function initRecognition() {
+    if (!hasSTT) return;
+    recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.lang = lang === 'fi' ? 'fi-FI' : lang === 'en' ? 'en-US' : 'nl-NL';
+
+    recognition.onresult = (event) => {
+      let transcript = '';
+      for (let i = 0; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+      }
+      inputEl.value = transcript;
+      inputEl.style.height = 'auto';
+      inputEl.style.height = Math.min(inputEl.scrollHeight, 100) + 'px';
+      sendBtn.disabled = !transcript.trim();
+
+      // Auto-send on final result
+      if (event.results[event.results.length - 1].isFinal) {
+        stopListening();
+        if (transcript.trim()) {
+          setTimeout(() => sendMessage(), 150);
+        }
+      }
+    };
+
+    recognition.onerror = () => stopListening();
+    recognition.onend = () => stopListening();
+  }
+
+  function startListening() {
+    if (!recognition || isListening || isStreaming) return;
+    isListening = true;
+    inputEl.placeholder = t.listening;
+    updateMicButton();
+    try {
+      recognition.start();
+    } catch {
+      stopListening();
+    }
+  }
+
+  function stopListening() {
+    if (!isListening) return;
+    isListening = false;
+    inputEl.placeholder = t.placeholder;
+    updateMicButton();
+    try { recognition.stop(); } catch {}
+  }
+
+  function updateMicButton() {
+    const micBtn = document.getElementById('aether-mic');
+    if (!micBtn) return;
+    micBtn.classList.toggle('active', isListening);
   }
 
   // ─── SVG Icons ───
@@ -301,9 +414,8 @@
   // ─── Inject Styles ───
   const style = document.createElement('style');
   style.textContent = `
-    /* ═══════ AETHER-ASSIST v2.1 Widget Styles ═══════ */
+    /* ═══════ AETHER-ASSIST v3.0 Widget Styles ═══════ */
 
-    /* Chat FAB Button */
     .aether-assist-btn {
       position: fixed; bottom: 24px; right: 24px; z-index: 99999;
       width: 60px; height: 60px; border-radius: 50%; border: none; cursor: pointer;
@@ -326,7 +438,6 @@
       50% { box-shadow: 0 4px 32px rgba(0,212,255,0.5), 0 0 60px rgba(139,92,246,0.3); }
     }
 
-    /* Chat Panel */
     .aether-assist-panel {
       position: fixed; bottom: 96px; right: 24px; z-index: 99998;
       width: 420px; max-width: calc(100vw - 32px); height: 580px; max-height: calc(100vh - 140px);
@@ -347,29 +458,26 @@
 
     /* Header */
     .aether-assist-header {
-      padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px; display: flex; align-items: center; gap: 10px;
       background: linear-gradient(135deg, rgba(0,212,255,0.06), rgba(139,92,246,0.06));
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
-    .aether-assist-avatar {
-      width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
-      background: linear-gradient(135deg, #00d4ff, #8b5cf6);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px; color: white; font-weight: 700;
-      font-family: 'Syne', sans-serif;
-      box-shadow: 0 2px 12px rgba(0,212,255,0.3);
+    .aether-assist-logo {
+      width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+      object-fit: contain;
     }
     .aether-assist-header-info { flex: 1; min-width: 0; }
     .aether-assist-header-info h3 {
       margin: 0; font-family: 'Syne', sans-serif; font-size: 14px;
       font-weight: 700; color: #e4e8f1; letter-spacing: 0.5px;
+      display: flex; align-items: center; gap: 8px;
     }
     .aether-assist-header-info p {
       margin: 2px 0 0; font-size: 11px; color: #6b7394;
     }
     .aether-assist-status {
-      width: 8px; height: 8px; border-radius: 50%; background: #00dfa2;
-      flex-shrink: 0;
+      width: 7px; height: 7px; border-radius: 50%; background: #00dfa2;
+      display: inline-block; flex-shrink: 0;
       box-shadow: 0 0 8px rgba(0,223,162,0.5);
       animation: aether-status-pulse 2s ease-in-out infinite;
     }
@@ -386,15 +494,15 @@
     /* Messages */
     .aether-assist-messages {
       flex: 1; overflow-y: auto; padding: 16px 14px 8px;
-      scroll-behavior: smooth;
       scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.08) transparent;
     }
     .aether-assist-messages::-webkit-scrollbar { width: 4px; }
     .aether-assist-messages::-webkit-scrollbar-track { background: transparent; }
     .aether-assist-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
 
-    .aether-msg {
-      max-width: 88%; margin-bottom: 10px; animation: aether-msg-in 0.3s ease;
+    .aether-msg { max-width: 88%; margin-bottom: 10px; }
+    .aether-msg.aether-msg-enter {
+      animation: aether-msg-in 0.3s ease forwards;
     }
     .aether-msg-user { margin-left: auto; }
     .aether-msg-assistant { margin-right: auto; }
@@ -418,9 +526,9 @@
       border-radius: 16px 16px 16px 4px; color: #c8cee0;
     }
 
-    /* Markdown elements */
     .aether-msg-bubble strong { color: #e4e8f1; font-weight: 600; }
     .aether-msg-bubble em { font-style: italic; }
+    .aether-heading { display: block; font-size: 14px; margin-bottom: 4px; color: #e4e8f1; }
     .aether-link {
       color: #00d4ff; text-decoration: none; border-bottom: 1px solid rgba(0,212,255,0.3);
       transition: all 0.2s; cursor: pointer;
@@ -430,12 +538,8 @@
       background: rgba(0,212,255,0.08); padding: 1px 6px; border-radius: 4px;
       font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00d4ff;
     }
-    .aether-list {
-      margin: 6px 0; padding-left: 18px; list-style: none;
-    }
-    .aether-list li {
-      position: relative; padding-left: 2px; margin-bottom: 4px;
-    }
+    .aether-list { margin: 6px 0; padding-left: 18px; list-style: none; }
+    .aether-list li { position: relative; padding-left: 2px; margin-bottom: 4px; }
     .aether-list li::before {
       content: ''; position: absolute; left: -14px; top: 8px;
       width: 5px; height: 5px; border-radius: 50%;
@@ -448,28 +552,22 @@
     }
 
     /* TTS Button */
-    .aether-msg-actions {
-      display: flex; gap: 4px; margin-top: 6px;
-    }
+    .aether-msg-actions { display: flex; gap: 4px; margin-top: 6px; }
     .aether-tts-btn {
       background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
       border-radius: 8px; padding: 4px 10px; cursor: pointer;
       color: #6b7394; font-size: 11px; display: flex; align-items: center; gap: 5px;
-      font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.2s;
-      line-height: 1;
+      font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.2s; line-height: 1;
     }
     .aether-tts-btn:hover { color: #00d4ff; border-color: rgba(0,212,255,0.25); background: rgba(0,212,255,0.06); }
     .aether-tts-btn.playing { color: #00dfa2; border-color: rgba(0,223,162,0.3); background: rgba(0,223,162,0.06); }
     .aether-tts-btn.loading { color: #8b5cf6; border-color: rgba(139,92,246,0.25); }
     .aether-tts-btn svg { flex-shrink: 0; }
 
-    @keyframes aether-tts-spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
+    @keyframes aether-tts-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     .aether-tts-spin { animation: aether-tts-spin 1s linear infinite; }
 
-    /* Suggested Questions */
+    /* Suggestions */
     .aether-suggestions {
       display: flex; flex-wrap: wrap; gap: 6px; padding: 0 14px 12px;
       animation: aether-msg-in 0.4s ease 0.2s both;
@@ -504,21 +602,38 @@
       border-top: 1px solid rgba(255,255,255,0.06);
       background: rgba(5,6,15,0.5);
     }
-    .aether-assist-input-row {
-      display: flex; gap: 8px; align-items: flex-end;
-    }
+    .aether-assist-input-row { display: flex; gap: 8px; align-items: flex-end; }
     .aether-assist-textarea {
       flex: 1; resize: none; border: 1px solid rgba(255,255,255,0.08);
       border-radius: 14px; padding: 10px 14px; font-size: 13.5px;
       font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
       background: rgba(255,255,255,0.04); color: #e4e8f1;
       outline: none; max-height: 100px; min-height: 40px;
-      transition: border-color 0.2s;
-      scrollbar-width: none;
+      transition: border-color 0.2s; scrollbar-width: none;
     }
     .aether-assist-textarea::-webkit-scrollbar { display: none; }
     .aether-assist-textarea:focus { border-color: rgba(0,212,255,0.3); }
     .aether-assist-textarea::placeholder { color: #4a5068; }
+
+    /* Mic button */
+    .aether-assist-mic {
+      width: 40px; height: 40px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0; color: #6b7394;
+    }
+    .aether-assist-mic:hover { color: #00d4ff; border-color: rgba(0,212,255,0.25); background: rgba(0,212,255,0.06); }
+    .aether-assist-mic.active {
+      color: #ff4466; border-color: rgba(255,68,102,0.4);
+      background: rgba(255,68,102,0.08);
+      animation: aether-mic-pulse 1.5s ease-in-out infinite;
+    }
+    .aether-assist-mic svg { width: 18px; height: 18px; }
+
+    @keyframes aether-mic-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,68,102,0.3); }
+      50% { box-shadow: 0 0 0 6px rgba(255,68,102,0); }
+    }
 
     .aether-assist-send {
       width: 40px; height: 40px; border-radius: 12px; border: none; cursor: pointer;
@@ -558,6 +673,7 @@
       background: rgba(255,255,255,0.8); border-color: rgba(0,0,0,0.06); color: #2a2f45;
     }
     [data-theme="light"] .aether-msg-bubble strong { color: #1a1f35; }
+    [data-theme="light"] .aether-heading { color: #1a1f35; }
     [data-theme="light"] .aether-suggest-chip {
       background: rgba(0,212,255,0.04); border-color: rgba(0,0,0,0.1); color: #4a5068;
     }
@@ -575,13 +691,15 @@
     [data-theme="light"] .aether-link { color: #0077cc; border-color: rgba(0,119,204,0.3); }
     [data-theme="light"] .aether-link:hover { color: #005fa3; }
     [data-theme="light"] .aether-code { background: rgba(0,119,204,0.06); color: #0077cc; }
+    [data-theme="light"] .aether-assist-mic { color: #6b7394; border-color: rgba(0,0,0,0.1); background: rgba(0,0,0,0.02); }
+    [data-theme="light"] .aether-assist-mic:hover { color: #0077cc; }
+    [data-theme="light"] .aether-assist-mic.active { color: #ff4466; border-color: rgba(255,68,102,0.3); background: rgba(255,68,102,0.06); }
 
     /* Mobile */
     @media (max-width: 480px) {
       .aether-assist-panel {
         width: calc(100vw - 16px); right: 8px; bottom: 88px;
-        height: calc(100vh - 120px); max-height: none;
-        border-radius: 16px;
+        height: calc(100vh - 120px); max-height: none; border-radius: 16px;
       }
       .aether-assist-btn { width: 54px; height: 54px; bottom: 20px; right: 16px; }
       .aether-suggest-chip { font-size: 11px; padding: 5px 11px; }
@@ -595,16 +713,19 @@
   btn.setAttribute('aria-label', 'Chat met AETHER');
   btn.innerHTML = '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/><path d="M7 9h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>';
 
+  // Resolve logo path (works from /nl/, /en/, /fi/ subdirs)
+  const basePath = window.location.pathname.includes('/nl/') || window.location.pathname.includes('/en/') || window.location.pathname.includes('/fi/')
+    ? '../' : '';
+
   const panel = document.createElement('div');
   panel.className = 'aether-assist-panel';
   panel.innerHTML = `
     <div class="aether-assist-header">
-      <div class="aether-assist-avatar">A</div>
+      <img src="${basePath}images/logo-color.png" alt="AetherLink" class="aether-assist-logo" />
       <div class="aether-assist-header-info">
-        <h3>AETHER</h3>
+        <h3>AETHER <span class="aether-assist-status"></span></h3>
         <p>AI Assistant &bull; AetherLink.ai</p>
       </div>
-      <div class="aether-assist-status"></div>
       <button class="aether-assist-clear" id="aether-clear" title="${t.clearChat}">${t.clearChat}</button>
     </div>
     <div class="aether-assist-messages" id="aether-messages"></div>
@@ -612,6 +733,7 @@
       <div class="aether-assist-input-row">
         <textarea class="aether-assist-textarea" id="aether-input"
           placeholder="${t.placeholder}" rows="1"></textarea>
+        ${hasSTT ? '<button class="aether-assist-mic" id="aether-mic" aria-label="Voice input"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg></button>' : ''}
         <button class="aether-assist-send" id="aether-send" disabled>
           <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
         </button>
@@ -627,63 +749,96 @@
   const inputEl = document.getElementById('aether-input');
   const sendBtn = document.getElementById('aether-send');
   const clearBtn = document.getElementById('aether-clear');
+  const micBtn = document.getElementById('aether-mic');
 
-  // ─── Render ───
-  function renderMessages() {
+  // Init speech recognition
+  if (hasSTT) initRecognition();
+
+  // ─── Render All Messages (only called on init, clear, restore) ───
+  function renderAllMessages() {
     messagesEl.innerHTML = '';
-
     messages.forEach((msg, idx) => {
-      const div = document.createElement('div');
-      div.className = `aether-msg aether-msg-${msg.role}`;
-
-      if (msg.role === 'assistant') {
-        const bubbleHtml = renderMarkdown(msg.content);
-
-        // Build TTS button for completed assistant messages (not empty, not loading chat)
-        let actionsHtml = '';
-        if (msg.content && msg.content.length > 5 && !isLoading) {
-          const isPlaying = ttsPlayingIdx === idx;
-          const isTtsLoading = ttsLoadingIdx === idx;
-          const btnClass = isPlaying ? 'playing' : isTtsLoading ? 'loading' : '';
-          const icon = isTtsLoading ? ICON_LOADING : isPlaying ? ICON_STOP : ICON_SPEAKER;
-          const label = isPlaying ? 'Stop' : isTtsLoading ? '...' : (lang === 'fi' ? 'Kuuntele' : lang === 'en' ? 'Listen' : 'Luister');
-
-          actionsHtml = `<div class="aether-msg-actions"><button class="aether-tts-btn ${btnClass}" data-tts-idx="${idx}">${icon}<span>${label}</span></button></div>`;
-        }
-
-        div.innerHTML = `<div class="aether-msg-bubble">${bubbleHtml}</div>${actionsHtml}`;
-      } else {
-        div.innerHTML = `<div class="aether-msg-bubble">${escapeHtml(msg.content)}</div>`;
-      }
-      messagesEl.appendChild(div);
+      appendMessageDOM(msg, idx, false);
     });
-
-    // Suggestions
     if (suggestionsShown && messages.length === 1 && messages[0].role === 'assistant') {
-      const suggestionsDiv = document.createElement('div');
-      suggestionsDiv.className = 'aether-suggestions';
-      suggestions.forEach((q) => {
-        const chip = document.createElement('button');
-        chip.className = 'aether-suggest-chip';
-        chip.textContent = q;
-        chip.addEventListener('click', () => {
-          inputEl.value = q;
-          suggestionsShown = false;
-          sendMessage();
-        });
-        suggestionsDiv.appendChild(chip);
+      renderSuggestions();
+    }
+    scrollToBottom();
+  }
+
+  // Append a single message to the DOM
+  function appendMessageDOM(msg, idx, animate) {
+    const div = document.createElement('div');
+    div.className = `aether-msg aether-msg-${msg.role}${animate ? ' aether-msg-enter' : ''}`;
+    div.dataset.msgIdx = idx;
+
+    if (msg.role === 'assistant') {
+      const bubble = document.createElement('div');
+      bubble.className = 'aether-msg-bubble';
+      bubble.innerHTML = renderMarkdown(msg.content);
+      div.appendChild(bubble);
+
+      if (msg.content && msg.content.length > 5 && !isStreaming) {
+        div.appendChild(createTTSButton(idx));
+      }
+    } else {
+      const bubble = document.createElement('div');
+      bubble.className = 'aether-msg-bubble';
+      bubble.textContent = msg.content;
+      div.appendChild(bubble);
+    }
+    messagesEl.appendChild(div);
+    return div;
+  }
+
+  function createTTSButton(idx) {
+    const actions = document.createElement('div');
+    actions.className = 'aether-msg-actions';
+    const isPlaying = ttsPlayingIdx === idx;
+    const isTtsLoading = ttsLoadingIdx === idx;
+    const btnClass = isPlaying ? ' playing' : isTtsLoading ? ' loading' : '';
+    const icon = isTtsLoading ? ICON_LOADING : isPlaying ? ICON_STOP : ICON_SPEAKER;
+    const label = isPlaying ? 'Stop' : isTtsLoading ? '...' : (lang === 'fi' ? 'Kuuntele' : lang === 'en' ? 'Listen' : 'Luister');
+    actions.innerHTML = `<button class="aether-tts-btn${btnClass}" data-tts-idx="${idx}"><span class="aether-tts-icon">${icon}</span><span>${label}</span></button>`;
+    return actions;
+  }
+
+  function renderSuggestions() {
+    const suggestionsDiv = document.createElement('div');
+    suggestionsDiv.className = 'aether-suggestions';
+    suggestionsDiv.id = 'aether-suggestions';
+    suggestions.forEach((q) => {
+      const chip = document.createElement('button');
+      chip.className = 'aether-suggest-chip';
+      chip.textContent = q;
+      chip.addEventListener('click', () => {
+        inputEl.value = q;
+        suggestionsShown = false;
+        sendMessage();
       });
-      messagesEl.appendChild(suggestionsDiv);
-    }
+      suggestionsDiv.appendChild(chip);
+    });
+    messagesEl.appendChild(suggestionsDiv);
+  }
 
-    if (isLoading) {
-      const typing = document.createElement('div');
-      typing.className = 'aether-msg aether-msg-assistant';
-      typing.innerHTML = '<div class="aether-msg-bubble"><div class="aether-typing"><span></span><span></span><span></span></div></div>';
-      messagesEl.appendChild(typing);
-    }
-
+  function scrollToBottom() {
     messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  // ─── Streaming Render — only updates the last bubble, no full rebuild ───
+  function scheduleStreamRender() {
+    if (streamRAF) return;
+    streamRAF = requestAnimationFrame(flushStreamRender);
+  }
+
+  function flushStreamRender() {
+    streamRAF = null;
+    if (!streamBubbleEl) return;
+    const lastMsg = messages[messages.length - 1];
+    if (lastMsg && lastMsg.role === 'assistant') {
+      streamBubbleEl.innerHTML = renderMarkdown(lastMsg.content);
+      scrollToBottom();
+    }
   }
 
   // ─── TTS Click Delegation ───
@@ -698,7 +853,7 @@
   inputEl.addEventListener('input', () => {
     inputEl.style.height = 'auto';
     inputEl.style.height = Math.min(inputEl.scrollHeight, 100) + 'px';
-    sendBtn.disabled = !inputEl.value.trim() || isLoading;
+    sendBtn.disabled = !inputEl.value.trim() || isStreaming;
   });
 
   // ─── Toggle Panel ───
@@ -717,23 +872,50 @@
     stopAudio();
     messages = [{ role: 'assistant', content: t.welcome }];
     suggestionsShown = true;
-    isLoading = false;
+    isStreaming = false;
+    streamBubbleEl = null;
     saveSession();
-    renderMessages();
+    renderAllMessages();
   });
+
+  // ─── Mic Button ───
+  if (micBtn) {
+    micBtn.addEventListener('click', () => {
+      if (isListening) {
+        stopListening();
+      } else {
+        startListening();
+      }
+    });
+  }
 
   // ─── Send Message ───
   async function sendMessage() {
     const text = inputEl.value.trim();
-    if (!text || isLoading) return;
+    if (!text || isStreaming) return;
 
+    // Remove suggestions if visible
+    const sugEl = document.getElementById('aether-suggestions');
+    if (sugEl) sugEl.remove();
+    suggestionsShown = false;
+
+    // Add user message
     messages.push({ role: 'user', content: text });
+    appendMessageDOM(messages[messages.length - 1], messages.length - 1, true);
+    scrollToBottom();
+
     inputEl.value = '';
     inputEl.style.height = 'auto';
     sendBtn.disabled = true;
-    isLoading = true;
-    suggestionsShown = false;
-    renderMessages();
+    isStreaming = true;
+
+    // Show typing indicator
+    const typingEl = document.createElement('div');
+    typingEl.className = 'aether-msg aether-msg-assistant aether-msg-enter';
+    typingEl.id = 'aether-typing';
+    typingEl.innerHTML = '<div class="aether-msg-bubble"><div class="aether-typing"><span></span><span></span><span></span></div></div>';
+    messagesEl.appendChild(typingEl);
+    scrollToBottom();
 
     try {
       const apiMessages = messages
@@ -747,6 +929,7 @@
           messages: apiMessages,
           pageContext: pageType,
           lang: lang,
+          learningContext: getLearnings(),
         }),
       });
 
@@ -755,13 +938,25 @@
         throw new Error(err.error || 'Request failed');
       }
 
+      // Remove typing indicator
+      const typingIndicator = document.getElementById('aether-typing');
+      if (typingIndicator) typingIndicator.remove();
+
+      // Create assistant message element for streaming
+      messages.push({ role: 'assistant', content: '' });
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'aether-msg aether-msg-assistant aether-msg-enter';
+      msgDiv.dataset.msgIdx = messages.length - 1;
+      const bubble = document.createElement('div');
+      bubble.className = 'aether-msg-bubble';
+      msgDiv.appendChild(bubble);
+      messagesEl.appendChild(msgDiv);
+      streamBubbleEl = bubble;
+
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let assistantContent = '';
       let buffer = '';
-
-      messages.push({ role: 'assistant', content: '' });
-      isLoading = false;
 
       while (true) {
         const { done, value } = await reader.read();
@@ -771,6 +966,7 @@
         const lines = buffer.split('\n');
         buffer = lines.pop() || '';
 
+        let chunkDirty = false;
         for (const line of lines) {
           if (line.startsWith('data: ')) {
             const data = line.slice(6).trim();
@@ -779,29 +975,55 @@
               const parsed = JSON.parse(data);
               if (parsed.text) {
                 assistantContent += parsed.text;
-                messages[messages.length - 1].content = assistantContent;
-                renderMessages();
+                chunkDirty = true;
               }
             } catch {}
           }
         }
+
+        if (chunkDirty) {
+          messages[messages.length - 1].content = assistantContent;
+          scheduleStreamRender();
+        }
+      }
+
+      // Final render of complete message
+      if (streamBubbleEl) {
+        streamBubbleEl.innerHTML = renderMarkdown(assistantContent);
       }
 
       if (!assistantContent) {
         messages[messages.length - 1].content = t.errorGeneric;
+        if (streamBubbleEl) streamBubbleEl.innerHTML = renderMarkdown(t.errorGeneric);
       }
+
+      // Save learning from this Q&A pair
+      saveLearning(text, assistantContent);
+
+      // Add TTS button after streaming completes
+      const lastMsgEl = messagesEl.querySelector(`[data-msg-idx="${messages.length - 1}"]`);
+      if (lastMsgEl && assistantContent.length > 5) {
+        lastMsgEl.appendChild(createTTSButton(messages.length - 1));
+      }
+
     } catch (error) {
-      isLoading = false;
+      // Remove typing indicator if still present
+      const typingIndicator = document.getElementById('aether-typing');
+      if (typingIndicator) typingIndicator.remove();
+
       const errorMsg = error.message.includes('veel berichten') || error.message.includes('Too many') || error.message.includes('Liian monta')
         ? error.message
         : t.errorGeneric;
       messages.push({ role: 'assistant', content: errorMsg });
+      appendMessageDOM(messages[messages.length - 1], messages.length - 1, true);
     }
 
-    isLoading = false;
+    isStreaming = false;
+    streamBubbleEl = null;
+    if (streamRAF) { cancelAnimationFrame(streamRAF); streamRAF = null; }
     saveSession();
-    renderMessages();
-    sendBtn.disabled = false;
+    sendBtn.disabled = !inputEl.value.trim();
+    scrollToBottom();
   }
 
   // ─── Event Listeners ───
@@ -814,5 +1036,5 @@
   });
 
   // ─── Initial Render ───
-  renderMessages();
+  renderAllMessages();
 })();

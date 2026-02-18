@@ -1,27 +1,4 @@
 {
-  "name": "aetherlink-website",
-  "version": "1.0.0",
-  "description": "> **The power of AI, accessible for every business.**",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Maca2024/aetherlink-site-.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/Maca2024/aetherlink-site-/issues"
-  },
-  "homepage": "https://github.com/Maca2024/aetherlink-site-#readme",
-  "dependencies": {
-    "@anthropic-ai/sdk": "^0.75.0"
-  }
+  "private": true,
+  "type": "module"
 }

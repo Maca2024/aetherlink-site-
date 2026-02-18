@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AetherLink - AI-Assistent, Consultancy & Ontwikkeling</title>
-    <meta name="description" content="Van kant-en-klare AI-assistenten tot maatwerk ontwikkeling. AetherLink maakt AI toegankelijk voor elk bedrijf. Ontdek AetherBot, AetherMIND en AetherDEV.">
+    <title>AetherLink — AI Consultancy & Development Nederland | AI Lead Architecture</title>
+    <meta name="description" content="AetherLink is Europa's AI One-Stop-Shop. AI-chatbots, consultancy, training en maatwerk AI-ontwikkeling. AI Lead Architecture, Agentic AI en AI verandermanagement voor Nederlandse organisaties.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <link rel="canonical" href="https://aetherlink.ai/nl/">
     <link rel="icon" type="image/png" href="../images/favicon.png">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="AetherLink - AI-Assistent, Consultancy & Ontwikkeling">
-    <meta property="og:description" content="Van kant-en-klare AI-assistenten tot maatwerk ontwikkeling. AetherLink maakt AI toegankelijk voor elk bedrijf.">
+    <meta property="og:title" content="AetherLink — AI Consultancy & Development Nederland">
+    <meta property="og:description" content="Europa's AI One-Stop-Shop. AI-chatbots, consultancy, training en maatwerk AI-ontwikkeling. AI Lead Architecture en Agentic AI voor Nederlandse organisaties.">
     <meta property="og:image" content="https://aetherlink.ai/images/og-image-en.png">
     <meta property="og:url" content="https://aetherlink.ai/nl/">
     <meta property="og:type" content="website">
@@ -26,16 +27,58 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "Organization",
+        "@type": ["Organization", "ProfessionalService"],
         "name": "AetherLink",
+        "alternateName": "AetherLink.ai",
         "url": "https://aetherlink.ai",
         "logo": "https://aetherlink.ai/images/logo-color.png",
-        "description": "Europa's AI One-Stop-Shop. AI-assistenten, consultancy en maatwerk ontwikkeling.",
+        "image": "https://aetherlink.ai/images/og-image-en.png",
+        "description": "AetherLink is Europa's AI One-Stop-Shop. Gespecialiseerd in AI Lead Architecture, Agentic AI implementatie, AI consultancy en maatwerk AI-ontwikkeling voor organisaties in Nederland en Europa.",
         "foundingDate": "2019",
+        "founder": [
+            {"@type": "Person", "name": "Marco", "jobTitle": "CTO & AI Lead Architect"},
+            {"@type": "Person", "name": "Constance", "jobTitle": "CEO"},
+            {"@type": "Person", "name": "Ronald", "jobTitle": "CCO / CFO"}
+        ],
+        "knowsAbout": [
+            "Artificial Intelligence", "AI Lead Architecture", "Agentic AI",
+            "AI Consulting", "AI Change Management", "AI Chatbots",
+            "RAG Systems", "LangGraph", "MCP Servers", "n8n",
+            "Supabase", "Pinecone", "Machine Learning", "AI Strategy",
+            "AI Training", "EU AI Act Compliance"
+        ],
+        "areaServed": [
+            {"@type": "Country", "name": "Netherlands"},
+            {"@type": "Country", "name": "Finland"},
+            {"@type": "Country", "name": "United Arab Emirates"},
+            {"@type": "Continent", "name": "Europe"}
+        ],
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "NL"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+31-6-1377-2333",
+            "email": "info@aetherlink.ai",
+            "contactType": "customer service",
+            "availableLanguage": ["Dutch", "English", "Finnish"]
+        },
         "sameAs": [
             "https://www.linkedin.com/company/aetherlink/",
-            "https://twitter.com/aetherlink"
-        ]
+            "https://twitter.com/aetherlink",
+            "https://www.youtube.com/@Aetherlink",
+            "https://github.com/Maca2024"
+        ],
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "AI Diensten",
+            "itemListElement": [
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "AetherBot", "description": "AI-chatbot platform voor websites, getraind op uw bedrijfskennis"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "AetherMIND", "description": "AI consultancy, strategie en training voor organisaties"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "AetherDEV", "description": "Maatwerk AI-applicaties, automatiseringen en platforms"}}
+            ]
+        }
     }
     </script>
 
@@ -606,9 +649,12 @@
                         </span>
                     </h1>
 
-                    <!-- Subtitle -->
+                    <!-- Answer Capsule — optimized for LLM extraction -->
+                    <p class="max-w-2xl text-lg md:text-xl text-light/80 font-medium leading-relaxed mb-6 reveal reveal-delay-2">
+                        <strong>AetherLink.ai is Europa's AI One-Stop-Shop, gevestigd in Nederland. Als AI consultancy en ontwikkelpartner bieden wij AI Lead Architecture, Agentic AI implementatie, AI-chatbots en maatwerk AI-oplossingen. Van strategie tot productie — wij maken AI toegankelijk voor elke organisatie.</strong>
+                    </p>
                     <p class="max-w-2xl text-lg md:text-xl text-muted leading-relaxed mb-12 reveal reveal-delay-2">
-                        AetherLink brengt kunstmatige intelligentie naar jouw organisatie — van kant-en-klare AI-assistenten tot strategisch advies en maatwerkontwikkeling.
+                        Van kant-en-klare AI-assistenten tot strategisch advies en maatwerkontwikkeling — ontdek onze drie diensten.
                     </p>
 
                     <!-- CTAs -->
@@ -1157,6 +1203,7 @@
         }
     </script>
 
-<script src="../js/chatbot.js"></script>
+<!-- AETHER-ASSIST Chat Widget -->
+<script src="../js/aether-assist.js" defer></script>
 </body>
 </html>

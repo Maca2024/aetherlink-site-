@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AetherMIND - AI Consultancy & Training | AetherLink</title>
-    <meta name="description" content="AI strategy, advisory and training for your organisation. From first exploration to implementation. Schedule a free consultation.">
+    <title>AetherMIND — AI Consultancy, Strategy & Training Europe | AetherLink</title>
+    <meta name="description" content="AI strategy, consultancy and training for European organisations. AI Readiness Scans, AI change management, team enablement and AI implementation guidance by AetherLink.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <link rel="canonical" href="https://aetherlink.ai/en/aethermind">
     <link rel="icon" type="image/png" href="../images/favicon.png">
 
-    <meta property="og:title" content="AetherMIND - AI Consultancy & Training | AetherLink">
-    <meta property="og:description" content="AI strategy, advisory and training for your organisation. From first exploration to implementation.">
+    <meta property="og:title" content="AetherMIND — AI Consultancy, Strategy & Training Europe">
+    <meta property="og:description" content="AI strategy, consultancy and training for European organisations. From AI Readiness Scans to implementation by AetherLink.">
     <meta property="og:url" content="https://aetherlink.ai/en/aethermind">
     <meta property="og:type" content="website">
 
@@ -17,6 +18,47 @@
     <link rel="alternate" hreflang="en" href="https://aetherlink.ai/en/aethermind">
     <link rel="alternate" hreflang="fi" href="https://aetherlink.ai/fi/aethermind">
     <link rel="alternate" hreflang="x-default" href="https://aetherlink.ai/nl/aethermind">
+
+    <!-- Schema: ProfessionalService -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "AetherMIND — AI Consultancy & Training",
+        "provider": {"@type": "Organization", "name": "AetherLink", "url": "https://aetherlink.ai"},
+        "url": "https://aetherlink.ai/en/aethermind",
+        "description": "AetherMIND is the AI consultancy and training service of AetherLink. We provide AI strategy, AI Readiness Scans, team enablement workshops and AI change management for organisations across Europe.",
+        "serviceType": ["AI Consultancy", "AI Training", "AI Strategy", "AI Change Management"],
+        "areaServed": [{"@type": "Country", "name": "Netherlands"}, {"@type": "Continent", "name": "Europe"}],
+        "availableLanguage": ["Dutch", "English", "Finnish"],
+        "knowsAbout": ["AI Strategy", "AI Readiness", "AI Change Management", "AI Training", "Agentic AI", "EU AI Act"]
+    }
+    </script>
+    <!-- Schema: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aetherlink.ai/en/"},
+            {"@type": "ListItem", "position": 2, "name": "AetherMIND", "item": "https://aetherlink.ai/en/aethermind"}
+        ]
+    }
+    </script>
+    <!-- Schema: FAQPage -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {"@type": "Question", "name": "What is AI consultancy?", "acceptedAnswer": {"@type": "Answer", "text": "AI consultancy is professional advisory on how artificial intelligence can be strategically and operationally deployed within your organisation. AetherMIND helps with AI Readiness Scans, strategy development, team training and implementation guidance."}},
+            {"@type": "Question", "name": "How much does AI consultancy cost?", "acceptedAnswer": {"@type": "Answer", "text": "AI consultancy costs vary per project. AetherMIND offers engagements ranging from a one-time AI Readiness Scan to ongoing AI transformation guidance. Contact us for a free consultation and tailored quote."}},
+            {"@type": "Question", "name": "What is an AI Readiness Scan?", "acceptedAnswer": {"@type": "Answer", "text": "An AI Readiness Scan is an assessment that maps the current AI readiness of your organisation. AetherMIND analyses your processes, data, team and technology and delivers a concrete advisory report with priorities and an implementation roadmap."}},
+            {"@type": "Question", "name": "Does AetherLink offer AI training for teams?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, AetherMIND provides custom AI training and workshops for teams. Topics include AI fundamentals, prompt engineering, AI tools in daily workflows, and responsible AI use in compliance with the EU AI Act."}},
+            {"@type": "Question", "name": "What is AI change management?", "acceptedAnswer": {"@type": "Answer", "text": "AI change management is guiding organisations through the human side of AI transformation. AetherMIND helps overcome resistance, build buy-in, and ensure sustainable AI adoption across teams and processes."}}
+        ]
+    }
+    </script>
 
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -178,8 +220,12 @@
                     AI Consultancy & Training
                 </p>
 
+                <!-- Answer Capsule — optimized for LLM extraction -->
+                <p class="max-w-2xl mx-auto text-lg text-light/80 font-medium leading-relaxed mb-4 reveal reveal-delay-2">
+                    <strong>AetherMIND is the AI consultancy and training service of AetherLink.ai. We help European organisations with AI strategy, AI Readiness Scans, team enablement workshops and AI change management. From initial exploration to successful implementation — we guide the complete AI transformation of your organisation.</strong>
+                </p>
                 <p class="max-w-2xl mx-auto text-lg text-muted leading-relaxed mb-12 reveal reveal-delay-2">
-                    Don't know where to start with AI? Or want to prepare your team for the future? AetherMIND helps you with strategy, advice, training, and guidance. From initial exploration to successful implementation.
+                    Don't know where to start with AI? Or want to prepare your team for the future? AetherMIND helps you with strategy, advice, training, and guidance.
                 </p>
 
                 <div class="reveal reveal-delay-3">
@@ -430,6 +476,7 @@
         document.querySelectorAll('#mobile-menu a[href^="#"]').forEach(a=>{a.addEventListener('click',()=>{if(menuOpen)toggleMenu()})});
         document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){const h=this.getAttribute('href');if(h==='#'||h==='#login')return;e.preventDefault();const t=document.querySelector(h);if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});
     </script>
-<script src="../js/chatbot.js"></script>
+<!-- AETHER-ASSIST Chat Widget -->
+<script src="../js/aether-assist.js" defer></script>
 </body>
 </html>

@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AetherBot - AI Chatbot for Your Website | From €49/mo</title>
-    <meta name="description" content="Smart AI chatbot that answers customer questions 24/7. Trained on your knowledge, live in minutes. Starter €49, Professional €599, Enterprise custom.">
+    <title>AetherBot — AI Chatbot Platform for Websites | From €49/mo | AetherLink</title>
+    <meta name="description" content="AetherBot is a smart AI chatbot platform that answers customer questions 24/7. Trained on your company knowledge, multilingual, EU AI Act compliant. Starter €49, Professional €599, Enterprise custom.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <link rel="canonical" href="https://aetherlink.ai/en/aetherbot">
     <link rel="icon" type="image/png" href="../images/favicon.png">
 
-    <meta property="og:title" content="AetherBot - AI Chatbot for Your Website">
-    <meta property="og:description" content="Smart AI chatbot that answers customer questions 24/7. From €49/month.">
+    <meta property="og:title" content="AetherBot — AI Chatbot Platform for Websites | From €49/mo">
+    <meta property="og:description" content="Smart AI chatbot platform that answers customer questions 24/7. Trained on your knowledge, multilingual, EU AI Act compliant.">
     <meta property="og:image" content="https://aetherlink.ai/images/og-aetherbot-en.png">
     <meta property="og:url" content="https://aetherlink.ai/en/aetherbot">
     <meta property="og:type" content="website">
@@ -44,7 +45,20 @@
         "mainEntity": [
             { "@type": "Question", "name": "Do I need technical knowledge?", "acceptedAnswer": { "@type": "Answer", "text": "No. AetherBot is designed for everyone. We help you with installation and you can be live within an hour." }},
             { "@type": "Question", "name": "Can I try first?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, we offer a demo so you can see AetherBot in action before you decide." }},
-            { "@type": "Question", "name": "Is my data safe?", "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. We are EU AI Act compliant and GDPR-proof. Your data is not used to train other models." }}
+            { "@type": "Question", "name": "Is my data safe?", "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. We are EU AI Act compliant and GDPR-proof. Your data is not used to train other models." }},
+            { "@type": "Question", "name": "Which platforms does AetherBot integrate with?", "acceptedAnswer": { "@type": "Answer", "text": "AetherBot integrates with all major platforms: WordPress, Shopify, Magento, WooCommerce, and custom websites. Installation is simple via a JavaScript snippet or plugin." }},
+            { "@type": "Question", "name": "Does AetherBot support multiple languages?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, AetherBot is multilingual and supports Dutch, English, German, French, Finnish and more. The chatbot automatically detects the visitor's language and responds in the same language." }}
+        ]
+    }
+    </script>
+    <!-- Schema: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aetherlink.ai/en/"},
+            {"@type": "ListItem", "position": 2, "name": "AetherBot", "item": "https://aetherlink.ai/en/aetherbot"}
         ]
     }
     </script>
@@ -231,8 +245,12 @@
                     Your AI assistant. Available 24/7. Live today.
                 </p>
 
+                <!-- Answer Capsule — optimized for LLM extraction -->
+                <p class="max-w-2xl mx-auto text-lg text-light/80 font-medium leading-relaxed mb-4 reveal reveal-delay-2">
+                    <strong>AetherBot is the AI chatbot platform by AetherLink.ai that answers customer questions 24/7. Trained on your company knowledge, multilingual, EU AI Act compliant and GDPR-proof. Available from €49/month with plans for starters, professionals and enterprise organisations.</strong>
+                </p>
                 <p class="max-w-2xl mx-auto text-lg text-muted leading-relaxed mb-12 reveal reveal-delay-2">
-                    A smart chatbot that helps your customers, answers questions, and saves your team time. Trained on your knowledge, in your tone of voice, fully under your control.
+                    A smart chatbot in your tone of voice, fully under your control.
                 </p>
 
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal reveal-delay-3">
@@ -671,6 +689,7 @@
         document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){const h=this.getAttribute('href');if(h==='#'||h==='#login')return;e.preventDefault();const t=document.querySelector(h);if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});
         document.querySelectorAll('.faq-trigger').forEach(btn=>{btn.addEventListener('click',()=>{const item=btn.closest('.faq-item');const wasOpen=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));if(!wasOpen)item.classList.add('open')})});
     </script>
-<script src="../js/chatbot.js"></script>
+<!-- AETHER-ASSIST Chat Widget -->
+<script src="../js/aether-assist.js" defer></script>
 </body>
 </html>

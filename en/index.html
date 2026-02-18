@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AetherLink - AI Assistant, Consultancy & Development</title>
-    <meta name="description" content="From ready-to-use AI assistants to custom development. AetherLink makes AI accessible for every business. Discover AetherBot, AetherMIND and AetherDEV.">
+    <title>AetherLink — AI Consultancy & Development Europe | AI Lead Architecture</title>
+    <meta name="description" content="AetherLink is Europe's AI One-Stop-Shop. AI chatbots, consultancy, training and custom AI development. AI Lead Architecture, Agentic AI and AI change management for European organisations.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <link rel="canonical" href="https://aetherlink.ai/en/">
     <link rel="icon" type="image/png" href="../images/favicon.png">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="AetherLink - AI Assistant, Consultancy & Development">
-    <meta property="og:description" content="From ready-to-use AI assistants to custom development. AetherLink makes AI accessible for every business.">
+    <meta property="og:title" content="AetherLink — AI Consultancy & Development Europe">
+    <meta property="og:description" content="Europe's AI One-Stop-Shop. AI chatbots, consultancy, training and custom AI development. AI Lead Architecture and Agentic AI for European organisations.">
     <meta property="og:image" content="https://aetherlink.ai/images/og-image-en.png">
     <meta property="og:url" content="https://aetherlink.ai/en/">
     <meta property="og:type" content="website">
@@ -26,17 +27,58 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "Organization",
+        "@type": ["Organization", "ProfessionalService"],
         "name": "AetherLink",
+        "alternateName": "AetherLink.ai",
         "url": "https://aetherlink.ai",
         "logo": "https://aetherlink.ai/images/logo-color.png",
-        "description": "Europe's AI One-Stop-Shop. AI assistants, consultancy, and custom development.",
+        "image": "https://aetherlink.ai/images/og-image-en.png",
+        "description": "AetherLink is Europe's AI One-Stop-Shop. Specialising in AI Lead Architecture, Agentic AI implementation, AI consultancy and custom AI development for organisations across Europe.",
         "foundingDate": "2019",
+        "founder": [
+            {"@type": "Person", "name": "Marco", "jobTitle": "CTO & AI Lead Architect"},
+            {"@type": "Person", "name": "Constance", "jobTitle": "CEO"},
+            {"@type": "Person", "name": "Ronald", "jobTitle": "CCO / CFO"}
+        ],
+        "knowsAbout": [
+            "Artificial Intelligence", "AI Lead Architecture", "Agentic AI",
+            "AI Consulting", "AI Change Management", "AI Chatbots",
+            "RAG Systems", "LangGraph", "MCP Servers", "n8n",
+            "Supabase", "Pinecone", "Machine Learning", "AI Strategy",
+            "AI Training", "EU AI Act Compliance"
+        ],
+        "areaServed": [
+            {"@type": "Country", "name": "Netherlands"},
+            {"@type": "Country", "name": "Finland"},
+            {"@type": "Country", "name": "United Arab Emirates"},
+            {"@type": "Continent", "name": "Europe"}
+        ],
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "NL"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+31-6-1377-2333",
+            "email": "info@aetherlink.ai",
+            "contactType": "customer service",
+            "availableLanguage": ["Dutch", "English", "Finnish"]
+        },
         "sameAs": [
             "https://www.linkedin.com/company/aetherlink/",
             "https://twitter.com/aetherlink",
-            "https://www.youtube.com/@Aetherlink"
-        ]
+            "https://www.youtube.com/@Aetherlink",
+            "https://github.com/Maca2024"
+        ],
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "AI Services",
+            "itemListElement": [
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "AetherBot", "description": "AI chatbot platform for websites, trained on your company knowledge"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "AetherMIND", "description": "AI consultancy, strategy and training for organisations"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "AetherDEV", "description": "Custom AI applications, automations and platforms"}}
+            ]
+        }
     }
     </script>
 
@@ -833,9 +875,12 @@
                         </span>
                     </h1>
 
-                    <!-- Subtitle -->
+                    <!-- Answer Capsule — optimized for LLM extraction -->
+                    <p class="max-w-xl text-base lg:text-lg text-light/80 font-medium leading-relaxed mb-4 reveal reveal-delay-2">
+                        <strong>AetherLink.ai is Europe's AI One-Stop-Shop, headquartered in the Netherlands. As an AI consultancy and development partner, we offer AI Lead Architecture, Agentic AI implementation, AI chatbots and custom AI solutions. From strategy to production — we make AI accessible for every organisation.</strong>
+                    </p>
                     <p class="max-w-xl text-base lg:text-lg text-muted leading-relaxed mb-10 reveal reveal-delay-2">
-                        AetherLink brings artificial intelligence to your organisation — from ready-to-use AI assistants to strategic consulting and custom development.
+                        From ready-to-use AI assistants to strategic consulting and custom development — discover our three core services.
                     </p>
 
                     <!-- CTAs -->
@@ -1426,6 +1471,7 @@
         }
     </script>
 
-<script src="../js/chatbot.js"></script>
+<!-- AETHER-ASSIST Chat Widget -->
+<script src="../js/aether-assist.js" defer></script>
 </body>
 </html>

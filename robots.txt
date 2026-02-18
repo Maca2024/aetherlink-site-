@@ -1,0 +1,51 @@
+# AetherLink.ai — Robots.txt
+# Last updated: 2026-02-16
+
+# Allow all standard crawlers
+User-agent: *
+Allow: /
+Disallow: /.git/
+Disallow: /.vercel/
+
+# AI Search Crawlers — Explicitly Allowed
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# Sitemap
+Sitemap: https://aetherlink.ai/sitemap.xml
+
+# LLMs context file
+# See also: https://aetherlink.ai/llms.txt

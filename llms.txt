@@ -1,0 +1,58 @@
+# AetherLink.ai
+
+> Europe's AI One-Stop-Shop — AI Assistants, Consultancy & Custom Development
+
+## What is AetherLink?
+AetherLink.ai is a European AI consultancy and development company headquartered in the Netherlands with operations in Finland and the UAE. Founded in 2019, AetherLink specializes in AI Lead Architecture, Agentic AI implementation, and AI change management. The company makes artificial intelligence accessible for businesses of all sizes through three core services: AetherBot (AI chatbot platform), AetherMIND (AI consultancy & training), and AetherDEV (custom AI development).
+
+## Team
+- Marco — CTO & AI Lead Architect. 5+ years AI experience, specialist in autonomous AI agents, agentic workflows, RAG systems, and AI platform architecture.
+- Constance — CEO. Organization strategy and business development.
+- Ronald — CCO/CFO. Commercial operations and finance.
+
+## Core Services
+
+### AetherBot — AI Chatbot Platform
+Ready-to-use AI chatbots for websites. Trained on your company knowledge, live in minutes, available 24/7. Multilingual, GDPR-compliant, EU AI Act compliant. Pricing from €49/month (Starter) to €599/month (Professional), with custom Enterprise plans.
+- URL: https://aetherlink.ai/nl/aetherbot
+
+### AetherMIND — AI Consultancy & Training
+AI strategy, advisory, and team training. Services include AI Readiness Scans, AI strategy development, team enablement workshops, and AI change management guidance. From first exploration to successful implementation.
+- URL: https://aetherlink.ai/nl/aethermind
+
+### AetherDEV — Custom AI Development
+Bespoke AI applications, automations, and platforms. From idea to working product. Capabilities include agentic AI workflows, RAG systems, AI-powered dashboards, process automation, and custom integrations.
+- URL: https://aetherlink.ai/nl/aetherdev
+
+## Technology Expertise
+- AI Platforms: Claude (Anthropic), GPT (OpenAI), Gemini (Google), Grok (xAI), Mistral
+- Infrastructure: Supabase, Pinecone, Docker, Vercel, n8n
+- Frameworks: LangGraph, MCP Servers, Agentic AI Workflows, RAG Systems
+- Compliance: EU AI Act, GDPR/AVG, responsible AI practices
+
+## Differentiators
+- 5+ years of hands-on AI experience (since 2019)
+- EU AI Act compliant — all solutions meet European AI regulations
+- Multilingual platform — Dutch, English, Finnish
+- Full-stack AI capability — from chatbots to custom enterprise AI architectures
+- Trusted by organizations including Solvari, Dutch Ministry of Defence, and 10+ SMEs
+
+## Locations
+- Netherlands (HQ)
+- Finland (Nordic operations)
+- UAE (Middle East operations)
+
+## Contact
+- Website: https://aetherlink.ai
+- Email: info@aetherlink.ai
+- Phone: +31 6 1377 2333
+- LinkedIn: https://www.linkedin.com/company/aetherlink/
+
+## Important URLs
+- Homepage (NL): https://aetherlink.ai/nl/
+- Homepage (EN): https://aetherlink.ai/en/
+- Homepage (FI): https://aetherlink.ai/fi/
+- AetherBot: https://aetherlink.ai/nl/aetherbot
+- AetherMIND: https://aetherlink.ai/nl/aethermind
+- AetherDEV: https://aetherlink.ai/nl/aetherdev
+- Terms & Conditions: https://aetherlink.ai/docs/algemene-voorwaarden.pdf

@@ -1,51 +1,60 @@
-// ElevenLabs voice IDs per language
-const VOICES = {
-  nl: "pNInz6obpgDQGcFmaJgB", // Adam - deep male, works well for Dutch
-  en: "21m00Tcm4TlvDq8ikWAM", // Rachel - clear female English
-  fi: "EXAVITQu4vr4xnSDxMaL", // Bella - works for Finnish
-};
+// AETHER-ASSIST TTS — ElevenLabs Text-to-Speech
+// Streams audio from ElevenLabs multilingual v2
 
-module.exports = async function handler(req, res) {
-  // CORS
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
+  const apiKey = process.env.ELEVENLABS_API_KEY;
+  if (!apiKey) return res.status(500).json({ error: 'TTS not configured' });
 
   try {
-    const { text, language = "nl" } = req.body;
+    const { text } = req.body;
 
-    if (!text || typeof text !== "string") {
-      return res.status(400).json({ error: "Text is required" });
+    if (!text || typeof text !== 'string') {
+      return res.status(400).json({ error: 'Text required' });
     }
 
-    // Trim text to reasonable length for TTS
-    const trimmedText = text.slice(0, 1000);
-    const voiceId = VOICES[language] || VOICES.nl;
+    // Strip markdown for cleaner speech
+    const cleanText = text
+      .replace(/\*\*(.+?)\*\*/g, '$1')       // bold
+      .replace(/\*(.+?)\*/g, '$1')            // italic
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // links → text only
+      .replace(/`([^`]+)`/g, '$1')            // inline code
+      .replace(/^[-*] /gm, '')                // list markers
+      .replace(/\n{2,}/g, '. ')               // paragraph breaks → pause
+      .trim();
+
+    if (!cleanText) {
+      return res.status(400).json({ error: 'No speakable text' });
+    }
+
+    // Limit text to ~500 chars for cost control
+    const trimmed = cleanText.length > 500
+      ? cleanText.slice(0, 497) + '...'
+      : cleanText;
+
+    const voiceId = process.env.ELEVENLABS_VOICE_ID || 'ErXwobaYiN019PkySvjV';
 
     const response = await fetch(
-      `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
+      `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}/stream`,
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "xi-api-key": process.env.ELEVENLABS_API_KEY,
-          "Content-Type": "application/json",
-          Accept: "audio/mpeg",
+          'Content-Type': 'application/json',
+          'xi-api-key': apiKey,
         },
         body: JSON.stringify({
-          text: trimmedText,
-          model_id: "eleven_multilingual_v2",
+          text: trimmed,
+          model_id: 'eleven_multilingual_v2',
           voice_settings: {
             stability: 0.5,
             similarity_boost: 0.75,
-            style: 0.0,
+            style: 0.3,
             use_speaker_boost: true,
           },
         }),
@@ -54,21 +63,29 @@ module.exports = async function handler(req, res) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("ElevenLabs error:", response.status, errorText);
-      return res
-        .status(response.status)
-        .json({ error: "TTS generation failed" });
+      console.error('ElevenLabs error:', response.status, errorText);
+      return res.status(502).json({ error: 'TTS service unavailable' });
     }
 
-    // Stream the audio response
-    res.setHeader("Content-Type", "audio/mpeg");
-    res.setHeader("Cache-Control", "no-cache");
+    res.setHeader('Content-Type', 'audio/mpeg');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Transfer-Encoding', 'chunked');
 
-    const arrayBuffer = await response.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    return res.send(buffer);
+    const reader = response.body.getReader();
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      res.write(Buffer.from(value));
+    }
+
+    res.end();
   } catch (error) {
-    console.error("TTS API error:", error.message);
-    return res.status(500).json({ error: "TTS service error" });
+    console.error('TTS error:', error);
+    if (!res.headersSent) {
+      res.status(500).json({ error: 'Internal server error' });
+    } else {
+      res.end();
+    }
   }
-};
+}

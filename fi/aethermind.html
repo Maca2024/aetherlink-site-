@@ -430,5 +430,6 @@
         document.querySelectorAll('#mobile-menu a[href^="#"]').forEach(a=>{a.addEventListener('click',()=>{if(menuOpen)toggleMenu()})});
         document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){const h=this.getAttribute('href');if(h==='#'||h==='#login')return;e.preventDefault();const t=document.querySelector(h);if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});
     </script>
+<script src="../js/chatbot.js"></script>
 </body>
 </html>

@@ -1679,8 +1679,84 @@
   const tricks = ['trick-spin', 'trick-jump', 'trick-flip', 'trick-dance', 'trick-wave', 'trick-moonwalk'];
   const trickDurations = { 'trick-spin': 800, 'trick-jump': 700, 'trick-flip': 1000, 'trick-dance': 1200, 'trick-wave': 900, 'trick-moonwalk': 1400 };
 
+  // ─── Gated Entrance: on homepages, wait for cinema done + scroll ───
+  const isHomepage = /\/(nl|en|fi)\/(index\.html)?$/.test(location.pathname);
+  let chatbotRevealed = !isHomepage; // sub-pages: show immediately
+  let cinemaDone = !isHomepage;      // sub-pages: no cinema to wait for
+  let hasScrolledPastHero = !isHomepage;
+
+  if (isHomepage) {
+    // Start hidden
+    btn.style.opacity = '0';
+    btn.style.pointerEvents = 'none';
+    btn.style.transition = 'opacity 1s ease, transform 0.15s ease';
+
+    // Listen for cinema end
+    window.addEventListener('rc-cinema-done', () => {
+      cinemaDone = true;
+      tryRevealChatbot();
+    }, { once: true });
+
+    // Fallback: if cinema never fires (e.g. reduced motion, mobile), reveal after 45s
+    setTimeout(() => {
+      if (!cinemaDone) {
+        cinemaDone = true;
+        tryRevealChatbot();
+      }
+    }, 45000);
+
+    // Listen for scroll past hero
+    const heroEl = document.getElementById('hero');
+    if (heroEl) {
+      const scrollObserver = new IntersectionObserver((entries) => {
+        // Hero is out of view = user scrolled past
+        if (!entries[0].isIntersecting) {
+          hasScrolledPastHero = true;
+          scrollObserver.disconnect();
+          tryRevealChatbot();
+        }
+      }, { threshold: 0.1 });
+      scrollObserver.observe(heroEl);
+    } else {
+      // No hero? fallback: scroll listener
+      const onScroll = () => {
+        if (window.scrollY > window.innerHeight * 0.5) {
+          hasScrolledPastHero = true;
+          window.removeEventListener('scroll', onScroll);
+          tryRevealChatbot();
+        }
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+  }
+
+  function tryRevealChatbot() {
+    if (chatbotRevealed || !cinemaDone || !hasScrolledPastHero) return;
+    chatbotRevealed = true;
+    // Fade in the chatbot
+    btn.style.opacity = '1';
+    btn.style.pointerEvents = '';
+    // Start walking
+    btn.classList.add('walking');
+    lastWalkTime = 0;
+    walkTimer = requestAnimationFrame(walkStep);
+    scheduleIdleStop();
+    scheduleDepthWalk();
+    // Show greeting after fade-in
+    setTimeout(() => {
+      if (!isOpen && !hasGreeted) {
+        hasGreeted = true;
+        const greetText = (speechTexts[lang] || speechTexts.nl).greeting;
+        showSpeechBubble(greetText, false, true);
+      }
+    }, 1500);
+  }
+
   btn.style.transform = `translateX(${walkX}px)`;
-  btn.classList.add('walking');
+  // Only auto-start walking on non-homepage (homepage waits for reveal)
+  if (!isHomepage) {
+    btn.classList.add('walking');
+  }
 
   function updateBtnTransform() {
     btn.style.transform = `translateX(${walkX}px) scale(${depthScale})`;
@@ -1741,7 +1817,10 @@
     walkTimer = requestAnimationFrame(walkStep);
   }
 
-  walkTimer = requestAnimationFrame(walkStep);
+  // Auto-start walk loop only on non-homepage (homepage waits for reveal)
+  if (!isHomepage) {
+    walkTimer = requestAnimationFrame(walkStep);
+  }
 
   // ─── Smoke Puffs ───
   function spawnPuff(x, fromLeft) {
@@ -1903,7 +1982,7 @@
       }, idleDuration);
     }, nextPause);
   }
-  scheduleIdleStop();
+  if (!isHomepage) scheduleIdleStop();
 
   // ─── Depth Walk — Turn around and walk into/out of the screen ───
   function scheduleDepthWalk() {
@@ -1975,7 +2054,7 @@
       }, 500);
     }, nextDepth);
   }
-  scheduleDepthWalk();
+  if (!isHomepage) scheduleDepthWalk();
 
   function resetDepthWalk() {
     depthPhase = 'normal';
@@ -1983,19 +2062,21 @@
     btn.classList.remove('walking-away', 'walking-toward', 'depth-turning');
   }
 
-  // Initial greeting — special first bubble, then random help
+  // Initial greeting — on sub-pages show after 2.5s; on homepages handled by tryRevealChatbot
   let hasGreeted = false;
-  setTimeout(() => {
-    if (!isOpen && !hasGreeted) {
-      hasGreeted = true;
-      const greetText = (speechTexts[lang] || speechTexts.nl).greeting;
-      showSpeechBubble(greetText, false, true);
-    }
-  }, 2500);
-  // Second bubble after 14s if user hasn't clicked yet
-  setTimeout(() => {
-    if (!isOpen && hasGreeted) showRandomHelp();
-  }, 14000);
+  if (!isHomepage) {
+    setTimeout(() => {
+      if (!isOpen && !hasGreeted) {
+        hasGreeted = true;
+        const greetText = (speechTexts[lang] || speechTexts.nl).greeting;
+        showSpeechBubble(greetText, false, true);
+      }
+    }, 2500);
+    // Second bubble after 14s if user hasn't clicked yet
+    setTimeout(() => {
+      if (!isOpen && hasGreeted) showRandomHelp();
+    }, 14000);
+  }
 
   window.addEventListener('resize', () => {
     const maxX = window.innerWidth - 80;

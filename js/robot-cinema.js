@@ -1051,6 +1051,9 @@
     await wait(2200);
     robot.style.display = 'none';
 
+    // Signal that the cinema is done — chatbot can now appear
+    window.dispatchEvent(new CustomEvent('rc-cinema-done'));
+
     // Show replay button
     const replay = stage.querySelector('.rc-replay');
     if (replay) replay.classList.add('rc-visible');

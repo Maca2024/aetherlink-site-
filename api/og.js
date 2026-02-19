@@ -1,21 +1,18 @@
 import satori from 'satori';
 import { Resvg, initWasm } from '@resvg/resvg-wasm';
-import { readFileSync } from 'fs';
-import { join } from 'path';
 
-// Cache font data and WASM init state
+// Cache across warm invocations
 let fontData = null;
 let wasmInitialized = false;
 
 async function initResvg() {
   if (wasmInitialized) return;
   try {
-    const wasmPath = join(process.cwd(), 'node_modules', '@resvg', 'resvg-wasm', 'index_bg.wasm');
-    const wasmBuffer = readFileSync(wasmPath);
+    const wasmRes = await fetch('https://unpkg.com/@resvg/resvg-wasm@2.6.2/index_bg.wasm');
+    const wasmBuffer = await wasmRes.arrayBuffer();
     await initWasm(wasmBuffer);
     wasmInitialized = true;
   } catch (e) {
-    // Already initialized in a previous invocation
     if (e.message && e.message.includes('Already initialized')) {
       wasmInitialized = true;
     } else {

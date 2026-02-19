@@ -1,8 +1,28 @@
 import satori from 'satori';
-import { Resvg } from '@resvg/resvg-js';
+import { Resvg, initWasm } from '@resvg/resvg-wasm';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
-// Cache font data across invocations
+// Cache font data and WASM init state
 let fontData = null;
+let wasmInitialized = false;
+
+async function initResvg() {
+  if (wasmInitialized) return;
+  try {
+    const wasmPath = join(process.cwd(), 'node_modules', '@resvg', 'resvg-wasm', 'index_bg.wasm');
+    const wasmBuffer = readFileSync(wasmPath);
+    await initWasm(wasmBuffer);
+    wasmInitialized = true;
+  } catch (e) {
+    // Already initialized in a previous invocation
+    if (e.message && e.message.includes('Already initialized')) {
+      wasmInitialized = true;
+    } else {
+      throw e;
+    }
+  }
+}
 
 async function loadFont() {
   if (fontData) return fontData;
@@ -44,7 +64,7 @@ export default async function handler(req, res) {
     const sub = customSub || meta.sub;
     const accent = meta.accent || '#00C9A7';
 
-    const font = await loadFont();
+    const [font] = await Promise.all([loadFont(), initResvg()]);
 
     const svg = await satori(
       {

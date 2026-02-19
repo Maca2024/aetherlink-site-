@@ -1,28 +1,46 @@
 # AetherLink.ai
 
-> Europe's AI One-Stop-Shop — AI Assistants, Consultancy & Custom Development
+> Europe's AI One-Stop-Shop — AI Lead Architecture, Consultancy, Training & Custom Development
 
 ## What is AetherLink?
-AetherLink.ai is a European AI consultancy and development company headquartered in the Netherlands with operations in Finland and the UAE. Founded in 2019, AetherLink specializes in AI Lead Architecture, Agentic AI implementation, and AI change management. The company makes artificial intelligence accessible for businesses of all sizes through three core services: AetherBot (AI chatbot platform), AetherMIND (AI consultancy & training), and AetherDEV (custom AI development).
+AetherLink.ai is a European AI consultancy and development company headquartered in the Netherlands with operations in Finland and the UAE. Founded in 2019, AetherLink specializes in AI Lead Architecture, Agentic AI implementation, AI consultancy, and AI change management. The company makes artificial intelligence accessible for businesses of all sizes through five core offerings: AI Lead Architecture (fractional AI architect services), AetherBot (AI chatbot platform), AetherMIND (AI consultancy & training), AetherDEV (custom AI development), and AI Change Management (human-centered AI transformation).
 
 ## Team
-- Marco — CTO & AI Lead Architect. 5+ years AI experience, specialist in autonomous AI agents, agentic workflows, RAG systems, and AI platform architecture.
+- Marco — CTO & AI Lead Architect. 5+ years AI experience, specialist in autonomous AI agents, agentic workflows, RAG systems, AI platform architecture, and AI strategy for organizations.
 - Constance — CEO. Organization strategy and business development.
 - Ronald — CCO/CFO. Commercial operations and finance.
 
 ## Core Services
 
+### AI Lead Architecture — Fractional AI Architect
+AetherLink provides Fractional AI Lead Architecture: senior AI expertise without full-time employment. An AI Lead Architect designs, guides and implements the complete AI strategy and technical architecture of an organization. From agentic AI workflows to RAG systems, we build the AI backbone of your organization. Our 6-phase methodology covers Discovery, Architecture, Prototype, Build, Launch, and Optimize.
+- URL (NL): https://aetherlink.ai/nl/ai-lead-architect
+- URL (EN): https://aetherlink.ai/en/ai-lead-architect
+
+### AI Consultancy — Strategy, Training & Implementation
+Strategic AI advice that goes beyond technology. AI Readiness Scans, AI strategy development, team enablement workshops, co-intelligence programs, and implementation guidance. From first exploration to successful AI adoption.
+- URL (NL): https://aetherlink.ai/nl/ai-consultancy
+- URL (EN): https://aetherlink.ai/en/ai-consultancy
+
+### AI Change Management — Human-Centered AI Transformation
+Human-centered guidance through AI transformation. Building buy-in, overcoming resistance, ensuring sustainable AI adoption. Our 5-step model: Awareness, Understanding, Acceptance, Usage, Optimization.
+- URL (NL): https://aetherlink.ai/nl/ai-verandermanagement
+- URL (EN): https://aetherlink.ai/en/ai-change-management
+
 ### AetherBot — AI Chatbot Platform
 Ready-to-use AI chatbots for websites. Trained on your company knowledge, live in minutes, available 24/7. Multilingual, GDPR-compliant, EU AI Act compliant. Pricing from €49/month (Starter) to €599/month (Professional), with custom Enterprise plans.
-- URL: https://aetherlink.ai/nl/aetherbot
+- URL (NL): https://aetherlink.ai/nl/aetherbot
+- URL (EN): https://aetherlink.ai/en/aetherbot
 
 ### AetherMIND — AI Consultancy & Training
-AI strategy, advisory, and team training. Services include AI Readiness Scans, AI strategy development, team enablement workshops, and AI change management guidance. From first exploration to successful implementation.
-- URL: https://aetherlink.ai/nl/aethermind
+AI strategy, advisory, and team training. Services include AI Readiness Scans, AI strategy development, team enablement workshops, and AI change management guidance.
+- URL (NL): https://aetherlink.ai/nl/aethermind
+- URL (EN): https://aetherlink.ai/en/aethermind
 
 ### AetherDEV — Custom AI Development
 Bespoke AI applications, automations, and platforms. From idea to working product. Capabilities include agentic AI workflows, RAG systems, AI-powered dashboards, process automation, and custom integrations.
-- URL: https://aetherlink.ai/nl/aetherdev
+- URL (NL): https://aetherlink.ai/nl/aetherdev
+- URL (EN): https://aetherlink.ai/en/aetherdev
 
 ## Technology Expertise
 - AI Platforms: Claude (Anthropic), GPT (OpenAI), Gemini (Google), Grok (xAI), Mistral
@@ -30,12 +48,28 @@ Bespoke AI applications, automations, and platforms. From idea to working produc
 - Frameworks: LangGraph, MCP Servers, Agentic AI Workflows, RAG Systems
 - Compliance: EU AI Act, GDPR/AVG, responsible AI practices
 
+## Key Expertise Areas
+- AI Lead Architecture & AI Strategy
+- Agentic AI & Autonomous AI Agents
+- RAG (Retrieval-Augmented Generation) Systems
+- AI Change Management & AI Adoption
+- AI Training & Team Enablement
+- Co-intelligence: Human-AI Collaboration
+- EU AI Act Compliance
+
 ## Differentiators
 - 5+ years of hands-on AI experience (since 2019)
 - EU AI Act compliant — all solutions meet European AI regulations
 - Multilingual platform — Dutch, English, Finnish
 - Full-stack AI capability — from chatbots to custom enterprise AI architectures
-- Trusted by organizations including Solvari, Dutch Ministry of Defence, and 10+ SMEs
+- Fractional AI Lead Architecture — senior expertise without full-time cost
+- Human-centered approach — technology serving people, not replacing them
+- Trusted by organizations including Solvari, Dutch Ministry of Defence, and 15+ SMEs
+
+## Notable Projects
+- Solvari ANTIGRAVITY: 21 AI-agents built within 12 weeks (Supabase, n8n, Pinecone architecture)
+- Dutch Ministry of Defence: AI advisory and implementation
+- 10+ SME chatbot deployments across Netherlands and Finland
 
 ## Locations
 - Netherlands (HQ)
@@ -47,11 +81,18 @@ Bespoke AI applications, automations, and platforms. From idea to working produc
 - Email: info@aetherlink.ai
 - Phone: +31 6 1377 2333
 - LinkedIn: https://www.linkedin.com/company/aetherlink/
+- Consultation: https://calendly.com/aetherlink
 
 ## Important URLs
 - Homepage (NL): https://aetherlink.ai/nl/
 - Homepage (EN): https://aetherlink.ai/en/
 - Homepage (FI): https://aetherlink.ai/fi/
+- AI Lead Architect (NL): https://aetherlink.ai/nl/ai-lead-architect
+- AI Lead Architect (EN): https://aetherlink.ai/en/ai-lead-architect
+- AI Consultancy (NL): https://aetherlink.ai/nl/ai-consultancy
+- AI Consultancy (EN): https://aetherlink.ai/en/ai-consultancy
+- AI Verandermanagement (NL): https://aetherlink.ai/nl/ai-verandermanagement
+- AI Change Management (EN): https://aetherlink.ai/en/ai-change-management
 - AetherBot: https://aetherlink.ai/nl/aetherbot
 - AetherMIND: https://aetherlink.ai/nl/aethermind
 - AetherDEV: https://aetherlink.ai/nl/aetherdev

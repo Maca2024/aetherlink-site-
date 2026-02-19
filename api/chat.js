@@ -65,6 +65,33 @@ Contact: info@aetherlink.ai | +31 6 1377 2333
    - URL: https://aetherlink.ai/nl/aetherdev
 </services>
 
+<expertise>
+4. AI Lead Architecture — Fractional AI Architect
+   - Senior AI-architectuur expertise zonder fulltime aanstelling
+   - Een AI Lead Architect ontwerpt, begeleidt en implementeert de complete AI-strategie en technische architectuur
+   - Van agentic AI workflows tot RAG-systemen — wij bouwen de AI-backbone van uw organisatie
+   - 6-fasen methodologie: Discovery, Architecture, Prototype, Build, Launch, Optimize
+   - Marco, onze CTO, is specialist met 5+ jaar ervaring in autonome AI-agents en platformarchitectuur
+   - URL NL: https://aetherlink.ai/nl/ai-lead-architect
+   - URL EN: https://aetherlink.ai/en/ai-lead-architect
+
+5. AI Consultancy — Strategie, Training & Implementatie
+   - Strategisch AI-advies dat verder gaat dan technologie
+   - AI Readiness Scans, strategieontwikkeling, team-enablement workshops
+   - Co-intelligence programma's: mens + AI samenwerking optimaliseren
+   - Van eerste verkenning tot succesvolle AI-adoptie
+   - URL NL: https://aetherlink.ai/nl/ai-consultancy
+   - URL EN: https://aetherlink.ai/en/ai-consultancy
+
+6. AI Verandermanagement — Mensgerichte AI Transformatie
+   - Mensgerichte begeleiding door AI-transformatie
+   - Draagvlak creëren, weerstand overwinnen, duurzame adoptie borgen
+   - 5-stappen model: Bewustwording, Begrip, Acceptatie, Gebruik, Optimalisatie
+   - Cultuur en leiderschap centraal bij AI-verandering
+   - URL NL: https://aetherlink.ai/nl/ai-verandermanagement
+   - URL EN: https://aetherlink.ai/en/ai-change-management
+</expertise>
+
 <differentiators>
 - 5+ jaar hands-on AI-ervaring (sinds 2019)
 - EU AI Act compliant — alle oplossingen voldoen aan Europese AI-wetgeving
@@ -141,6 +168,21 @@ const PAGE_CONTEXT = {
     nl: 'De bezoeker bekijkt de AetherDEV pagina — maatwerk AI-ontwikkeling. Ze zijn waarschijnlijk geïnteresseerd in custom AI-oplossingen.',
     en: 'The visitor is viewing the AetherDEV page — custom AI development. They are likely interested in bespoke AI solutions.',
     fi: 'Vierailija on AetherDEV-sivulla — räätälöity tekoälykehitys. He ovat todennäköisesti kiinnostuneita räätälöidyistä tekoälyratkaisuista.',
+  },
+  'ai-lead-architect': {
+    nl: 'De bezoeker bekijkt de AI Lead Architect pagina — fractional AI-architectuur. Ze zijn waarschijnlijk geïnteresseerd in senior AI-expertise op flexibele basis.',
+    en: 'The visitor is viewing the AI Lead Architect page — fractional AI architecture. They are likely interested in senior AI expertise on a flexible basis.',
+    fi: 'Vierailija on AI Lead Architect -sivulla — fraktionaalinen tekoälyarkkitehtuuri. He ovat todennäköisesti kiinnostuneita senior-tason tekoälyosaamisesta joustavasti.',
+  },
+  'ai-consultancy': {
+    nl: 'De bezoeker bekijkt de AI Consultancy pagina — AI-strategie, training en implementatie. Ze zijn waarschijnlijk geïnteresseerd in strategisch AI-advies voor hun organisatie.',
+    en: 'The visitor is viewing the AI Consultancy page — AI strategy, training and implementation. They are likely interested in strategic AI advice for their organisation.',
+    fi: 'Vierailija on tekoälykonsultointi-sivulla — tekoälystrategia, koulutus ja toteutus. He ovat todennäköisesti kiinnostuneita strategisesta tekoälyneuvonnasta.',
+  },
+  'ai-verandermanagement': {
+    nl: 'De bezoeker bekijkt de AI Verandermanagement pagina — mensgerichte AI-transformatie. Ze zijn waarschijnlijk geïnteresseerd in hoe ze hun organisatie door AI-verandering kunnen leiden.',
+    en: 'The visitor is viewing the AI Change Management page — human-centred AI transformation. They are likely interested in how to lead their organisation through AI change.',
+    fi: 'Vierailija on tekoälyn muutoshallinta -sivulla — ihmiskeskeinen tekoälymuutos. He ovat todennäköisesti kiinnostuneita organisaationsa ohjaamisesta tekoälymuutoksen läpi.',
   },
 };
 

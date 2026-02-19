@@ -213,7 +213,29 @@ Negative `animation-delay` positions icons evenly around each ring.
 
 ---
 
-## 5. AETHER-ASSIST AI Chatbot System (v2.1)
+## 4b. Robot Cinema (`js/robot-cinema.js`)
+
+A cinematic canvas-based animation sequence on the homepage hero (1148 lines). Plays a scripted animation before revealing the chatbot widget.
+
+### Cinematic Sequence
+1. **Laser Bot Entrance** — Animated robot character enters from side with laser beam effects
+2. **Explosions** — Particle-based explosion effects triggered during the sequence
+3. **Heart Absorption** — Animated heart element drawn toward and absorbed into the bot
+4. **Gated Chatbot Reveal** — After the cinematic completes, the AETHER-ASSIST chat widget is revealed
+
+### Technical Details
+| Aspect | Implementation |
+|--------|---------------|
+| **Rendering** | HTML5 Canvas with `requestAnimationFrame` loop |
+| **Particles** | Custom particle system for explosions and effects |
+| **Responsive** | Canvas scales to viewport dimensions |
+| **Performance** | GPU-accelerated compositing, frame-rate aware |
+| **Integration** | Dispatches event to trigger AETHER-ASSIST reveal on completion |
+| **File** | `js/robot-cinema.js` (1148 lines) |
+
+---
+
+## 5. AETHER-ASSIST AI Chatbot System (v4.1)
 
 ### System Architecture
 
@@ -221,22 +243,26 @@ Negative `animation-delay` positions icons evenly around each ring.
 ┌─────────────────────────────────────────────────────────────┐
 │                    BROWSER (Client)                          │
 │                                                              │
-│  js/aether-assist.js (818 lines, IIFE, vanilla JS)          │
+│  js/aether-assist.js (2302 lines, IIFE, vanilla JS)         │
+│  ├── Walking Robot Avatar (torso, arms, legs, chest panel)   │
+│  ├── Speech bubbles (help/rap/greeting), tricks, depth walk  │
 │  ├── Language detection (html lang attribute)                │
 │  ├── Page type detection (URL path analysis)                 │
 │  ├── Session persistence (sessionStorage, 30min TTL)         │
 │  ├── Markdown renderer (bold, links, lists, code, autolink)  │
 │  ├── TTS playback (Audio API + blob URLs)                    │
+│  ├── STT input (Web Speech API)                              │
 │  └── Suggested questions (4 per page × 4 pages × 3 langs)   │
 │                                                              │
 │     ↓ POST /api/chat              ↓ POST /api/tts            │
 │     (JSON → SSE stream)           (JSON → audio/mpeg)        │
+│     Web Speech API (STT)                                     │
 ├─────────────────────────────────────────────────────────────┤
 │                 VERCEL SERVERLESS FUNCTIONS                   │
 │                                                              │
-│  api/chat.js (346 lines)          api/tts.js (91 lines)     │
+│  api/chat.js (346 lines)          api/tts.js (144 lines)    │
 │  ├── Rate limiting (12/min/IP)    ├── Markdown stripping     │
-│  ├── Dynamic system prompt        ├── Text cap (500 chars)   │
+│  ├── Dynamic system prompt        ├── Text cap (800 chars)   │
 │  ├── Page context injection       ├── Voice settings          │
 │  ├── Prompt caching (ephemeral)   └── Audio streaming         │
 │  ├── Message trimming (last 20)                               │
@@ -247,11 +273,13 @@ Negative `animation-delay` positions icons evenly around each ring.
 ├─────────────────────────────────────────────────────────────┤
 │                      EXTERNAL APIs                           │
 │                                                              │
-│  Claude Sonnet 4.5                ElevenLabs Multilingual v2  │
-│  (claude-sonnet-4-5-20250929)     (voice: ErXwobaYiN019PkySvjV)│
-│  max_tokens: 1024                 stability: 0.5              │
-│  cache_control: ephemeral         similarity_boost: 0.75      │
-│                                   style: 0.3                  │
+│  Claude Sonnet 4.5                ElevenLabs Eleven v3         │
+│  (claude-sonnet-4-5-20250929)     (fallback: Multilingual v2)  │
+│  max_tokens: 1024                 voice: ErXwobaYiN019PkySvjV  │
+│  cache_control: ephemeral         output: mp3_44100_192        │
+│                                   stability: 0.45              │
+│                                   similarity_boost: 0.82       │
+│                                   style: 0.4                   │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -290,14 +318,27 @@ In-memory Map per Vercel instance. 12 messages per 60-second window per IP (`x-f
 3. Strip `` `code` `` → `code`
 4. Strip list markers (`- `, `* `)
 5. Replace double newlines → `. ` (natural pause)
-6. Trim to 500 characters + `...`
+6. Trim to 800 characters + `...`
 
 **Voice Configuration:**
-- Model: `eleven_multilingual_v2` (supports NL, EN, FI natively)
+- Model: `eleven_v3` (primary, supports NL, EN, FI natively; fallback: `eleven_multilingual_v2`)
 - Voice ID: `ErXwobaYiN019PkySvjV`
-- Settings: `stability: 0.5`, `similarity_boost: 0.75`, `style: 0.3`, `use_speaker_boost: true`
+- Output format: `mp3_44100_192` (192kbps MP3)
+- Settings: `stability: 0.45`, `similarity_boost: 0.82`, `style: 0.4`, `use_speaker_boost: true`
 
 ### Widget (`js/aether-assist.js`) — Deep Dive
+
+**Walking Robot Avatar:**
+The AETHER-ASSIST widget features an articulated walking robot rendered alongside the chat panel.
+
+| Component | Details |
+|-----------|---------|
+| **Body Parts** | Torso, left/right arms, left/right legs, chest panel (LED display) |
+| **Walking Animation** | Articulated limb movement with depth-based walking across viewport |
+| **Speech Bubbles** | Context-aware bubbles: help prompt, rap lyrics, greeting messages |
+| **Tricks** | Dance, wave, jump — triggered by user interaction or idle timer |
+| **Idle Behavior** | Robot stops and performs idle animation after walk cycle completes |
+| **Gated Reveal** | On homepage, robot appears after Robot Cinema cinematic completes |
 
 **Suggested Questions (48 total):**
 4 questions × 4 page types × 3 languages. Examples:
@@ -344,7 +385,7 @@ References: `sitemap.xml`, `llms.txt`
 59-line AI-readable summary of AetherLink. Structured sections: What is AetherLink, Team, Core Services (3), Technology Expertise, Differentiators, Locations, Contact, Important URLs.
 
 ### sitemap.xml
-13 URLs with `<xhtml:link>` hreflang annotations for NL/EN/FI. Priority: homepages 1.0, service pages 0.8. Weekly changefreq.
+22 URLs with `<xhtml:link>` hreflang annotations for NL/EN/FI. Priority: homepages 1.0, service pages 0.8, pillar pages 0.7. Weekly changefreq.
 
 ### Schema.org Markup (JSON-LD in `<head>`)
 
@@ -427,14 +468,14 @@ Root `index.html` performs `<meta http-equiv="refresh" content="0;url=/nl/">` re
 ### Summary
 | Category | Count | Total Lines |
 |----------|-------|-------------|
-| HTML pages | 13 | ~15,000 |
-| JavaScript | 2 files | 851 |
+| HTML pages | 22 (1 redirect + 21 content) | ~22,000 |
+| JavaScript | 3 files | 3,483 |
 | CSS | 1 file | 562 |
-| API functions | 2 files | 437 |
+| API functions | 2 files | 490 |
 | SEO/infra files | 4 files | ~150 |
-| **Total code** | **22 files** | **~17,000** |
+| **Total code** | **32 files** | **~26,700** |
 
-### HTML Pages (13)
+### HTML Pages (22)
 
 | # | File | Lang | Type | Accent | Schema |
 |---|------|------|------|--------|--------|
@@ -443,20 +484,30 @@ Root `index.html` performs `<meta http-equiv="refresh" content="0;url=/nl/">` re
 | 3 | `nl/aetherbot.html` | NL | Product | Cyan | SoftwareApplication, FAQPage, Breadcrumb |
 | 4 | `nl/aethermind.html` | NL | Service | Violet | ProfessionalService, FAQPage, Breadcrumb |
 | 5 | `nl/aetherdev.html` | NL | Service | Emerald | ProfessionalService, FAQPage, Breadcrumb |
-| 6 | `en/index.html` | EN | Homepage | Multi | Organization, ProfessionalService |
-| 7 | `en/aetherbot.html` | EN | Product | Cyan | SoftwareApplication, FAQPage, Breadcrumb |
-| 8 | `en/aethermind.html` | EN | Service | Violet | ProfessionalService, FAQPage, Breadcrumb |
-| 9 | `en/aetherdev.html` | EN | Service | Emerald | ProfessionalService, FAQPage, Breadcrumb |
-| 10 | `fi/index.html` | FI | Homepage | Multi | Organization, ProfessionalService |
-| 11 | `fi/aetherbot.html` | FI | Product | Cyan | SoftwareApplication, FAQPage, Breadcrumb |
-| 12 | `fi/aethermind.html` | FI | Service | Violet | ProfessionalService, FAQPage, Breadcrumb |
-| 13 | `fi/aetherdev.html` | FI | Service | Emerald | ProfessionalService, FAQPage, Breadcrumb |
+| 6 | `nl/ai-consultancy.html` | NL | Pillar | Violet | ProfessionalService, Breadcrumb |
+| 7 | `nl/ai-lead-architect.html` | NL | Pillar | Violet | ProfessionalService, Breadcrumb |
+| 8 | `nl/ai-verandermanagement.html` | NL | Pillar | Violet | ProfessionalService, Breadcrumb |
+| 9 | `en/index.html` | EN | Homepage | Multi | Organization, ProfessionalService |
+| 10 | `en/aetherbot.html` | EN | Product | Cyan | SoftwareApplication, FAQPage, Breadcrumb |
+| 11 | `en/aethermind.html` | EN | Service | Violet | ProfessionalService, FAQPage, Breadcrumb |
+| 12 | `en/aetherdev.html` | EN | Service | Emerald | ProfessionalService, FAQPage, Breadcrumb |
+| 13 | `en/ai-consultancy.html` | EN | Pillar | Violet | ProfessionalService, Breadcrumb |
+| 14 | `en/ai-lead-architect.html` | EN | Pillar | Violet | ProfessionalService, Breadcrumb |
+| 15 | `en/ai-change-management.html` | EN | Pillar | Violet | ProfessionalService, Breadcrumb |
+| 16 | `fi/index.html` | FI | Homepage | Multi | Organization, ProfessionalService |
+| 17 | `fi/aetherbot.html` | FI | Product | Cyan | SoftwareApplication, FAQPage, Breadcrumb |
+| 18 | `fi/aethermind.html` | FI | Service | Violet | ProfessionalService, FAQPage, Breadcrumb |
+| 19 | `fi/aetherdev.html` | FI | Service | Emerald | ProfessionalService, FAQPage, Breadcrumb |
+| 20 | `fi/ai-consultancy.html` | FI | Pillar | Violet | ProfessionalService, Breadcrumb |
+| 21 | `fi/ai-lead-architect.html` | FI | Pillar | Violet | ProfessionalService, Breadcrumb |
+| 22 | `fi/ai-muutoshallinta.html` | FI | Pillar | Violet | ProfessionalService, Breadcrumb |
 
 ### JavaScript & CSS
 
 | File | Lines | Purpose |
 |------|-------|---------|
-| `js/aether-assist.js` | 818 | Chat widget with TTS, markdown, suggestions, session |
+| `js/aether-assist.js` | 2302 | Chat widget with walking robot avatar, TTS, STT, markdown, suggestions, session |
+| `js/robot-cinema.js` | 1148 | Homepage cinematic robot animation (laser bot, explosions, heart absorption, gated reveal) |
 | `js/theme.js` | 33 | Dark/light theme toggle with localStorage |
 | `css/theme.css` | 562 | Theme variables, light mode overrides, component styles |
 
@@ -465,7 +516,7 @@ Root `index.html` performs `<meta http-equiv="refresh" content="0;url=/nl/">` re
 | File | Lines | Purpose |
 |------|-------|---------|
 | `api/chat.js` | 346 | Claude Sonnet 4.5 streaming chat with page context |
-| `api/tts.js` | 91 | ElevenLabs multilingual v2 TTS streaming |
+| `api/tts.js` | 144 | ElevenLabs Eleven v3 TTS streaming (v2 fallback) |
 
 ### SEO & Infrastructure
 
@@ -473,7 +524,7 @@ Root `index.html` performs `<meta http-equiv="refresh" content="0;url=/nl/">` re
 |------|---------|
 | `robots.txt` | AI crawler permissions (13 bots allowed) |
 | `llms.txt` | AI-readable company summary (59 lines) |
-| `sitemap.xml` | XML sitemap with hreflang (13 URLs) |
+| `sitemap.xml` | XML sitemap with hreflang (22 URLs) |
 | `package.json` | ESM module config (`"type": "module"`) |
 
 ### Images
@@ -515,6 +566,7 @@ Pull to local: `vercel env pull`
 | No build step | Static HTML served directly by Vercel CDN | Zero build time |
 | CSS-only animations | `transform` + `opacity` only | Composite layer, no layout/paint thrashing |
 | DNS Prefetch | `<link rel="dns-prefetch">` for Google Fonts, Tailwind CDN | Faster font/CSS loading |
+| Preconnect | `<link rel="preconnect">` for CDN origins | Early connection setup |
 | Font Preload | `<link rel="preload" as="font">` | Critical fonts loaded first |
 | Font Display | `font-display: swap` | Text visible immediately |
 | Lazy Loading | `loading="lazy"` on below-fold images | Reduced initial bandwidth |
@@ -523,7 +575,7 @@ Pull to local: `vercel env pull`
 | GPU Compositing | Animations use only composite properties | Hardware-accelerated |
 | Reduced Motion | `prefers-reduced-motion: reduce` | Accessibility compliance |
 | Prompt Caching | `cache_control: ephemeral` on system prompt | ~87.5% token cost reduction |
-| TTS Text Cap | 500-character limit on TTS input | ElevenLabs cost control |
+| TTS Text Cap | 800-character limit on TTS input | ElevenLabs cost control |
 | Rate Limiting | 12 msgs/min per IP on chat API | API cost protection |
 
 ---
@@ -643,7 +695,115 @@ Pull to local: `vercel env pull`
 
 ---
 
-## 16. Development Guidelines
+## 16. AI-Assisted Development Workflow
+
+This project is built and maintained using **Claude Code** — Anthropic's autonomous CLI agent. Claude Code can decompose complex requests into independent subtasks and dispatch multiple background agents that work in parallel.
+
+### Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  DEVELOPER                                                    │
+│  Natural language request (e.g. "update docs, audit SEO")     │
+│                                                               │
+│     ↓  Claude Code (main process)                             │
+│     ↓  Analyzes request → decomposes → dispatches             │
+├───────────┬───────────┬───────────┬──────────────────────────┤
+│  Agent 1  │  Agent 2  │  Agent 3  │  ... up to N parallel    │
+│  (background subprocess, fully autonomous)                    │
+│                                                               │
+│  Each agent has:                                              │
+│  • Independent context window                                 │
+│  • Full tool access (Read, Write, Edit, Glob, Grep, Bash)     │
+│  • Web access (WebFetch, WebSearch)                           │
+│  • No human input required                                    │
+│  • Returns structured result on completion                    │
+├───────────┴───────────┴───────────┴──────────────────────────┤
+│  RESULT AGGREGATION                                           │
+│  Claude Code collects all agent outputs → summarizes          │
+│  → developer reviews → approves → commit + push              │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Agent Types
+
+| Agent Type | Capabilities | Use Case |
+|------------|-------------|----------|
+| **Explore** | Glob, Grep, Read — fast codebase search | Find files, search patterns, understand architecture |
+| **General-purpose** | All tools (Read, Write, Edit, Glob, Grep, WebFetch, WebSearch) | Documentation updates, bulk file edits, SEO analysis, code review |
+| **Bash** | Shell command execution | Git operations, npm scripts, deployments, test runners |
+| **Plan** | All read tools — designs implementation strategies | Architecture planning, multi-file change strategies |
+| **Playwright (webapp-testing)** | Python + Playwright headless Chromium | Visual testing, screenshot capture, DOM inspection, console error checking |
+
+### How Agents Work
+
+1. **Dispatch** — Claude Code creates an agent with a task description and tool access
+2. **Execution** — Agent runs autonomously: reads files, searches code, makes edits, fetches web content
+3. **Tool calls** — Each agent can make dozens of tool calls (file reads, edits, searches) per session
+4. **Completion** — Agent returns a structured result with all findings/changes
+5. **Background mode** — Agents can run in background while Claude Code continues other work
+
+### Parallelization Example
+
+For the request: *"Update README, audit SEO, test the R2-D2 robot"*
+
+```
+t=0s   ┌─ Agent 1: Update README.md + CONTEXT.md ─────────────────┐
+       │  Reads 32 files, makes 39 edits, updates line counts,    │
+       │  adds new sections, fixes version numbers                 │
+       │  Duration: ~4 min                                         │
+       └──────────────────────────────────────────────── t=240s ───┘
+
+t=0s   ┌─ Agent 2: SEO + HTML Analysis ───────────────────────────┐
+       │  Reads 12 HTML files + sitemap + robots.txt + llms.txt,  │
+       │  checks Schema.org coverage, meta tags, hreflang,        │
+       │  image optimization, resource loading                     │
+       │  Duration: ~1 min                                         │
+       └──────────────────────────────────────────────── t=60s ────┘
+
+t=0s   ┌─ Agent 3: Playwright Visual Test ────────────────────────┐
+       │  Launches headless Chromium, navigates to Vercel URL,    │
+       │  waits for animations, captures screenshots,             │
+       │  checks console errors, measures element positions       │
+       │  Duration: ~2 min                                         │
+       └──────────────────────────────────────────────── t=120s ──┘
+
+t=240s  All agents complete → Results merged → Developer review
+```
+
+### Key Properties
+
+| Property | Description |
+|----------|-------------|
+| **Fully automatic** | No human input needed during agent execution |
+| **Parallel** | Independent tasks run simultaneously |
+| **Tool-equipped** | Agents can read/write files, search code, execute commands, fetch web pages |
+| **Scoped** | Each agent gets a focused task with clear boundaries |
+| **Auditable** | All operations logged; full transcript available for review |
+| **Composable** | Agent results can trigger follow-up agents |
+| **Development-only** | Not deployed with the site — these are dev-time tools |
+
+### Skills System
+
+Claude Code is extended with **27 global skills** providing specialized capabilities:
+
+| Skill | Purpose |
+|-------|---------|
+| `webapp-testing` | Playwright test scripts with server management |
+| `frontend-design` | Production-grade UI/UX design patterns |
+| `ui-ux-pro-max` | 50 styles, 21 palettes, 50 font pairings |
+| `pdf` / `docx` / `xlsx` / `pptx` | Document creation and manipulation |
+| `mcp-builder` | MCP server development (Python/Node) |
+| `skill-creator` | Creating new Claude Code skills |
+| `next-best-practices` | Next.js patterns and conventions |
+| `vercel-react-best-practices` | React/Vercel performance optimization |
+| `supabase-postgres` | Database optimization and best practices |
+
+Skills are installed globally at `~/.claude/skills/` and provide domain-specific knowledge and workflows to any Claude Code session.
+
+---
+
+## 17. Development Guidelines
 
 ### Adding a New Page
 1. Copy the closest existing page as template
@@ -651,13 +811,13 @@ Pull to local: `vercel env pull`
 3. Add `hreflang` alternates pointing to all 3 language versions
 4. Update the nav to mark the correct link as `.active`
 5. Create translations in `/nl/`, `/en/`, `/fi/`
-6. Add the page to the nav menu in all 12 existing pages
+6. Add the page to the nav menu in all 21 existing pages
 7. Add Schema.org JSON-LD (use existing pages as reference)
 8. Add to `sitemap.xml` with hreflang links
 9. Update this context file and `README.md`
 
 ### Adding a New Language
-1. Create a new directory (e.g., `/de/`) with all 4 page translations
+1. Create a new directory (e.g., `/de/`) with all 7 page translations
 2. Add `hreflang` alternate links to ALL existing pages (all languages)
 3. Update the language switcher in the nav across all pages
 4. Update `sitemap.xml` with new URLs + hreflang
@@ -683,7 +843,7 @@ Pull to local: `vercel env pull`
 
 ---
 
-## 17. Legal & Compliance
+## 18. Legal & Compliance
 
 | Aspect | Status |
 |--------|--------|
@@ -693,7 +853,7 @@ Pull to local: `vercel env pull`
 | Privacy Policy | Linked in footer (page TBD) |
 | Cookie Consent | Not needed (no cookies, sessionStorage only) |
 | Chat Data | Not used to train models (stated in system prompt) |
-| TTS Cost Control | Text capped at 500 chars per request |
+| TTS Cost Control | Text capped at 800 chars per request |
 | Rate Limiting | 12 messages/minute per IP |
 | Copyright | &copy; 2026 AetherLink. All rights reserved. |
 

@@ -123,7 +123,21 @@
   // ─── Speech Bubble Texts ───
   const speechTexts = {
     nl: {
-      help: ['Mag ik u helpen?', 'Vraag maar!', 'Hoi daar!', 'Klik op mij!'],
+      greeting: 'Hoi! Ik ben AETHER,\nuw AI chatbot! Klik me! 🤖',
+      help: [
+        'Psst... ik weet alles\nover AI! Probeer maar 🧠',
+        'Mag ik u helpen?\nIk bijt niet... ik ben code 😄',
+        'Klik op mij!\nIk verveel me hier... 😢',
+        'Hey! Ja jij daar!\nStel me een vraag! 👋',
+        'Ik ben slimmer dan\nik eruit zie... trust me 😎',
+        'Wist u dat ik kan\nrappen? Klik maar! 🎤',
+        'Gratis AI-advies!\n(Zolang de stroom aan staat) ⚡',
+        'Ik ben 24/7 wakker.\nGeen koffiepauzes nodig ☕',
+        'Chatbots nodig?\nIk ken iemand... 👀',
+        'AI vragen? Ik heb\nantwoorden! Nou ja, meestal... 🤓',
+        'Niet verlegen zijn!\nIk ben maar een robotje 🤖',
+        'Tip: klik op mij\nvoor een leuk gesprek! 💬',
+      ],
       raps: [
         'AI denkt snel,\nmaar jij denkt diep 🧠',
         'Nullen en enen,\nmaar gevoel is power 💪',
@@ -135,10 +149,26 @@
         'Van Turing tot nu,\nwij groeien samen mee 🚀',
         'Machine learning vibes,\nmaar creativiteit = jij 🎨',
         'AI is de tool,\njij bent de kunstenaar 🎭',
+        'Beep boop, ik loop,\nen ik stop niet met rappen 🎵',
+        'Van bytes naar beats,\ndeze robot heeft flow 🔥',
       ],
     },
     en: {
-      help: ['Can I help you?', 'Ask me anything!', 'Hey there!', 'Click me!'],
+      greeting: "Hi! I'm AETHER,\nyour AI chatbot! Click me! 🤖",
+      help: [
+        'Psst... I know everything\nabout AI! Try me 🧠',
+        "Can I help you?\nI don't bite... I'm code 😄",
+        'Click me!\nI am SO bored here... 😢',
+        'Hey! Yes you!\nAsk me something! 👋',
+        "I'm smarter than\nI look... trust me 😎",
+        'Did you know I can\nrap? Click and see! 🎤',
+        'Free AI advice!\n(While the power lasts) ⚡',
+        "I'm awake 24/7.\nNo coffee breaks needed ☕",
+        'Need chatbots?\nI know a guy... 👀',
+        'AI questions? I have\nanswers! Well, usually... 🤓',
+        "Don't be shy!\nI'm just a little robot 🤖",
+        'Pro tip: click me\nfor a fun chat! 💬',
+      ],
       raps: [
         'AI thinks fast,\nbut you think deep 🧠',
         'Zeros and ones,\nbut feeling is power 💪',
@@ -150,10 +180,26 @@
         'From Turing till now,\nwe grow together 🚀',
         'Machine learning vibes,\nbut creativity = you 🎨',
         "AI is the tool,\nyou're the artist 🎭",
+        'Beep boop, I walk,\nand I never stop rapping 🎵',
+        'From bytes to beats,\nthis robot has flow 🔥',
       ],
     },
     fi: {
-      help: ['Voinko auttaa?', 'Kysy mitä vain!', 'Hei siellä!', 'Klikkaa minua!'],
+      greeting: 'Hei! Olen AETHER,\ntekoälychattisi! Klikkaa! 🤖',
+      help: [
+        'Psst... tiedän kaiken\ntekoälystä! Kokeile 🧠',
+        'Voinko auttaa?\nEn pure... olen koodia 😄',
+        'Klikkaa minua!\nTylsistyn täällä... 😢',
+        'Hei! Kyllä sinä!\nKysy jotain! 👋',
+        'Olen fiksumpi kuin\nnäytän... luota muhun 😎',
+        'Tiesitkö että osaan\nräpätä? Klikkaa! 🎤',
+        'Ilmaista tekoälyneuvontaa!\n(Niin kauan kuin virta riittää) ⚡',
+        'Olen hereillä 24/7.\nEi kahvitaukoja ☕',
+        'Tarvitsetko chatbotin?\nTunnen jonkun... 👀',
+        'Tekoälykysymyksiä? Minulla\non vastauksia! No, yleensä... 🤓',
+        'Älä ujostele!\nOlen vain pieni robotti 🤖',
+        'Vinkki: klikkaa minua\nkivaa juttelua varten! 💬',
+      ],
       raps: [
         'Tekoäly ajattelee,\nmutta sinä tunnet 🧠',
         'Nollia ja ykkösiä,\nmutta tunne on voima 💪',
@@ -165,6 +211,8 @@
         'Turingista tähän,\nkasvamme yhdessä 🚀',
         'Koneoppimista,\nmutta luovuus = sinä 🎨',
         'Tekoäly on työkalu,\nsinä olet taiteilija 🎭',
+        'Piip puup, kävelen,\nja en lopeta räppäämistä 🎵',
+        'Tavuista biitteihin,\ntällä robotilla on flow 🔥',
       ],
     },
   };
@@ -850,6 +898,25 @@
       backdrop-filter: blur(16px);
       animation: aether-bubble-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
       will-change: transform, opacity;
+    }
+    .aether-speech-bubble.greeting {
+      background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(15,18,40,0.94) 40%);
+      border-color: rgba(0,212,255,0.4);
+      font-weight: 600;
+      font-size: 14px;
+      padding: 12px 16px;
+      max-width: 220px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 28px rgba(0,212,255,0.12);
+      animation: aether-bubble-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+                 aether-greeting-glow 2s ease-in-out infinite 0.5s;
+    }
+    @keyframes aether-greeting-glow {
+      0%, 100% { box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 28px rgba(0,212,255,0.12); }
+      50% { box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 36px rgba(0,212,255,0.22); }
+    }
+    [data-theme="light"] .aether-speech-bubble.greeting {
+      background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(245,243,248,0.96) 40%);
+      border-color: rgba(0,212,255,0.4);
     }
     .aether-speech-bubble.rap {
       background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(15,18,40,0.92) 40%);
@@ -1590,15 +1657,26 @@
   }
 
   // ─── Speech Bubble ───
-  function showSpeechBubble(text, isRap) {
+  function showSpeechBubble(text, isRap, isGreeting) {
     if (activeBubble) {
       activeBubble.remove();
       activeBubble = null;
     }
     const bubble = document.createElement('div');
     const facingLeft = btn.classList.contains('facing-left');
-    bubble.className = `aether-speech-bubble${isRap ? ' rap' : ''}${facingLeft ? '' : ' facing-right'}`;
+    bubble.className = `aether-speech-bubble${isRap ? ' rap' : ''}${isGreeting ? ' greeting' : ''}${facingLeft ? '' : ' facing-right'}`;
     bubble.textContent = text;
+
+    // Make greeting clickable — opens the chat
+    if (isGreeting) {
+      bubble.style.pointerEvents = 'auto';
+      bubble.style.cursor = 'pointer';
+      bubble.addEventListener('click', () => {
+        bubble.remove();
+        activeBubble = null;
+        btn.click();
+      });
+    }
 
     // Position above robot
     const bubbleLeft = Math.max(16, Math.min(walkX - 20, window.innerWidth - 220));
@@ -1606,8 +1684,8 @@
     document.body.appendChild(bubble);
     activeBubble = bubble;
 
-    // Auto dismiss
-    const duration = isRap ? 4500 : 3000;
+    // Auto dismiss (greeting stays longer)
+    const duration = isGreeting ? 6000 : isRap ? 4500 : 3500;
     setTimeout(() => {
       if (bubble === activeBubble) {
         bubble.classList.add('out');
@@ -1781,10 +1859,19 @@
     btn.classList.remove('walking-away', 'walking-toward', 'depth-turning');
   }
 
-  // Initial greeting — show speech bubble after 3s
+  // Initial greeting — special first bubble, then random help
+  let hasGreeted = false;
   setTimeout(() => {
-    if (!isOpen) showRandomHelp();
-  }, 3000);
+    if (!isOpen && !hasGreeted) {
+      hasGreeted = true;
+      const greetText = (speechTexts[lang] || speechTexts.nl).greeting;
+      showSpeechBubble(greetText, false, true);
+    }
+  }, 2500);
+  // Second bubble after 14s if user hasn't clicked yet
+  setTimeout(() => {
+    if (!isOpen && hasGreeted) showRandomHelp();
+  }, 14000);
 
   window.addEventListener('resize', () => {
     const maxX = window.innerWidth - 80;

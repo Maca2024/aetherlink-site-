@@ -416,28 +416,31 @@
   style.textContent = `
     /* ═══════ AETHER-ASSIST v3.0 Widget Styles ═══════ */
 
-    /* ── 3D Robot FAB ── */
+    /* ── Walking Robot FAB ── */
     .aether-assist-btn {
-      position: fixed; bottom: 24px; right: 24px; z-index: 99999;
-      width: 68px; height: 76px; border: none; cursor: pointer;
+      position: fixed; bottom: 12px; z-index: 99999;
+      width: 68px; height: 90px; border: none; cursor: pointer;
       background: none;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      animation: aether-float 4s ease-in-out infinite;
+      display: flex; align-items: flex-start; justify-content: center;
       perspective: 200px;
       -webkit-tap-highlight-color: transparent;
+      /* position controlled by JS — right: auto, left via transform */
+      right: auto; left: 0;
+      transition: none;
     }
-    .aether-assist-btn:hover { animation-play-state: paused; }
+    .aether-assist-btn.walking {
+      animation: aether-bob 0.5s ease-in-out infinite;
+    }
     .aether-assist-btn.open { animation: none; }
 
-    @keyframes aether-float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+    @keyframes aether-bob {
+      0%, 100% { padding-top: 0; }
+      50% { padding-top: 3px; }
     }
 
     /* Robot container */
     .aether-robo {
-      position: relative; width: 58px; height: 64px;
+      position: relative; width: 58px; height: 80px;
       transform-style: preserve-3d;
       transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -447,17 +450,69 @@
     .aether-assist-btn.open .aether-robo {
       transform: rotateY(180deg);
     }
+    /* Flip robot body when walking left */
+    .aether-assist-btn.facing-left .aether-robo {
+      transform: scaleX(-1);
+    }
+    .aether-assist-btn.facing-left:hover .aether-robo {
+      transform: scaleX(-1) rotateY(-12deg) rotateX(8deg) scale(1.08);
+    }
+    .aether-assist-btn.open.facing-left .aether-robo {
+      transform: rotateY(180deg);
+    }
 
     /* Shadow on ground */
     .aether-robo::after {
-      content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+      content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%);
       width: 40px; height: 8px; border-radius: 50%;
       background: radial-gradient(ellipse, rgba(0,212,255,0.25) 0%, transparent 70%);
-      animation: aether-shadow 4s ease-in-out infinite;
+    }
+    .aether-assist-btn.walking .aether-robo::after {
+      animation: aether-shadow 0.5s ease-in-out infinite;
     }
     @keyframes aether-shadow {
-      0%, 100% { width: 40px; opacity: 0.6; }
-      50% { width: 32px; opacity: 0.3; }
+      0%, 100% { width: 40px; opacity: 0.5; }
+      50% { width: 34px; opacity: 0.3; }
+    }
+
+    /* ── Legs ── */
+    .aether-robo-legs {
+      position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 10px;
+      backface-visibility: hidden;
+    }
+    .aether-robo-leg {
+      width: 8px; height: 16px; border-radius: 0 0 4px 4px;
+      background: linear-gradient(to bottom, #161d3a, #0e1225);
+      border: 1px solid rgba(0,212,255,0.15);
+      border-top: none;
+      transform-origin: top center;
+    }
+    /* Walking animation on legs */
+    .aether-assist-btn.walking .aether-robo-leg.left {
+      animation: aether-leg-l 0.5s ease-in-out infinite;
+    }
+    .aether-assist-btn.walking .aether-robo-leg.right {
+      animation: aether-leg-r 0.5s ease-in-out infinite;
+    }
+    @keyframes aether-leg-l {
+      0%, 100% { transform: rotate(-18deg); }
+      50% { transform: rotate(18deg); }
+    }
+    @keyframes aether-leg-r {
+      0%, 100% { transform: rotate(18deg); }
+      50% { transform: rotate(-18deg); }
+    }
+    /* When stopped (not walking, not open) - legs neutral */
+    .aether-assist-btn:not(.walking):not(.open) .aether-robo-leg {
+      animation: none; transform: rotate(0);
+    }
+    /* Feet */
+    .aether-robo-leg::after {
+      content: ''; position: absolute; bottom: -3px; left: -2px;
+      width: 12px; height: 4px; border-radius: 3px;
+      background: #0e1225;
+      border: 1px solid rgba(0,212,255,0.12);
     }
 
     /* Head */
@@ -575,9 +630,17 @@
     [data-theme="light"] .aether-robo-close {
       background: linear-gradient(170deg, #352040 0%, #251030 50%, #3d1850 100%);
     }
+    [data-theme="light"] .aether-robo-leg {
+      background: linear-gradient(to bottom, #252b50, #1a1f3a);
+      border-color: rgba(0,212,255,0.25);
+    }
+    [data-theme="light"] .aether-robo-leg::after {
+      background: #1a1f3a;
+      border-color: rgba(0,212,255,0.2);
+    }
 
     .aether-assist-panel {
-      position: fixed; bottom: 96px; right: 24px; z-index: 99998;
+      position: fixed; bottom: 96px; right: auto; left: auto; z-index: 99998;
       width: 420px; max-width: calc(100vw - 32px); height: 580px; max-height: calc(100vh - 140px);
       border-radius: 20px; overflow: hidden;
       background: rgba(10, 13, 26, 0.94);
@@ -836,14 +899,15 @@
     /* Mobile */
     @media (max-width: 480px) {
       .aether-assist-panel {
-        width: calc(100vw - 16px); right: 8px; bottom: 88px;
+        width: calc(100vw - 16px); left: 8px !important; right: auto !important; bottom: 88px;
         height: calc(100vh - 120px); max-height: none; border-radius: 16px;
       }
-      .aether-assist-btn { width: 60px; height: 68px; bottom: 16px; right: 12px; }
-      .aether-robo { width: 50px; height: 56px; }
+      .aether-assist-btn { width: 60px; height: 80px; bottom: 8px; }
+      .aether-robo { width: 50px; height: 70px; }
       .aether-robo-head { width: 44px; height: 36px; top: 10px; left: 3px; }
       .aether-robo-eye { width: 8px; height: 8px; }
       .aether-robo-eyes { top: 18px; gap: 10px; }
+      .aether-robo-leg { width: 7px; height: 13px; }
       .aether-suggest-chip { font-size: 11px; padding: 5px 11px; }
     }
   `;
@@ -860,6 +924,7 @@
     <div class="aether-robo-head"></div>
     <div class="aether-robo-eyes"><div class="aether-robo-eye"></div><div class="aether-robo-eye"></div></div>
     <div class="aether-robo-mouth"><span></span><span></span><span></span><span></span></div>
+    <div class="aether-robo-legs"><div class="aether-robo-leg left"></div><div class="aether-robo-leg right"></div></div>
     <div class="aether-robo-close"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></div>
   </div>`;
 
@@ -1006,12 +1071,101 @@
     sendBtn.disabled = !inputEl.value.trim() || isStreaming;
   });
 
+  // ─── Walking Logic ───
+  let walkX = window.innerWidth - 90; // Start position (right side)
+  let walkDir = -1; // -1 = walking left, 1 = walking right
+  let walkSpeed = 0.6; // pixels per frame
+  let walkPaused = false;
+  let walkTimer = null;
+  let idleTimeout = null;
+
+  // Initial position
+  btn.style.transform = `translateX(${walkX}px)`;
+  btn.classList.add('walking');
+
+  function walkStep() {
+    if (isOpen || walkPaused) return;
+
+    walkX += walkDir * walkSpeed;
+    const maxX = window.innerWidth - 76;
+    const minX = 8;
+
+    // Bounce at edges
+    if (walkX <= minX) {
+      walkX = minX;
+      walkDir = 1;
+      btn.classList.remove('facing-left');
+    } else if (walkX >= maxX) {
+      walkX = maxX;
+      walkDir = -1;
+      btn.classList.add('facing-left');
+    }
+
+    btn.style.transform = `translateX(${walkX}px)`;
+    walkTimer = requestAnimationFrame(walkStep);
+  }
+
+  // Start walking
+  walkTimer = requestAnimationFrame(walkStep);
+
+  // Random idle stops: pause for 2-4s, then continue
+  function scheduleIdleStop() {
+    const nextPause = 6000 + Math.random() * 10000; // 6-16s between stops
+    idleTimeout = setTimeout(() => {
+      if (isOpen) { scheduleIdleStop(); return; }
+      walkPaused = true;
+      btn.classList.remove('walking');
+      // Resume after 2-4s
+      setTimeout(() => {
+        if (!isOpen) {
+          walkPaused = false;
+          btn.classList.add('walking');
+          walkTimer = requestAnimationFrame(walkStep);
+        }
+        scheduleIdleStop();
+      }, 2000 + Math.random() * 2000);
+    }, nextPause);
+  }
+  scheduleIdleStop();
+
+  // Adjust on resize
+  window.addEventListener('resize', () => {
+    const maxX = window.innerWidth - 76;
+    if (walkX > maxX) walkX = maxX;
+  });
+
   // ─── Toggle Panel ───
   btn.addEventListener('click', () => {
     isOpen = !isOpen;
     panel.classList.toggle('open', isOpen);
     btn.classList.toggle('open', isOpen);
-    if (isOpen) setTimeout(() => inputEl.focus(), 400);
+
+    if (isOpen) {
+      // Stop walking, park the robot
+      walkPaused = true;
+      btn.classList.remove('walking');
+      if (walkTimer) { cancelAnimationFrame(walkTimer); walkTimer = null; }
+
+      // Position panel near the robot
+      const btnRect = btn.getBoundingClientRect();
+      const panelWidth = Math.min(420, window.innerWidth - 32);
+      let panelLeft = btnRect.left + btnRect.width / 2 - panelWidth / 2;
+      // Clamp to screen edges
+      panelLeft = Math.max(16, Math.min(panelLeft, window.innerWidth - panelWidth - 16));
+      panel.style.left = panelLeft + 'px';
+      panel.style.right = 'auto';
+      panel.style.bottom = '96px';
+
+      setTimeout(() => inputEl.focus(), 400);
+    } else {
+      // Resume walking
+      walkPaused = false;
+      btn.classList.add('walking');
+      btn.classList.remove('facing-left');
+      walkDir = walkX > window.innerWidth / 2 ? -1 : 1;
+      if (walkDir === -1) btn.classList.add('facing-left');
+      walkTimer = requestAnimationFrame(walkStep);
+    }
   });
 
   // ─── Clear Chat ───

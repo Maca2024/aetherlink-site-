@@ -235,6 +235,6 @@ export default async function handler(req, res) {
     res.send(Buffer.from(png));
   } catch (error) {
     console.error('OG image error:', error);
-    res.status(500).json({ error: 'Failed to generate image', detail: error.message, stack: error.stack });
+    res.status(500).json({ error: 'Failed to generate image' });
   }
 }

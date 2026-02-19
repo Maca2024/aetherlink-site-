@@ -24,7 +24,7 @@ Europe's AI One-Stop-Shop — AI Chatbots, Consultancy, Training & Custom Develo
 - [Services](#services)
 - [Tech Stack](#tech-stack)
 - [Design System](#design-system--luminous-void)
-- [AETHER-ASSIST AI Chatbot](#aether-assist-ai-chatbot-v21)
+- [AETHER-ASSIST AI Chatbot](#aether-assist-ai-chatbot-v41)
 - [SEO & GEO Infrastructure](#seo--geo-infrastructure)
 - [Multilingual Architecture](#multilingual-architecture)
 - [Project Structure](#project-structure)
@@ -69,8 +69,9 @@ This repository contains the complete multilingual corporate website — a stati
 | **Fonts** | Google Fonts: Syne (display) + Plus Jakarta Sans (body) |
 | **Hosting** | Vercel (static files + serverless functions) |
 | **Chat AI** | Anthropic Claude Sonnet 4.5 (`claude-sonnet-4-5-20250929`) via Messages API |
-| **Voice AI** | ElevenLabs Multilingual v2 (text-to-speech streaming) |
+| **Voice AI** | ElevenLabs Eleven v3 (text-to-speech streaming, v2 fallback) |
 | **Module System** | ESM (`package.json` with `"type": "module"`) |
+| **Voice Input** | Web Speech API (speech-to-text) |
 | **SEO** | Schema.org JSON-LD, robots.txt, sitemap.xml, llms.txt |
 
 ---
@@ -111,24 +112,27 @@ A premium dark-theme aesthetic with glass morphism, orbital motion, and floating
 
 ---
 
-## AETHER-ASSIST AI Chatbot (v2.1)
+## AETHER-ASSIST AI Chatbot (v4.1)
 
-A premium AI chat widget integrated into all 12 language pages, powered by Claude Sonnet 4.5 with ElevenLabs text-to-speech.
+A premium AI chat widget with walking robot avatar, integrated into all 21 pages, powered by Claude Sonnet 4.5 with ElevenLabs text-to-speech and Web Speech API voice input.
 
 ### Architecture
 
 ```
 ┌──────────────────────────────────────┐
 │  Browser (js/aether-assist.js)       │
-│  818 lines · Vanilla JS · IIFE      │
+│  2302 lines · Vanilla JS · IIFE     │
+│  Walking Robot Avatar + Speech       │
 ├──────────────┬───────────────────────┤
 │ POST /api/chat (SSE)  │ POST /api/tts│
+│ Web Speech API (STT)  │             │
 ├──────────────┼───────────────────────┤
 │ api/chat.js  │ api/tts.js            │
-│ 346 lines    │ 91 lines              │
+│ 346 lines    │ 144 lines             │
 ├──────────────┼───────────────────────┤
 │ Claude       │ ElevenLabs            │
-│ Sonnet 4.5   │ Multilingual v2       │
+│ Sonnet 4.5   │ Eleven v3 (v2 fallbk) │
+│              │ mp3_44100_192 (192kbps)│
 └──────────────┴───────────────────────┘
 ```
 
@@ -136,8 +140,10 @@ A premium AI chat widget integrated into all 12 language pages, powered by Claud
 
 | Feature | Details |
 |---------|---------|
+| **Walking Robot Avatar** | Articulated robot with torso, arms, legs, chest panel. Walking animation, tricks (dance, wave, jump), speech bubbles (help/rap/greeting), depth walking, idle stops |
 | **Streaming Chat** | SSE-based real-time text streaming from Claude |
-| **Text-to-Speech** | "Luister/Listen/Kuuntele" button per response, ElevenLabs multilingual v2 |
+| **Voice Input (STT)** | Web Speech API for speech-to-text input in NL/EN/FI |
+| **Text-to-Speech** | "Luister/Listen/Kuuntele" button per response, ElevenLabs Eleven v3 (v2 fallback) |
 | **Page Context** | Adapts system prompt to current page (homepage/aetherbot/aethermind/aetherdev) |
 | **Suggested Questions** | 4 context-aware question chips per page type, per language (48 total) |
 | **Markdown Rendering** | Bold, italic, clickable links, autolinked URLs, email links, lists, inline code |
@@ -152,6 +158,21 @@ A premium AI chat widget integrated into all 12 language pages, powered by Claud
 
 ---
 
+## Robot Cinema (`js/robot-cinema.js`)
+
+A cinematic canvas-based animation on the homepage hero section (1148 lines). Features a laser bot that performs an animated entrance sequence with explosions, heart absorption, and a gated chatbot reveal.
+
+| Element | Details |
+|---------|---------|
+| **Laser Bot** | Animated robot character with laser beam effects |
+| **Explosions** | Particle-based explosion effects during sequence |
+| **Heart Absorption** | Animated heart element absorbed into the bot |
+| **Gated Reveal** | Chatbot widget revealed after cinematic completes |
+| **Canvas Rendering** | Full hardware-accelerated canvas with particle system |
+| **Responsive** | Scales to viewport, mobile-optimized |
+
+---
+
 ## SEO & GEO Infrastructure
 
 ### AI Findability (GEO — Generative Engine Optimization)
@@ -160,7 +181,7 @@ A premium AI chat widget integrated into all 12 language pages, powered by Claud
 |------|---------|
 | `robots.txt` | Explicitly allows 13 AI crawlers (GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot, anthropic-ai, Google-Extended, etc.) |
 | `llms.txt` | AI-readable company summary — team, services, technology, differentiators, contact, URLs |
-| `sitemap.xml` | 13 URLs with `xhtml:link` hreflang annotations for all 3 languages |
+| `sitemap.xml` | 22 URLs with `xhtml:link` hreflang annotations for all 3 languages |
 
 ### Schema.org Markup (JSON-LD)
 
@@ -207,32 +228,42 @@ aetherlink-site/
 │
 ├── api/                          # Vercel Serverless Functions
 │   ├── chat.js                   # Claude Sonnet 4.5 streaming (346 lines)
-│   └── tts.js                    # ElevenLabs TTS streaming (91 lines)
+│   └── tts.js                    # ElevenLabs TTS streaming (144 lines)
 │
 ├── js/
-│   ├── aether-assist.js          # AETHER-ASSIST chat widget (818 lines)
+│   ├── aether-assist.js          # AETHER-ASSIST chat widget (2302 lines)
+│   ├── robot-cinema.js           # Homepage cinematic robot animation (1148 lines)
 │   └── theme.js                  # Dark/light theme toggle (33 lines)
 │
 ├── css/
 │   └── theme.css                 # Theme variables & overrides (562 lines)
 │
 ├── nl/                           # Dutch pages (default language)
-│   ├── index.html                # Homepage with orbital animation
+│   ├── index.html                # Homepage with orbital animation + Robot Cinema
 │   ├── aetherbot.html            # AetherBot product page
 │   ├── aethermind.html           # AetherMIND services page
-│   └── aetherdev.html            # AetherDEV development page
+│   ├── aetherdev.html            # AetherDEV development page
+│   ├── ai-consultancy.html       # Pillar page: AI Consultancy
+│   ├── ai-lead-architect.html    # Pillar page: AI Lead Architect
+│   └── ai-verandermanagement.html # Pillar page: AI Verandermanagement
 │
 ├── en/                           # English pages
 │   ├── index.html
 │   ├── aetherbot.html
 │   ├── aethermind.html
-│   └── aetherdev.html
+│   ├── aetherdev.html
+│   ├── ai-consultancy.html       # Pillar page: AI Consultancy
+│   ├── ai-lead-architect.html    # Pillar page: AI Lead Architect
+│   └── ai-change-management.html # Pillar page: AI Change Management
 │
 ├── fi/                           # Finnish pages
 │   ├── index.html
 │   ├── aetherbot.html
 │   ├── aethermind.html
-│   └── aetherdev.html
+│   ├── aetherdev.html
+│   ├── ai-consultancy.html       # Pillar page: AI Consultancy
+│   ├── ai-lead-architect.html    # Pillar page: AI Lead Architect
+│   └── ai-muutoshallinta.html    # Pillar page: AI Muutoshallinta
 │
 ├── images/
 │   ├── logo-white.png/svg        # White logo variants
@@ -290,6 +321,7 @@ aetherlink-site/
 
 ### Homepages (`*/index.html`)
 - Orbital animation hero (3 rings, 8+ orbiting AI brand icons, counter-rotation)
+- **Robot Cinema** — cinematic hero animation (`js/robot-cinema.js`, 1148 lines): laser bot sequence with explosions, heart absorption, gated chatbot reveal. Canvas-based with particle effects.
 - Three product cards with accent-colored top borders
 - Partner logo marquee carousel (15 logos, CSS-only infinite scroll)
 - "Why AetherLink" USP section (4 cards)
@@ -329,6 +361,7 @@ aetherlink-site/
 | No build step | Static HTML served directly by Vercel |
 | CSS-only animations | `transform` + `opacity` only (composite layer, no layout/paint) |
 | DNS Prefetch | `<link rel="dns-prefetch">` for Google Fonts, Tailwind CDN |
+| Preconnect | `<link rel="preconnect">` for CDN origins |
 | Font Preload | `<link rel="preload" as="font">` for critical font files |
 | Font Display | `font-display: swap` — text visible while fonts load |
 | Lazy Loading | `loading="lazy"` on below-fold images |
@@ -337,7 +370,7 @@ aetherlink-site/
 | GPU Compositing | Animations use only `transform` + `opacity` |
 | Reduced Motion | `prefers-reduced-motion: reduce` disables all animations |
 | Prompt Caching | Chat API caches system prompt for 87.5% token cost reduction |
-| TTS Text Cap | Voice synthesis limited to 500 chars for cost control |
+| TTS Text Cap | Voice synthesis limited to 800 chars for cost control |
 
 ---
 
@@ -389,14 +422,14 @@ Set via Vercel CLI (`vercel env add NAME production`):
 3. Add `hreflang` alternates for all 3 language versions
 4. Update nav to mark correct link as `.active`
 5. Create translations in `/nl/`, `/en/`, `/fi/`
-6. Add the page to nav in all 12 existing pages
+6. Add the page to nav in all 21 existing pages
 7. Add Schema.org JSON-LD (use existing pages as reference)
 8. Add to `sitemap.xml`
 9. Update `CONTEXT.md` and `README.md`
 
 ### Adding a New Language
 
-1. Create new directory (e.g., `/de/`) with all 4 pages
+1. Create new directory (e.g., `/de/`) with all 7 pages
 2. Add `hreflang` alternate links to ALL existing pages
 3. Update language switcher in nav across all pages
 4. Update `sitemap.xml` with new URLs
@@ -467,7 +500,7 @@ Trusted by 15+ organizations including:
 - Chat data is not used to train AI models
 - No cookies (sessionStorage only for chat persistence)
 - Rate limiting: 12 messages/minute per IP
-- TTS text capped at 500 characters for cost control
+- TTS text capped at 800 characters for cost control
 
 ---
 

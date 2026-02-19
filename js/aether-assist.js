@@ -514,7 +514,7 @@
   style.textContent = `
     /* ═══════ AETHER-ASSIST v3.0 Widget Styles ═══════ */
 
-    /* ── Walking Robot v2 — Smooth & Polished ── */
+    /* ── Walking Robot R2-D2 Edition — AetherLink Droid ── */
     .aether-assist-btn {
       position: fixed; bottom: 14px; z-index: 99999;
       width: 82px; height: 140px; border: none; cursor: pointer;
@@ -523,11 +523,11 @@
       -webkit-tap-highlight-color: transparent;
       right: auto; left: 0;
       will-change: transform;
-      filter: drop-shadow(0 2px 12px rgba(0,212,255,0.15));
+      filter: drop-shadow(0 4px 16px rgba(0,120,215,0.25));
       transition: filter 0.3s ease;
     }
     .aether-assist-btn:hover {
-      filter: drop-shadow(0 4px 20px rgba(0,212,255,0.35));
+      filter: drop-shadow(0 6px 24px rgba(0,120,215,0.45));
     }
 
     /* Robot container */
@@ -570,133 +570,156 @@
       transform: rotateY(180deg);
     }
 
-    /* Ground shadow */
+    /* Ground shadow (blue tint for R2-D2) */
     .aether-robo-shadow {
       position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 42px; height: 6px; border-radius: 50%;
-      background: radial-gradient(ellipse, rgba(0,212,255,0.22) 0%, transparent 70%);
+      width: 48px; height: 6px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(40,103,168,0.25) 0%, transparent 70%);
       transition: all 0.3s ease;
     }
     .aether-assist-btn.walking .aether-robo-shadow {
       animation: aether-shadow-walk 0.44s cubic-bezier(0.37, 0, 0.63, 1) infinite;
     }
     @keyframes aether-shadow-walk {
-      0%, 100% { width: 42px; opacity: 0.7; }
-      25%, 75% { width: 36px; opacity: 0.4; }
+      0%, 100% { width: 48px; opacity: 0.7; }
+      25%, 75% { width: 40px; opacity: 0.4; }
     }
 
-    /* ── Head ── */
+    /* ── Head (R2-D2 Dome) ── */
     .aether-robo-head {
-      position: absolute; top: 10px; left: 9px;
-      width: 52px; height: 42px;
-      border-radius: 18px 18px 14px 14px;
-      background: linear-gradient(175deg, #1e2550 0%, #0f1428 40%, #141a38 70%, #1a2248 100%);
-      border: 1.5px solid rgba(0,212,255,0.2);
+      position: absolute; top: 6px; left: 7px;
+      width: 56px; height: 40px;
+      border-radius: 50% 50% 8px 8px;
+      background: linear-gradient(175deg, #e8eef5 0%, #c8d4e2 30%, #b0bfd0 60%, #98a8bc 100%);
+      border: 1.5px solid rgba(255,255,255,0.3);
       box-shadow:
-        0 8px 24px rgba(0,0,0,0.5),
-        0 0 24px rgba(0,212,255,0.08),
-        inset 0 2px 0 rgba(255,255,255,0.06),
-        inset 0 -6px 16px rgba(0,0,0,0.25);
+        0 8px 24px rgba(0,0,0,0.3),
+        0 0 16px rgba(0,120,215,0.08),
+        inset 0 3px 0 rgba(255,255,255,0.5),
+        inset 0 -4px 12px rgba(0,0,0,0.15);
       backface-visibility: hidden;
       overflow: hidden;
     }
-    /* Visor shine */
+    /* Dome shine */
     .aether-robo-head::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%;
-      border-radius: 18px 18px 0 0;
-      background: linear-gradient(175deg, rgba(255,255,255,0.06) 0%, transparent 60%);
+      content: ''; position: absolute; top: 0; left: 5px; right: 5px; height: 55%;
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(175deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.1) 50%, transparent 70%);
     }
-    /* Chin highlight */
+    /* Blue horizontal band (R2-D2 signature) */
     .aether-robo-head::after {
-      content: ''; position: absolute; bottom: 4px; left: 14px; right: 14px; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(0,212,255,0.15), transparent);
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 12px;
+      background: linear-gradient(180deg, #2867a8 0%, #1a4f8a 100%);
+      border-top: 1px solid rgba(255,255,255,0.2);
+      border-bottom: 1px solid rgba(0,0,0,0.2);
     }
 
     /* ── Close X (backface) ── */
     .aether-robo-close {
-      position: absolute; top: 10px; left: 9px;
-      width: 52px; height: 42px;
-      border-radius: 18px 18px 14px 14px;
-      background: linear-gradient(175deg, #2a1040 0%, #180828 40%, #251240 100%);
-      border: 1.5px solid rgba(139,92,246,0.25);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 16px rgba(139,92,246,0.08);
+      position: absolute; top: 6px; left: 7px;
+      width: 56px; height: 40px;
+      border-radius: 50% 50% 8px 8px;
+      background: linear-gradient(175deg, #c8d4e2 0%, #98a8bc 100%);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 12px rgba(220,50,50,0.12);
       backface-visibility: hidden;
       transform: rotateY(180deg);
       display: flex; align-items: center; justify-content: center;
     }
-    .aether-robo-close svg { width: 20px; height: 20px; }
+    .aether-robo-close svg { width: 20px; height: 20px; stroke: #c0392b; }
 
-    /* ── Eyes ── */
+    /* ── Eyes (R2-D2: main lens + indicator) ── */
     .aether-robo-eyes {
-      position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 14px;
+      position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 6px; align-items: center;
       backface-visibility: hidden;
+      z-index: 2;
     }
+    /* Main eye — R2's large lens */
     .aether-robo-eye {
-      width: 11px; height: 11px; border-radius: 3.5px;
-      background: radial-gradient(circle at 35% 35%, #5cefff 0%, #00d4ff 60%, #0099cc 100%);
+      width: 16px; height: 16px; border-radius: 50%;
+      background: radial-gradient(circle at 38% 35%, #1a1a2e 0%, #0d0d1a 50%, #060612 100%);
+      border: 2px solid #4a6fa5;
       box-shadow:
-        0 0 10px rgba(0,212,255,0.9),
-        0 0 24px rgba(0,212,255,0.35),
-        inset 0 1px 2px rgba(255,255,255,0.6);
-      animation: aether-blink 5s ease-in-out infinite;
-      transition: all 0.2s;
+        0 0 8px rgba(0,120,215,0.6),
+        0 0 20px rgba(0,120,215,0.2),
+        inset 0 1px 3px rgba(255,255,255,0.15),
+        inset 0 -1px 2px rgba(0,0,0,0.5);
+      animation: aether-blink 6s ease-in-out infinite;
+      transition: all 0.3s;
+      position: relative;
     }
-    .aether-robo-eye:nth-child(2) { animation-delay: 0.05s; }
+    /* Small indicator eye — red LED */
+    .aether-robo-eye:nth-child(2) {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #ff6b6b 0%, #e74c3c 60%, #c0392b 100%);
+      border: 1px solid rgba(255,100,100,0.5);
+      box-shadow: 0 0 6px rgba(231,76,60,0.8), 0 0 14px rgba(231,76,60,0.3);
+      animation: aether-blink-red 3s ease-in-out infinite;
+    }
     .aether-assist-btn:hover .aether-robo-eye {
-      box-shadow: 0 0 14px rgba(0,212,255,1), 0 0 32px rgba(0,212,255,0.5), inset 0 1px 2px rgba(255,255,255,0.6);
-      height: 13px;
+      box-shadow: 0 0 12px rgba(0,120,215,0.9), 0 0 28px rgba(0,120,215,0.4), inset 0 1px 3px rgba(255,255,255,0.2);
+    }
+    .aether-assist-btn:hover .aether-robo-eye:nth-child(2) {
+      box-shadow: 0 0 10px rgba(231,76,60,1), 0 0 20px rgba(231,76,60,0.5);
     }
     @keyframes aether-blink {
-      0%, 38%, 44%, 100% { height: 11px; opacity: 1; border-radius: 3.5px; }
-      41% { height: 2px; opacity: 0.7; border-radius: 3.5px 3.5px 2px 2px; }
+      0%, 38%, 44%, 100% { opacity: 1; }
+      41% { opacity: 0.4; }
+    }
+    @keyframes aether-blink-red {
+      0%, 40%, 60%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
 
-    /* Eye pupils — tiny white dots */
+    /* Lens reflection — white highlight dot */
     .aether-robo-eye::after {
-      content: ''; position: absolute; top: 2px; left: 3px;
-      width: 3px; height: 3px; border-radius: 50%;
-      background: rgba(255,255,255,0.7);
+      content: ''; position: absolute; top: 3px; left: 4px;
+      width: 4px; height: 4px; border-radius: 50%;
+      background: rgba(255,255,255,0.6);
+    }
+    .aether-robo-eye:nth-child(2)::after {
+      top: 1px; left: 2px; width: 2px; height: 2px;
     }
 
-    /* ── Mouth ── */
+    /* ── Mouth (R2-D2 speaker grill) ── */
     .aether-robo-mouth {
-      position: absolute; top: 38px; left: 50%; transform: translateX(-50%);
-      width: 20px; height: 6px; border-radius: 1px 1px 3px 3px;
-      background: rgba(0,212,255,0.06);
-      border: 1px solid rgba(0,212,255,0.15);
-      display: flex; gap: 2px; align-items: center; justify-content: center; padding: 0 3px;
+      position: absolute; top: 34px; left: 50%; transform: translateX(-50%);
+      width: 22px; height: 5px; border-radius: 2px;
+      background: rgba(40,103,168,0.3);
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex; gap: 1px; align-items: center; justify-content: center; padding: 0 2px;
       backface-visibility: hidden;
       transition: all 0.3s ease;
+      z-index: 2;
     }
     .aether-robo-mouth span {
-      width: 2px; height: 3px; border-radius: 1px;
-      background: rgba(0,212,255,0.35);
+      width: 3px; height: 2px; border-radius: 1px;
+      background: rgba(40,103,168,0.6);
       transition: all 0.3s ease;
     }
     .aether-assist-btn:hover .aether-robo-mouth {
-      background: rgba(0,212,255,0.12);
-      border-color: rgba(0,212,255,0.3);
-      height: 7px; border-radius: 1px 1px 4px 4px;
+      background: rgba(0,120,215,0.2);
+      border-color: rgba(255,255,255,0.25);
     }
     .aether-assist-btn:hover .aether-robo-mouth span {
-      background: rgba(0,212,255,0.7);
-      box-shadow: 0 0 3px rgba(0,212,255,0.3);
+      background: rgba(0,120,215,0.8);
+      box-shadow: 0 0 2px rgba(0,120,215,0.3);
     }
 
-    /* ── Antenna ── */
+    /* ── Antenna (R2-D2 periscope) ── */
     .aether-robo-antenna {
-      position: absolute; top: -2px; left: 50%; transform: translateX(-50%);
-      width: 2px; height: 14px;
-      background: linear-gradient(to top, rgba(0,212,255,0.2), rgba(139,92,246,0.5));
+      position: absolute; top: -4px; left: 50%; transform: translateX(-50%);
+      width: 3px; height: 12px;
+      background: linear-gradient(to top, #98a8bc, #c8d4e2);
       border-radius: 2px;
       backface-visibility: hidden;
     }
     .aether-robo-antenna::after {
-      content: ''; position: absolute; top: -5px; left: 50%; transform: translateX(-50%);
-      width: 9px; height: 9px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #a78bfa, #8b5cf6 60%, #6d28d9);
-      box-shadow: 0 0 10px rgba(139,92,246,0.7), 0 0 24px rgba(139,92,246,0.25);
+      content: ''; position: absolute; top: -4px; left: 50%; transform: translateX(-50%);
+      width: 7px; height: 7px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #4a90d9, #2867a8 60%, #1a4f8a);
+      box-shadow: 0 0 8px rgba(40,103,168,0.6), 0 0 18px rgba(40,103,168,0.2);
       animation: aether-antenna-glow 3s ease-in-out infinite alternate;
     }
     .aether-assist-btn.walking .aether-robo-antenna {
@@ -708,97 +731,98 @@
       75% { transform: translateX(-50%) rotate(-3deg); }
     }
     @keyframes aether-antenna-glow {
-      0% { box-shadow: 0 0 10px rgba(139,92,246,0.7), 0 0 24px rgba(139,92,246,0.25); }
-      100% { box-shadow: 0 0 14px rgba(0,212,255,0.9), 0 0 32px rgba(0,212,255,0.3);
-             background: radial-gradient(circle at 35% 35%, #67e8f9, #00d4ff 60%, #0099cc); }
+      0% { box-shadow: 0 0 8px rgba(40,103,168,0.6), 0 0 18px rgba(40,103,168,0.2); }
+      100% { box-shadow: 0 0 12px rgba(0,120,215,0.9), 0 0 24px rgba(0,120,215,0.3);
+             background: radial-gradient(circle at 35% 35%, #6bb3e8, #4a90d9 60%, #2867a8); }
     }
 
-    /* ── Ears ── */
+    /* ── Ears (R2-D2 side vents) ── */
     .aether-robo-ear {
-      position: absolute; top: 24px; width: 6px; height: 13px;
-      border-radius: 3px;
-      background: linear-gradient(to bottom, #1a2248, #0e1225);
-      border: 1px solid rgba(0,212,255,0.15);
+      position: absolute; top: 22px; width: 5px; height: 16px;
+      border-radius: 2px;
+      background: linear-gradient(to bottom, #2867a8, #1a4f8a);
+      border: 1px solid rgba(255,255,255,0.15);
       backface-visibility: hidden;
     }
-    .aether-robo-ear.left { left: 4px; border-radius: 4px 1px 1px 4px; }
-    .aether-robo-ear.right { right: 4px; border-radius: 1px 4px 4px 1px; }
-    /* Ear glow strips */
+    .aether-robo-ear.left { left: 3px; border-radius: 3px 1px 1px 3px; }
+    .aether-robo-ear.right { right: 3px; border-radius: 1px 3px 3px 1px; }
+    /* Vent lines */
     .aether-robo-ear::after {
-      content: ''; position: absolute; top: 3px; width: 2px; height: 8px;
+      content: ''; position: absolute; top: 3px; width: 2px; height: 10px;
       border-radius: 1px;
-      background: linear-gradient(to bottom, rgba(0,212,255,0.4), rgba(139,92,246,0.3));
+      background: repeating-linear-gradient(to bottom, rgba(255,255,255,0.3) 0px, rgba(255,255,255,0.3) 1px, transparent 1px, transparent 3px);
     }
-    .aether-robo-ear.left::after { right: 1px; }
-    .aether-robo-ear.right::after { left: 1px; }
+    .aether-robo-ear.left::after { right: 0; }
+    .aether-robo-ear.right::after { left: 0; }
 
-    /* ── Torso ── */
+    /* ── Torso (R2-D2 cylindrical body) ── */
     .aether-robo-torso {
-      position: absolute; top: 50px; left: 50%; transform: translateX(-50%);
-      width: 40px; height: 30px;
-      background: linear-gradient(175deg, #1a2248 0%, #0e1428 50%, #141a38 100%);
-      border: 1.5px solid rgba(0,212,255,0.15);
+      position: absolute; top: 44px; left: 50%; transform: translateX(-50%);
+      width: 48px; height: 36px;
+      background: linear-gradient(175deg, #e8eef5 0%, #d0d8e4 30%, #bcc8d6 60%, #a8b4c4 100%);
+      border: 1.5px solid rgba(255,255,255,0.25);
       border-top: none;
-      border-radius: 4px 4px 8px 8px;
+      border-radius: 4px 4px 10px 10px;
       box-shadow:
-        0 6px 18px rgba(0,0,0,0.4),
-        0 0 16px rgba(0,212,255,0.05),
-        inset 0 1px 0 rgba(255,255,255,0.04);
+        0 6px 18px rgba(0,0,0,0.2),
+        0 0 8px rgba(0,120,215,0.05),
+        inset 0 1px 0 rgba(255,255,255,0.4),
+        inset 0 -4px 8px rgba(0,0,0,0.08);
       backface-visibility: hidden;
     }
 
-    /* ── Chest Panel ── */
+    /* ── Chest Panel (R2-D2 indicator lights) ── */
     .aether-robo-chest {
       position: absolute; left: 50%; top: 6px; transform: translateX(-50%);
-      width: 22px; height: 12px;
-      background: rgba(0,212,255,0.05);
-      border: 1px solid rgba(0,212,255,0.18);
+      width: 28px; height: 14px;
+      background: linear-gradient(180deg, #1a4f8a, #2867a8);
+      border: 1px solid rgba(255,255,255,0.2);
       border-radius: 3px;
-      display: flex; gap: 3px; align-items: center; justify-content: center;
+      display: flex; gap: 4px; align-items: center; justify-content: center;
     }
     .aether-robo-chest span {
-      width: 3px; height: 3px; border-radius: 50%;
+      width: 4px; height: 4px; border-radius: 50%;
       animation: aether-chest-blink 1.6s ease-in-out infinite;
     }
-    .aether-robo-chest span:nth-child(1) { background: #00d4ff; animation-delay: 0s; }
-    .aether-robo-chest span:nth-child(2) { background: #8b5cf6; animation-delay: 0.3s; }
-    .aether-robo-chest span:nth-child(3) { background: #00dfa2; animation-delay: 0.6s; }
+    .aether-robo-chest span:nth-child(1) { background: #e74c3c; animation-delay: 0s; }
+    .aether-robo-chest span:nth-child(2) { background: #3498db; animation-delay: 0.4s; }
+    .aether-robo-chest span:nth-child(3) { background: #2ecc71; animation-delay: 0.8s; }
     @keyframes aether-chest-blink {
       0%, 100% { opacity: 0.3; box-shadow: none; }
-      50% { opacity: 1; box-shadow: 0 0 4px currentColor; }
+      50% { opacity: 1; box-shadow: 0 0 5px currentColor; }
     }
 
-    /* ── Arms ── */
+    /* ── Arms (R2-D2 utility arms) ── */
     .aether-robo-arm {
-      position: absolute; top: 52px;
-      width: 8px; height: 18px;
-      background: linear-gradient(175deg, #1a2248, #0e1428);
-      border: 1px solid rgba(0,212,255,0.12);
-      border-radius: 3px 3px 2px 2px;
+      position: absolute; top: 50px;
+      width: 7px; height: 14px;
+      background: linear-gradient(175deg, #b0bfd0, #98a8bc);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 2px 2px 3px 3px;
       transform-origin: top center;
       backface-visibility: hidden;
       z-index: 1;
     }
-    .aether-robo-arm.left { left: 4px; }
-    .aether-robo-arm.right { right: 4px; }
+    .aether-robo-arm.left { left: 2px; }
+    .aether-robo-arm.right { right: 2px; }
 
-    /* Forearm */
+    /* Forearm (tool extension) */
     .aether-robo-forearm {
-      position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
-      width: 7px; height: 14px;
-      background: linear-gradient(175deg, #131936, #0a0e1e);
-      border: 1px solid rgba(0,212,255,0.08);
+      position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+      width: 6px; height: 10px;
+      background: linear-gradient(175deg, #2867a8, #1a4f8a);
+      border: 1px solid rgba(255,255,255,0.15);
       border-radius: 2px 2px 3px 3px;
       transform-origin: top center;
     }
 
-    /* Hand */
+    /* Tool tip (gripper) */
     .aether-robo-hand {
-      position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%);
-      width: 9px; height: 5px;
-      background: #151d38;
-      border: 1px solid rgba(0,212,255,0.12);
-      border-radius: 2px 2px 4px 4px;
+      position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%);
+      width: 8px; height: 4px;
+      background: #4a6fa5;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 1px 1px 3px 3px;
     }
 
     /* Arm walking animation */
@@ -845,17 +869,17 @@
       transition: transform 0.3s ease;
     }
 
-    /* ── Legs — Articulated (thigh + knee + shin + foot) ── */
+    /* ── Legs — R2-D2 style (cylindrical with blue panels) ── */
     .aether-robo-legs {
       position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 10px;
+      display: flex; gap: 14px;
       backface-visibility: hidden;
     }
-    /* Thigh (upper leg) */
+    /* Thigh (upper leg strut) */
     .aether-robo-leg {
-      width: 8px; height: 12px; border-radius: 2px 2px 1px 1px;
-      background: linear-gradient(to bottom, #161d3a 0%, #0e1225 80%);
-      border: 1px solid rgba(0,212,255,0.12);
+      width: 10px; height: 12px; border-radius: 2px;
+      background: linear-gradient(to bottom, #2867a8 0%, #1a4f8a 100%);
+      border: 1px solid rgba(255,255,255,0.15);
       border-top: none;
       transform-origin: top center;
       position: relative;
@@ -863,28 +887,28 @@
     /* Knee joint */
     .aether-robo-knee {
       position: absolute; bottom: -3px; left: 50%; transform: translateX(-50%);
-      width: 6px; height: 6px; border-radius: 50%;
-      background: radial-gradient(circle at 40% 35%, #1e2550, #0e1225);
-      border: 1px solid rgba(0,212,255,0.18);
-      box-shadow: 0 0 4px rgba(0,212,255,0.08);
+      width: 7px; height: 7px; border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #c8d4e2, #98a8bc);
+      border: 1px solid rgba(255,255,255,0.25);
+      box-shadow: 0 0 3px rgba(0,120,215,0.1);
       z-index: 1;
     }
-    /* Shin (lower leg) */
+    /* Shin (lower leg — R2 foot cylinder) */
     .aether-robo-shin {
       position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
-      width: 7px; height: 11px; border-radius: 1px 1px 3px 3px;
-      background: linear-gradient(to bottom, #131936 0%, #0a0e1e 80%);
-      border: 1px solid rgba(0,212,255,0.10);
+      width: 9px; height: 12px; border-radius: 2px 2px 4px 4px;
+      background: linear-gradient(to bottom, #2867a8 0%, #1a4f8a 80%);
+      border: 1px solid rgba(255,255,255,0.12);
       border-top: none;
       transform-origin: top center;
     }
-    /* Foot / boot */
+    /* Foot (R2-D2 treads) */
     .aether-robo-shin::after {
       content: ''; position: absolute; bottom: -4px; left: -3px;
-      width: 13px; height: 5px;
-      border-radius: 3px 4px 3px 3px;
-      background: linear-gradient(to bottom, #0e1225, #080c1a);
-      border: 1px solid rgba(0,212,255,0.1);
+      width: 15px; height: 6px;
+      border-radius: 3px 3px 4px 4px;
+      background: linear-gradient(to bottom, #4a6fa5, #2867a8);
+      border: 1px solid rgba(255,255,255,0.15);
     }
 
     /* Walking — thigh swing */
@@ -1172,36 +1196,15 @@
     }
 
     /* Light mode adjustments */
-    [data-theme="light"] .aether-robo-head {
-      background: linear-gradient(175deg, #2d3460 0%, #1e2345 40%, #282f58 70%, #2d3460 100%);
-      border-color: rgba(0,212,255,0.3);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2), 0 0 24px rgba(0,212,255,0.12),
-                  inset 0 2px 0 rgba(255,255,255,0.1), inset 0 -6px 16px rgba(0,0,0,0.15);
-    }
+    /* R2-D2 is white/blue — works the same in light mode, just tweak shadow */
     [data-theme="light"] .aether-assist-btn {
-      filter: drop-shadow(0 3px 16px rgba(0,0,0,0.15));
+      filter: drop-shadow(0 4px 16px rgba(0,0,0,0.12));
     }
-    [data-theme="light"] .aether-robo-close {
-      background: linear-gradient(175deg, #3a1850 0%, #281035 40%, #341550 100%);
+    [data-theme="light"] .aether-robo-head {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15), inset 0 2px 0 rgba(255,255,255,0.5);
     }
-    [data-theme="light"] .aether-robo-leg {
-      background: linear-gradient(to bottom, #282f58, #1e2345);
-      border-color: rgba(0,212,255,0.2);
-    }
-    [data-theme="light"] .aether-robo-knee {
-      background: radial-gradient(circle at 40% 35%, #2e3568, #1e2345);
-      border-color: rgba(0,212,255,0.25);
-    }
-    [data-theme="light"] .aether-robo-shin {
-      background: linear-gradient(to bottom, #242b52, #1a2040);
-      border-color: rgba(0,212,255,0.18);
-    }
-    [data-theme="light"] .aether-robo-shin::after {
-      background: linear-gradient(to bottom, #1e2345, #161b38);
-      border-color: rgba(0,212,255,0.15);
-    }
-    [data-theme="light"] .aether-robo-ear {
-      background: linear-gradient(to bottom, #282f58, #1e2345);
+    [data-theme="light"] .aether-robo-shadow {
+      background: radial-gradient(ellipse, rgba(0,0,0,0.12) 0%, transparent 70%);
     }
     [data-theme="light"] .aether-puff {
       background: radial-gradient(circle at 40% 40%, rgba(139,92,246,0.2), rgba(100,80,160,0.08) 60%, transparent 80%);
@@ -1472,20 +1475,22 @@
       }
       .aether-assist-btn { width: 68px; height: 118px; bottom: 8px; }
       .aether-robo { width: 58px; height: 108px; }
-      .aether-robo-head { width: 44px; height: 36px; top: 8px; left: 7px; }
-      .aether-robo-close { width: 44px; height: 36px; top: 8px; left: 7px; }
-      .aether-robo-eye { width: 9px; height: 9px; }
-      .aether-robo-eyes { top: 17px; gap: 11px; }
-      .aether-robo-torso { width: 34px; height: 24px; top: 42px; }
-      .aether-robo-chest { width: 18px; height: 10px; }
-      .aether-robo-arm { width: 6px; height: 14px; top: 44px; }
-      .aether-robo-arm.left { left: 3px; }
-      .aether-robo-arm.right { right: 3px; }
-      .aether-robo-forearm { width: 5px; height: 11px; top: 12px; }
-      .aether-robo-hand { width: 7px; height: 4px; }
-      .aether-robo-leg { width: 7px; height: 10px; }
-      .aether-robo-knee { width: 5px; height: 5px; }
-      .aether-robo-shin { width: 6px; height: 9px; }
+      .aether-robo-head { width: 46px; height: 32px; top: 6px; left: 6px; }
+      .aether-robo-close { width: 46px; height: 32px; top: 6px; left: 6px; }
+      .aether-robo-eye { width: 12px; height: 12px; }
+      .aether-robo-eye:nth-child(2) { width: 5px; height: 5px; }
+      .aether-robo-eyes { top: 10px; gap: 5px; }
+      .aether-robo-torso { width: 40px; height: 28px; top: 36px; }
+      .aether-robo-chest { width: 22px; height: 11px; }
+      .aether-robo-arm { width: 5px; height: 11px; top: 40px; }
+      .aether-robo-arm.left { left: 1px; }
+      .aether-robo-arm.right { right: 1px; }
+      .aether-robo-forearm { width: 4px; height: 8px; top: 10px; }
+      .aether-robo-hand { width: 6px; height: 3px; }
+      .aether-robo-leg { width: 8px; height: 10px; }
+      .aether-robo-knee { width: 6px; height: 6px; }
+      .aether-robo-shin { width: 7px; height: 10px; }
+      .aether-robo-legs { gap: 12px; }
       .aether-suggest-chip { font-size: 11px; padding: 5px 11px; }
     }
   `;

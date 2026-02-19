@@ -81,11 +81,11 @@
 
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
     <link rel="preload" href="../images/logo-white.png" as="image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -103,8 +103,8 @@
     </script>
     <style>
         *,*::before,*::after{box-sizing:border-box}html{scroll-behavior:smooth}
-        body{font-family:'Plus Jakarta Sans',sans-serif;background:#05060f;color:#e4e8f1;overflow-x:hidden;margin:0}
-        .font-display{font-family:'Syne',sans-serif}
+        body{font-family:'Plus Jakarta Sans',sans-serif;background:#05060f;color:#e4e8f1;overflow-x:hidden;-webkit-text-size-adjust:100%;margin:0}
+        section:not(:first-of-type){content-visibility:auto;contain-intrinsic-size:auto 800px}.font-display{font-family:'Syne',sans-serif}
         body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.4}
         .grid-bg{background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);background-size:72px 72px}
         .orb{position:absolute;border-radius:50%;filter:blur(100px);will-change:transform}
@@ -177,7 +177,7 @@
         <div class="max-w-[1400px] mx-auto px-6 lg:px-8">
             <div class="flex items-center justify-between h-[72px]">
                 <a href="index.html" class="flex items-center group relative z-50">
-                    <img src="../images/logo-white.png" alt="AetherLink" class="h-8 lg:h-9 w-auto transition-transform duration-300 group-hover:scale-105">
+                    <img src="../images/logo-white.png" alt="AetherLink" width="112" height="32" fetchpriority="high" class="h-8 lg:h-9 w-auto transition-transform duration-300 group-hover:scale-105">
                 </a>
                 <div class="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
                     <a href="aetherbot.html" class="nav-link">AetherBot</a>

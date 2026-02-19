@@ -416,26 +416,164 @@
   style.textContent = `
     /* ═══════ AETHER-ASSIST v3.0 Widget Styles ═══════ */
 
+    /* ── 3D Robot FAB ── */
     .aether-assist-btn {
       position: fixed; bottom: 24px; right: 24px; z-index: 99999;
-      width: 60px; height: 60px; border-radius: 50%; border: none; cursor: pointer;
-      background: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 50%, #00dfa2 100%);
-      box-shadow: 0 4px 24px rgba(0,212,255,0.3), 0 0 40px rgba(139,92,246,0.15);
+      width: 68px; height: 76px; border: none; cursor: pointer;
+      background: none;
       display: flex; align-items: center; justify-content: center;
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      animation: aether-pulse 3s ease-in-out infinite;
+      animation: aether-float 4s ease-in-out infinite;
+      perspective: 200px;
+      -webkit-tap-highlight-color: transparent;
     }
-    .aether-assist-btn:hover {
-      transform: scale(1.08);
-      box-shadow: 0 6px 32px rgba(0,212,255,0.45), 0 0 60px rgba(139,92,246,0.25);
-    }
-    .aether-assist-btn.open { animation: none; transform: scale(1); }
-    .aether-assist-btn svg { width: 28px; height: 28px; fill: white; transition: transform 0.3s ease; }
-    .aether-assist-btn.open svg { transform: rotate(90deg); }
+    .aether-assist-btn:hover { animation-play-state: paused; }
+    .aether-assist-btn.open { animation: none; }
 
-    @keyframes aether-pulse {
-      0%, 100% { box-shadow: 0 4px 24px rgba(0,212,255,0.3), 0 0 40px rgba(139,92,246,0.15); }
-      50% { box-shadow: 0 4px 32px rgba(0,212,255,0.5), 0 0 60px rgba(139,92,246,0.3); }
+    @keyframes aether-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* Robot container */
+    .aether-robo {
+      position: relative; width: 58px; height: 64px;
+      transform-style: preserve-3d;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .aether-assist-btn:hover .aether-robo {
+      transform: rotateY(-12deg) rotateX(8deg) scale(1.08);
+    }
+    .aether-assist-btn.open .aether-robo {
+      transform: rotateY(180deg);
+    }
+
+    /* Shadow on ground */
+    .aether-robo::after {
+      content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+      width: 40px; height: 8px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(0,212,255,0.25) 0%, transparent 70%);
+      animation: aether-shadow 4s ease-in-out infinite;
+    }
+    @keyframes aether-shadow {
+      0%, 100% { width: 40px; opacity: 0.6; }
+      50% { width: 32px; opacity: 0.3; }
+    }
+
+    /* Head */
+    .aether-robo-head {
+      position: absolute; top: 12px; left: 3px;
+      width: 52px; height: 42px;
+      border-radius: 16px 16px 12px 12px;
+      background: linear-gradient(170deg, #1a2040 0%, #0e1225 50%, #161d3a 100%);
+      border: 1.5px solid rgba(0,212,255,0.25);
+      box-shadow:
+        0 6px 20px rgba(0,0,0,0.5),
+        0 0 20px rgba(0,212,255,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        inset 0 -4px 12px rgba(0,0,0,0.3);
+      backface-visibility: hidden;
+    }
+
+    /* Close X (backface of robot head) */
+    .aether-robo-close {
+      position: absolute; top: 12px; left: 3px;
+      width: 52px; height: 42px;
+      border-radius: 16px 16px 12px 12px;
+      background: linear-gradient(170deg, #2a1030 0%, #1a0820 50%, #2d1540 100%);
+      border: 1.5px solid rgba(139,92,246,0.3);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5), 0 0 15px rgba(139,92,246,0.1);
+      backface-visibility: hidden;
+      transform: rotateY(180deg);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .aether-robo-close svg { width: 20px; height: 20px; }
+
+    /* Eyes */
+    .aether-robo-eyes {
+      position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 12px;
+      backface-visibility: hidden;
+    }
+    .aether-robo-eye {
+      width: 10px; height: 10px; border-radius: 3px;
+      background: #00d4ff;
+      box-shadow: 0 0 8px rgba(0,212,255,0.8), 0 0 20px rgba(0,212,255,0.3), inset 0 0 3px rgba(255,255,255,0.5);
+      animation: aether-blink 4s ease-in-out infinite;
+    }
+    .aether-robo-eye:nth-child(2) { animation-delay: 0.1s; }
+    @keyframes aether-blink {
+      0%, 42%, 46%, 100% { height: 10px; opacity: 1; }
+      44% { height: 2px; opacity: 0.8; }
+    }
+
+    /* Mouth / grille */
+    .aether-robo-mouth {
+      position: absolute; top: 36px; left: 50%; transform: translateX(-50%);
+      width: 18px; height: 5px; border-radius: 2px;
+      background: rgba(0,212,255,0.12);
+      border: 1px solid rgba(0,212,255,0.2);
+      display: flex; gap: 2px; align-items: center; justify-content: center; padding: 0 2px;
+      backface-visibility: hidden;
+    }
+    .aether-robo-mouth span {
+      width: 2px; height: 3px; border-radius: 1px;
+      background: rgba(0,212,255,0.5);
+    }
+    .aether-assist-btn:hover .aether-robo-mouth {
+      background: rgba(0,212,255,0.2);
+      box-shadow: 0 0 6px rgba(0,212,255,0.15);
+    }
+
+    /* Antenna */
+    .aether-robo-antenna {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 2px; height: 12px;
+      background: linear-gradient(to top, rgba(0,212,255,0.3), rgba(139,92,246,0.6));
+      border-radius: 2px;
+      backface-visibility: hidden;
+    }
+    .aether-robo-antenna::after {
+      content: ''; position: absolute; top: -4px; left: 50%; transform: translateX(-50%);
+      width: 8px; height: 8px; border-radius: 50%;
+      background: radial-gradient(circle, #8b5cf6 30%, #6d3bef 100%);
+      box-shadow: 0 0 8px rgba(139,92,246,0.6), 0 0 20px rgba(139,92,246,0.2);
+      animation: aether-antenna-glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes aether-antenna-glow {
+      from { box-shadow: 0 0 8px rgba(139,92,246,0.6), 0 0 20px rgba(139,92,246,0.2); }
+      to { box-shadow: 0 0 12px rgba(0,212,255,0.8), 0 0 30px rgba(0,212,255,0.3); background: radial-gradient(circle, #00d4ff 30%, #0099cc 100%); }
+    }
+
+    /* Ear accents */
+    .aether-robo-ear {
+      position: absolute; top: 24px; width: 5px; height: 12px;
+      border-radius: 3px;
+      background: linear-gradient(to bottom, rgba(0,212,255,0.3), rgba(139,92,246,0.3));
+      backface-visibility: hidden;
+    }
+    .aether-robo-ear.left { left: 0; border-radius: 3px 0 0 3px; }
+    .aether-robo-ear.right { right: 0; border-radius: 0 3px 3px 0; }
+
+    /* Visor shine */
+    .aether-robo-head::before {
+      content: ''; position: absolute; top: 3px; left: 8px; right: 8px; height: 8px;
+      border-radius: 8px 8px 0 0;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.08), transparent);
+    }
+
+    /* Light mode adjustments */
+    [data-theme="light"] .aether-robo-head {
+      background: linear-gradient(170deg, #2a2f52 0%, #1a1f3a 50%, #252b50 100%);
+      border-color: rgba(0,212,255,0.35);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.25), 0 0 20px rgba(0,212,255,0.15),
+                  inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+    [data-theme="light"] .aether-robo::after {
+      background: radial-gradient(ellipse, rgba(0,0,0,0.12) 0%, transparent 70%);
+    }
+    [data-theme="light"] .aether-robo-close {
+      background: linear-gradient(170deg, #352040 0%, #251030 50%, #3d1850 100%);
     }
 
     .aether-assist-panel {
@@ -701,7 +839,11 @@
         width: calc(100vw - 16px); right: 8px; bottom: 88px;
         height: calc(100vh - 120px); max-height: none; border-radius: 16px;
       }
-      .aether-assist-btn { width: 54px; height: 54px; bottom: 20px; right: 16px; }
+      .aether-assist-btn { width: 60px; height: 68px; bottom: 16px; right: 12px; }
+      .aether-robo { width: 50px; height: 56px; }
+      .aether-robo-head { width: 44px; height: 36px; top: 10px; left: 3px; }
+      .aether-robo-eye { width: 8px; height: 8px; }
+      .aether-robo-eyes { top: 18px; gap: 10px; }
       .aether-suggest-chip { font-size: 11px; padding: 5px 11px; }
     }
   `;
@@ -711,7 +853,15 @@
   const btn = document.createElement('button');
   btn.className = 'aether-assist-btn';
   btn.setAttribute('aria-label', 'Chat met AETHER');
-  btn.innerHTML = '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/><path d="M7 9h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>';
+  btn.innerHTML = `<div class="aether-robo">
+    <div class="aether-robo-antenna"></div>
+    <div class="aether-robo-ear left"></div>
+    <div class="aether-robo-ear right"></div>
+    <div class="aether-robo-head"></div>
+    <div class="aether-robo-eyes"><div class="aether-robo-eye"></div><div class="aether-robo-eye"></div></div>
+    <div class="aether-robo-mouth"><span></span><span></span><span></span><span></span></div>
+    <div class="aether-robo-close"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></div>
+  </div>`;
 
   // Resolve logo path (works from /nl/, /en/, /fi/ subdirs)
   const basePath = window.location.pathname.includes('/nl/') || window.location.pathname.includes('/en/') || window.location.pathname.includes('/fi/')
@@ -861,10 +1011,7 @@
     isOpen = !isOpen;
     panel.classList.toggle('open', isOpen);
     btn.classList.toggle('open', isOpen);
-    btn.innerHTML = isOpen
-      ? '<svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>'
-      : '<svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/><path d="M7 9h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>';
-    if (isOpen) setTimeout(() => inputEl.focus(), 300);
+    if (isOpen) setTimeout(() => inputEl.focus(), 400);
   });
 
   // ─── Clear Chat ───

@@ -1,5 +1,5 @@
 /**
- * AETHER-ASSIST v3.0 — Premium AI Chat Widget
+ * AETHER-ASSIST v4.0 — Premium AI Chat Widget
  * Features: ElevenLabs TTS, voice input (STT), streaming without flicker,
  *           markdown + autolinks, suggested questions, page context, session persistence
  * Vanilla JS — no dependencies
@@ -116,6 +116,55 @@
           'Milta kehitysprosessi nayttaa?',
         ],
       },
+    },
+  };
+
+  // ─── Speech Bubble Texts ───
+  const speechTexts = {
+    nl: {
+      help: ['Mag ik u helpen?', 'Vraag maar!', 'Hoi daar!', 'Klik op mij!'],
+      raps: [
+        'AI denkt snel,\nmaar jij denkt diep 🧠',
+        'Nullen en enen,\nmaar gevoel is power 💪',
+        'De toekomst is nu,\nmens en machine samen 🤝',
+        'Ik ben maar code,\njij bent het brein 🎤',
+        'Data flows als water,\nwijsheid komt van jou 🌊',
+        'Artificial? Nee man,\necht slim is menselijk ✨',
+        'Algoritmes rappen,\nmaar empathie wint altijd 💜',
+        'Van Turing tot nu,\nwij groeien samen mee 🚀',
+        'Machine learning vibes,\nmaar creativiteit = jij 🎨',
+        'AI is de tool,\njij bent de kunstenaar 🎭',
+      ],
+    },
+    en: {
+      help: ['Can I help you?', 'Ask me anything!', 'Hey there!', 'Click me!'],
+      raps: [
+        'AI thinks fast,\nbut you think deep 🧠',
+        'Zeros and ones,\nbut feeling is power 💪',
+        'The future is now,\nhuman and machine as one 🤝',
+        "I'm just code,\nyou're the real brain 🎤",
+        'Data flows like water,\nwisdom comes from you 🌊',
+        'Artificial? Nah,\ntrue smarts are human ✨',
+        'Algorithms rap,\nbut empathy always wins 💜',
+        'From Turing till now,\nwe grow together 🚀',
+        'Machine learning vibes,\nbut creativity = you 🎨',
+        "AI is the tool,\nyou're the artist 🎭",
+      ],
+    },
+    fi: {
+      help: ['Voinko auttaa?', 'Kysy mitä vain!', 'Hei siellä!', 'Klikkaa minua!'],
+      raps: [
+        'Tekoäly ajattelee,\nmutta sinä tunnet 🧠',
+        'Nollia ja ykkösiä,\nmutta tunne on voima 💪',
+        'Tulevaisuus on nyt,\nihminen ja kone yhdessä 🤝',
+        'Olen vain koodia,\nsinä olet aivot 🎤',
+        'Data virtaa kuin vesi,\nviisaus tulee sinulta 🌊',
+        'Keinotekoinen? Ei,\noikea älykkyys on inhimillistä ✨',
+        'Algoritmit räppää,\nmutta empatia voittaa aina 💜',
+        'Turingista tähän,\nkasvamme yhdessä 🚀',
+        'Koneoppimista,\nmutta luovuus = sinä 🎨',
+        'Tekoäly on työkalu,\nsinä olet taiteilija 🎭',
+      ],
     },
   };
 
@@ -713,6 +762,162 @@
       100% { opacity: 0; transform: translate(var(--spark-dx), var(--spark-dy)) scale(0); }
     }
 
+    /* ── Speech Bubble ── */
+    .aether-speech-bubble {
+      position: fixed; z-index: 99998; pointer-events: none;
+      bottom: 110px;
+      max-width: 200px; padding: 10px 14px;
+      background: rgba(15, 18, 40, 0.92);
+      border: 1.5px solid rgba(0,212,255,0.25);
+      border-radius: 18px 18px 18px 4px;
+      color: #e4e8f1; font-size: 13px; line-height: 1.5;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      white-space: pre-line;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(0,212,255,0.08);
+      backdrop-filter: blur(16px);
+      animation: aether-bubble-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      will-change: transform, opacity;
+    }
+    .aether-speech-bubble.rap {
+      background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(15,18,40,0.92) 40%);
+      border-color: rgba(139,92,246,0.35);
+      font-style: italic;
+    }
+    .aether-speech-bubble.rap::before {
+      content: '🎵'; position: absolute; top: -12px; right: 8px; font-size: 16px;
+      animation: aether-note-bounce 0.6s ease infinite alternate;
+    }
+    @keyframes aether-note-bounce {
+      from { transform: translateY(0) rotate(-8deg); }
+      to { transform: translateY(-6px) rotate(8deg); }
+    }
+    /* Tail pointing down-left toward robot */
+    .aether-speech-bubble::after {
+      content: ''; position: absolute; bottom: -8px; left: 12px;
+      width: 0; height: 0;
+      border-left: 8px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 10px solid rgba(15,18,40,0.92);
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+    .aether-speech-bubble.facing-right {
+      border-radius: 18px 18px 4px 18px;
+    }
+    .aether-speech-bubble.facing-right::after {
+      left: auto; right: 12px;
+      border-left: 4px solid transparent;
+      border-right: 8px solid transparent;
+    }
+    @keyframes aether-bubble-in {
+      0% { opacity: 0; transform: translateY(10px) scale(0.7); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .aether-speech-bubble.out {
+      animation: aether-bubble-out 0.3s ease-in forwards;
+    }
+    @keyframes aether-bubble-out {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-8px) scale(0.8); }
+    }
+    [data-theme="light"] .aether-speech-bubble {
+      background: rgba(245, 243, 248, 0.95);
+      color: #1a1f35;
+      border-color: rgba(0,212,255,0.3);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 0 20px rgba(0,212,255,0.06);
+    }
+    [data-theme="light"] .aether-speech-bubble::after {
+      border-top-color: rgba(245, 243, 248, 0.95);
+    }
+    [data-theme="light"] .aether-speech-bubble.rap {
+      background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(245,243,248,0.95) 40%);
+    }
+
+    /* ── Trick Animations ── */
+    .aether-assist-btn.trick-spin .aether-robo {
+      animation: aether-trick-spin 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    }
+    @keyframes aether-trick-spin {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(360deg) scale(1.15); }
+      100% { transform: rotate(720deg) scale(1); }
+    }
+
+    .aether-assist-btn.trick-jump .aether-robo {
+      animation: aether-trick-jump 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    }
+    @keyframes aether-trick-jump {
+      0% { transform: translateY(0) scale(1, 1); }
+      15% { transform: translateY(4px) scale(1.1, 0.85); }
+      40% { transform: translateY(-40px) scale(0.9, 1.15); }
+      55% { transform: translateY(-42px) rotate(15deg); }
+      70% { transform: translateY(-20px) rotate(-10deg); }
+      85% { transform: translateY(2px) scale(1.1, 0.9); }
+      100% { transform: translateY(0) scale(1, 1); }
+    }
+
+    .aether-assist-btn.trick-flip .aether-robo {
+      animation: aether-trick-flip 1s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    }
+    @keyframes aether-trick-flip {
+      0% { transform: translateY(0) rotateX(0deg); }
+      25% { transform: translateY(-35px) rotateX(180deg); }
+      50% { transform: translateY(-45px) rotateX(360deg) scale(1.1); }
+      75% { transform: translateY(-15px) rotateX(540deg); }
+      100% { transform: translateY(0) rotateX(720deg); }
+    }
+
+    .aether-assist-btn.trick-dance .aether-robo {
+      animation: aether-trick-dance 1.2s ease-in-out !important;
+    }
+    @keyframes aether-trick-dance {
+      0% { transform: translateX(0) rotate(0deg); }
+      10% { transform: translateX(-8px) rotate(-12deg); }
+      20% { transform: translateX(8px) rotate(12deg) translateY(-4px); }
+      30% { transform: translateX(-6px) rotate(-8deg); }
+      40% { transform: translateX(6px) rotate(8deg) translateY(-6px); }
+      50% { transform: translateX(0) rotate(0deg) scale(1.1) translateY(-8px); }
+      60% { transform: translateX(6px) rotate(10deg) translateY(-4px); }
+      70% { transform: translateX(-6px) rotate(-10deg); }
+      80% { transform: translateX(8px) rotate(6deg) translateY(-3px); }
+      90% { transform: translateX(-4px) rotate(-4deg); }
+      100% { transform: translateX(0) rotate(0deg); }
+    }
+
+    .aether-assist-btn.trick-wave .aether-robo {
+      animation: aether-trick-wave 0.9s ease-in-out !important;
+    }
+    @keyframes aether-trick-wave {
+      0% { transform: rotate(0deg); }
+      15% { transform: rotate(15deg); }
+      30% { transform: rotate(-10deg); }
+      45% { transform: rotate(12deg); }
+      60% { transform: rotate(-8deg); }
+      75% { transform: rotate(6deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    .aether-assist-btn.trick-moonwalk .aether-robo {
+      animation: aether-trick-moonwalk 1.4s ease-in-out !important;
+    }
+    @keyframes aether-trick-moonwalk {
+      0% { transform: translateX(0) scaleX(1); }
+      20% { transform: translateX(12px) scaleX(-1) translateY(-2px); }
+      40% { transform: translateX(-8px) scaleX(1) translateY(0); }
+      60% { transform: translateX(16px) scaleX(-1) translateY(-3px); }
+      80% { transform: translateX(-4px) scaleX(1) translateY(-1px); }
+      100% { transform: translateX(0) scaleX(1) translateY(0); }
+    }
+
+    /* Z-depth walking — scale variation for forward/backward illusion */
+    .aether-assist-btn.depth-near {
+      transition: filter 2s ease;
+      filter: drop-shadow(0 4px 24px rgba(0,212,255,0.3));
+    }
+    .aether-assist-btn.depth-far {
+      transition: filter 2s ease;
+      filter: drop-shadow(0 1px 6px rgba(0,212,255,0.08));
+    }
+
     /* Light mode adjustments */
     [data-theme="light"] .aether-robo-head {
       background: linear-gradient(175deg, #2d3460 0%, #1e2345 40%, #282f58 70%, #2d3460 100%);
@@ -1174,10 +1379,10 @@
     sendBtn.disabled = !inputEl.value.trim() || isStreaming;
   });
 
-  // ─── Walking Logic v2 — Smooth subpixel movement ───
+  // ─── Walking Logic v3 — Smooth with Z-depth + Tricks + Speech ───
   let walkX = window.innerWidth - 100;
   let walkDir = -1;
-  const WALK_SPEED = 0.45; // slower = smoother
+  const WALK_SPEED = 0.45;
   let walkPaused = false;
   let walkTimer = null;
   let idleTimeout = null;
@@ -1185,18 +1390,34 @@
   let puffTimer = 0;
   let sparkleTimer = 0;
 
+  // Z-depth (scale) for forward/backward illusion
+  let depthScale = 1;
+  let depthTarget = 1;
+  let depthTimer = 0;
+
+  // Speech bubble state
+  let activeBubble = null;
+  let lastRapIndex = -1;
+  let trickActive = false;
+
+  const tricks = ['trick-spin', 'trick-jump', 'trick-flip', 'trick-dance', 'trick-wave', 'trick-moonwalk'];
+  const trickDurations = { 'trick-spin': 800, 'trick-jump': 700, 'trick-flip': 1000, 'trick-dance': 1200, 'trick-wave': 900, 'trick-moonwalk': 1400 };
+
   btn.style.transform = `translateX(${walkX}px)`;
   btn.classList.add('walking');
+
+  function updateBtnTransform() {
+    btn.style.transform = `translateX(${walkX}px) scale(${depthScale})`;
+  }
 
   function walkStep(timestamp) {
     if (isOpen || walkPaused) return;
 
-    // Delta time for consistent speed regardless of frame rate
     if (!lastWalkTime) lastWalkTime = timestamp;
-    const delta = Math.min(timestamp - lastWalkTime, 32); // cap at ~30fps minimum
+    const delta = Math.min(timestamp - lastWalkTime, 32);
     lastWalkTime = timestamp;
 
-    const speed = WALK_SPEED * (delta / 16.67); // normalize to 60fps
+    const speed = WALK_SPEED * (delta / 16.67);
     walkX += walkDir * speed;
 
     const maxX = window.innerWidth - 80;
@@ -1206,17 +1427,29 @@
       walkX = minX;
       walkDir = 1;
       btn.classList.remove('facing-left');
-      spawnPuff(walkX + 50, true); // puff on turn
+      spawnPuff(walkX + 50, true);
     } else if (walkX >= maxX) {
       walkX = maxX;
       walkDir = -1;
       btn.classList.add('facing-left');
-      spawnPuff(walkX + 10, false); // puff on turn
+      spawnPuff(walkX + 10, false);
     }
 
-    btn.style.transform = `translateX(${walkX}px)`;
+    // Smooth depth interpolation (forward/backward)
+    depthTimer += delta;
+    if (depthTimer > 6000) {
+      depthTimer = 0;
+      depthTarget = 0.75 + Math.random() * 0.5; // 0.75 – 1.25
+    }
+    depthScale += (depthTarget - depthScale) * 0.005 * (delta / 16.67);
 
-    // Periodic smoke puffs while walking
+    // Update depth classes for shadow adjustment
+    btn.classList.toggle('depth-near', depthScale > 1.1);
+    btn.classList.toggle('depth-far', depthScale < 0.85);
+
+    updateBtnTransform();
+
+    // Periodic smoke puffs
     puffTimer += delta;
     if (puffTimer > 1200) {
       puffTimer = 0;
@@ -1273,37 +1506,128 @@
     }
   }
 
-  // Random idle stops with personality
+  // ─── Speech Bubble ───
+  function showSpeechBubble(text, isRap) {
+    if (activeBubble) {
+      activeBubble.remove();
+      activeBubble = null;
+    }
+    const bubble = document.createElement('div');
+    const facingLeft = btn.classList.contains('facing-left');
+    bubble.className = `aether-speech-bubble${isRap ? ' rap' : ''}${facingLeft ? '' : ' facing-right'}`;
+    bubble.textContent = text;
+
+    // Position above robot
+    const bubbleLeft = Math.max(16, Math.min(walkX - 20, window.innerWidth - 220));
+    bubble.style.left = bubbleLeft + 'px';
+    document.body.appendChild(bubble);
+    activeBubble = bubble;
+
+    // Auto dismiss
+    const duration = isRap ? 4500 : 3000;
+    setTimeout(() => {
+      if (bubble === activeBubble) {
+        bubble.classList.add('out');
+        setTimeout(() => {
+          bubble.remove();
+          if (activeBubble === bubble) activeBubble = null;
+        }, 300);
+      }
+    }, duration);
+  }
+
+  function showRandomHelp() {
+    const texts = (speechTexts[lang] || speechTexts.nl).help;
+    const text = texts[Math.floor(Math.random() * texts.length)];
+    showSpeechBubble(text, false);
+  }
+
+  function showRandomRap() {
+    const raps = (speechTexts[lang] || speechTexts.nl).raps;
+    let idx;
+    do { idx = Math.floor(Math.random() * raps.length); } while (idx === lastRapIndex && raps.length > 1);
+    lastRapIndex = idx;
+    showSpeechBubble(raps[idx], true);
+  }
+
+  // ─── Tricks ───
+  function doTrick() {
+    if (trickActive || isOpen) return;
+    trickActive = true;
+
+    const trick = tricks[Math.floor(Math.random() * tricks.length)];
+    const duration = trickDurations[trick] || 1000;
+
+    // Sparkle burst before trick
+    spawnSparkle();
+    spawnSparkle();
+
+    btn.classList.add(trick);
+
+    // Big puff burst during trick
+    for (let i = 0; i < 4; i++) {
+      setTimeout(() => {
+        spawnPuff(walkX + 20 + Math.random() * 30, Math.random() > 0.5);
+      }, i * 150);
+    }
+
+    setTimeout(() => {
+      btn.classList.remove(trick);
+      trickActive = false;
+      spawnSparkle();
+    }, duration + 100);
+  }
+
+  // ─── Idle Stops with Speech, Tricks, and Raps ───
   function scheduleIdleStop() {
-    const nextPause = 8000 + Math.random() * 12000;
+    const nextPause = 6000 + Math.random() * 10000;
     idleTimeout = setTimeout(() => {
       if (isOpen) { scheduleIdleStop(); return; }
       walkPaused = true;
       btn.classList.remove('walking');
       lastWalkTime = 0;
 
-      // Spawn a small sparkle burst when stopping
       spawnSparkle();
 
+      // Decide what to do during idle: help bubble, rap, or trick
+      const roll = Math.random();
+      if (roll < 0.3) {
+        // Show help text
+        showRandomHelp();
+      } else if (roll < 0.6) {
+        // Show rap line
+        showRandomRap();
+      } else {
+        // Do a trick (after a tiny delay so the stop is visible)
+        setTimeout(() => {
+          if (!isOpen) doTrick();
+        }, 300);
+      }
+
+      const idleDuration = 3000 + Math.random() * 3000;
       setTimeout(() => {
         if (!isOpen) {
           walkPaused = false;
           btn.classList.add('walking');
           lastWalkTime = 0;
           walkTimer = requestAnimationFrame(walkStep);
-          // Puff on start
           const puffX = walkDir === -1 ? walkX + 56 : walkX + 6;
           spawnPuff(puffX, walkDir === 1);
         }
         scheduleIdleStop();
-      }, 2500 + Math.random() * 2500);
+      }, idleDuration);
     }, nextPause);
   }
   scheduleIdleStop();
 
+  // Initial greeting — show speech bubble after 3s
+  setTimeout(() => {
+    if (!isOpen) showRandomHelp();
+  }, 3000);
+
   window.addEventListener('resize', () => {
     const maxX = window.innerWidth - 80;
-    if (walkX > maxX) { walkX = maxX; btn.style.transform = `translateX(${walkX}px)`; }
+    if (walkX > maxX) { walkX = maxX; updateBtnTransform(); }
   });
 
   // ─── Toggle Panel ───
@@ -1318,6 +1642,8 @@
       btn.classList.remove('walking');
       lastWalkTime = 0;
       if (walkTimer) { cancelAnimationFrame(walkTimer); walkTimer = null; }
+      // Dismiss speech bubble
+      if (activeBubble) { activeBubble.remove(); activeBubble = null; }
       // Big puff burst on opening
       for (let i = 0; i < 3; i++) {
         setTimeout(() => spawnPuff(walkX + 20 + i * 12, Math.random() > 0.5), i * 100);

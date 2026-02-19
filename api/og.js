@@ -23,10 +23,12 @@ async function initResvg() {
 
 async function loadFont() {
   if (fontData) return fontData;
-  const res = await fetch(
-    'https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hiA.woff2'
+  // Satori requires TTF/OTF (not WOFF2). Fetch Inter TTF from jsDelivr CDN.
+  const fontRes = await fetch(
+    'https://cdn.jsdelivr.net/gh/rsms/inter@v4.1/extras/ttf/Inter-Regular.ttf'
   );
-  fontData = await res.arrayBuffer();
+  if (!fontRes.ok) throw new Error(`Font fetch failed: ${fontRes.status}`);
+  fontData = await fontRes.arrayBuffer();
   return fontData;
 }
 
@@ -233,6 +235,6 @@ export default async function handler(req, res) {
     res.send(Buffer.from(png));
   } catch (error) {
     console.error('OG image error:', error);
-    res.status(500).json({ error: 'Failed to generate image' });
+    res.status(500).json({ error: 'Failed to generate image', detail: error.message, stack: error.stack });
   }
 }

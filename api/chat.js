@@ -299,7 +299,9 @@ const ERRORS = {
 
 // ─── API Handler ───
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  const origin = req.headers.origin || '';
+  const allowed = ['https://aetherlink.ai', 'https://www.aetherlink.ai', 'https://aetherlink-website.vercel.app'];
+  res.setHeader('Access-Control-Allow-Origin', allowed.includes(origin) ? origin : allowed[0]);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 

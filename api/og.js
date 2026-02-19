@@ -25,7 +25,7 @@ async function loadFont() {
   if (fontData) return fontData;
   // Satori requires TTF/OTF (not WOFF2). Fetch Inter TTF from jsDelivr CDN.
   const fontRes = await fetch(
-    'https://cdn.jsdelivr.net/gh/rsms/inter@v4.1/extras/ttf/Inter-Regular.ttf'
+    'https://cdn.jsdelivr.net/gh/google/fonts@main/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf'
   );
   if (!fontRes.ok) throw new Error(`Font fetch failed: ${fontRes.status}`);
   fontData = await fontRes.arrayBuffer();

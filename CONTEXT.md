@@ -1,23 +1,31 @@
 # AetherLink Website — Project Context
 
 > Complete technical and design context for the AetherLink corporate website.
-> This document serves as the single source of truth for developers, designers, and AI agents working on this project.
+> This document is the single source of truth for developers, designers, and AI agents working on this project.
+> **Last updated:** February 2026
 
 ---
 
 ## 1. Company Overview
 
-**AetherLink** is Europe's AI One-Stop-Shop, headquartered in the Netherlands with operations in Finland and the United Arab Emirates. The company provides end-to-end AI solutions for businesses of all sizes.
+**AetherLink.ai** is Europe's AI One-Stop-Shop, headquartered in the Netherlands with operations in Finland and the United Arab Emirates. Founded in 2019.
 
 ### Mission
 > The power of AI, accessible for every business.
+
+### Team
+| Name | Role | Expertise |
+|------|------|-----------|
+| **Marco** | CTO & AI Lead Architect | 5+ years AI experience. Specialist in autonomous AI agents, agentic workflows, RAG systems, AI platform architecture. Builds with Claude, GPT, Gemini, Supabase, n8n, Pinecone, LangGraph, MCP servers, Docker. |
+| **Constance** | CEO | Organization strategy, business development |
+| **Ronald** | CCO/CFO | Commercial operations, partnerships, finance |
 
 ### Contact
 - **Website:** https://aetherlink.ai
 - **Email:** info@aetherlink.ai
 - **Phone:** +31 6 1377 2333
 - **LinkedIn:** https://www.linkedin.com/company/aetherlink/
-- **Availability:** 24/7 support
+- **Availability:** 24/7
 
 ### Locations
 | Region | Country |
@@ -26,45 +34,59 @@
 | Nordics | Finland |
 | Middle East | United Arab Emirates |
 
+### Key Clients
+Solvari (21 AI agents in 12 weeks), Dutch Ministry of Defence (AI consultancy), 10+ SMEs (chatbots, automations, platforms).
+
 ---
 
 ## 2. Products & Services
 
 ### AetherBot — AI Chatbot Platform
 - **Accent Color:** Cyan `#00d4ff`
-- **Description:** Ready-to-use AI chatbot for websites. Provides 24/7 customer support, trained on your knowledge base. Handles FAQs, lead generation, and appointment scheduling.
-- **Pricing Tiers:**
-  - Starter: €39/month (1 chatbot, 1,000 conversations/mo)
-  - Professional: €399/month (5 chatbots, 10,000 conversations/mo, analytics)
-  - Enterprise: Custom pricing (unlimited, dedicated support, SLA)
-- **Key Features:** Knowledge base training, multilingual support, analytics dashboard, CRM integration, human handoff, custom branding
-- **Schema Markup:** `SoftwareApplication` + `FAQPage`
+- **Description:** Ready-to-use AI chatbots for websites. Trained on company knowledge, live in minutes, available 24/7.
+- **Pricing:**
+  - Starter: €49/month (1 chatbot, basic features)
+  - Professional: €599/month (5 chatbots, analytics, CRM integration)
+  - Enterprise: Custom (unlimited, dedicated support, SLA)
+- **Features:** Knowledge base training, multilingual (NL/EN/DE/FR/FI+), analytics dashboard, CRM integration, human handoff, custom branding
+- **Integrations:** WordPress, Shopify, Magento, WooCommerce, custom
+- **Compliance:** EU AI Act compliant, GDPR-proof
+- **Schema:** `SoftwareApplication` + `FAQPage` (5 Q&A per language) + `BreadcrumbList`
+- **URL pattern:** `/{lang}/aetherbot.html`
 
 ### AetherMIND — AI Consultancy & Training
 - **Accent Color:** Violet `#8b5cf6`
-- **Description:** Strategic AI consultancy, hands-on training, and workshops for organisations looking to adopt AI.
-- **Service Areas:**
-  - AI Consultancy (strategy, roadmaps, implementation planning)
-  - AI Training (7 training topics, from prompt engineering to AI ethics)
-  - Strategic Advisory (board-level AI governance, EU AI Act compliance)
-- **Methodology:** 3-step approach (Assess → Implement → Scale)
+- **Services:**
+  - AI Readiness Scans — assessment of AI readiness
+  - AI Strategy Development — roadmap and implementation plan
+  - AI Training for Teams — prompt engineering, AI tools, responsible AI use
+  - AI Change Management — human-centered AI transformation, adoption
+  - Co-intelligence — human + AI collaboration optimization
+- **Methodology:** Assess → Implement → Scale
+- **Schema:** `ProfessionalService` + `FAQPage` (5 Q&A per language) + `BreadcrumbList`
+- **URL pattern:** `/{lang}/aethermind.html`
 
 ### AetherDEV — Custom AI Development
 - **Accent Color:** Emerald `#00dfa2`
-- **Description:** Bespoke AI development services — automations, integrations, and full AI platforms.
 - **Capabilities:**
-  - AI-powered automations (workflow optimization, document processing)
-  - API integrations (connecting AI to existing business systems)
-  - Custom AI platforms (full-stack AI solutions, dashboards)
-  - Data pipelines (ETL, data enrichment, analytics)
-- **Process:** 4-step (Discovery → Design → Develop → Deploy)
+  - Agentic AI workflows (n8n, LangGraph)
+  - RAG systems and knowledge bases (Pinecone, pgvector)
+  - AI platform development (Supabase, Vercel)
+  - MCP server configuration and integration
+  - AI dashboards and analytics
+  - Process automation
+  - Custom integrations
+- **Technologies:** Claude, GPT, Gemini, Grok, Mistral, Supabase, n8n, Pinecone, LangGraph, Docker
+- **Process:** Discovery → Design → Develop → Deploy
+- **Schema:** `ProfessionalService` + `FAQPage` (5 Q&A per language) + `BreadcrumbList`
+- **URL pattern:** `/{lang}/aetherdev.html`
 
 ---
 
 ## 3. Design System — "Luminous Void"
 
 ### Philosophy
-A premium dark-theme aesthetic that balances sophistication with approachability. The design draws inspiration from deep space, with floating elements, glass morphism, and orbital motion suggesting the interconnected nature of AI systems.
+Premium dark-theme aesthetic balancing sophistication with approachability. Inspired by deep space — glass morphism, orbital motion, floating elements suggest the interconnected nature of AI systems. Supports dark/light theme toggle.
 
 ### Color Tokens
 
@@ -73,26 +95,36 @@ A premium dark-theme aesthetic that balances sophistication with approachability
 | `--void` | `#05060f` | `5, 6, 15` | Page background, deepest layer |
 | `--surface` | `#0a0d1a` | `10, 13, 26` | Card backgrounds, elevated surfaces |
 | `--border` | `#1a1f35` | `26, 31, 53` | Card borders, dividers |
-| `--accent-cyan` | `#00d4ff` | `0, 212, 255` | AetherBot branding, CTAs |
-| `--accent-violet` | `#8b5cf6` | `139, 92, 246` | AetherMIND branding, navigation |
-| `--accent-emerald` | `#00dfa2` | `0, 223, 162` | AetherDEV branding, success states |
+| `--accent-cyan` | `#00d4ff` | `0, 212, 255` | AetherBot branding, CTAs, links in chat |
+| `--accent-violet` | `#8b5cf6` | `139, 92, 246` | AetherMIND branding, navigation, chat accent |
+| `--accent-emerald` | `#00dfa2` | `0, 223, 162` | AetherDEV branding, success states, online indicator |
 | `--muted` | `#6b7394` | `107, 115, 148` | Secondary text, labels, captions |
 | `--light` | `#e4e8f1` | `228, 232, 241` | Primary text, headings |
 
 ### Gradients
-- **CTA Gradient:** `linear-gradient(135deg, #00dfa2, #8b5cf6)` — Emerald to Violet
-- **Hero Glow:** `radial-gradient(circle at 30% 50%, rgba(139,92,246,0.15), transparent 50%)`
-- **Card Hover:** `rgba(139,92,246,0.05)` overlay
+```css
+/* CTA Button */
+background: linear-gradient(135deg, #00dfa2, #8b5cf6);
+
+/* Chat Widget FAB */
+background: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 50%, #00dfa2 100%);
+
+/* Hero Glow */
+background: radial-gradient(circle at 30% 50%, rgba(139,92,246,0.15), transparent 50%);
+
+/* User Message Bubble */
+background: linear-gradient(135deg, rgba(0,212,255,0.18), rgba(139,92,246,0.12));
+```
 
 ### Typography
 
 | Role | Font | Weight | Size Range |
 |------|------|--------|------------|
-| Display / Headings | **Syne** | 700-800 | 36px–72px |
-| Body / UI | **Plus Jakarta Sans** | 400-600 | 14px–18px |
-| Code / Monospace | System monospace | 400 | 14px |
+| Display / Headings | **Syne** | 700–800 | 36px–72px |
+| Body / UI | **Plus Jakarta Sans** | 400–600 | 13.5px–18px |
+| Code / Monospace | **JetBrains Mono** / system | 400 | 12px–14px |
 
-**Source:** Google Fonts CDN with `font-display: swap` and preload hints.
+Source: Google Fonts CDN with `font-display: swap` and preload hints.
 
 ### Spacing Scale
 - Section padding: `120px 0` (desktop), `80px 0` (mobile)
@@ -100,41 +132,49 @@ A premium dark-theme aesthetic that balances sophistication with approachability
 - Content max-width: `1200px` centered
 - Grid gap: `32px` (desktop), `24px` (mobile)
 
-### Elevation & Glass
+### Glass Morphism
+
 ```css
-/* Glass card effect */
+/* Standard glass card */
 .glass-card {
-    background: rgba(10, 13, 26, 0.6);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 20px;
+  background: rgba(10, 13, 26, 0.6);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
 }
 
-/* Hover lift */
+/* Chat widget panel (heavier blur) */
+.aether-assist-panel {
+  background: rgba(10, 13, 26, 0.94);
+  backdrop-filter: blur(40px) saturate(1.2);
+  -webkit-backdrop-filter: blur(40px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Hover lift effect */
 .card:hover {
-    transform: translateY(-8px);
-    border-color: rgba(139, 92, 246, 0.3);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transform: translateY(-8px);
+  border-color: rgba(139, 92, 246, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 ```
 
 ### Visual Effects
 1. **SVG Noise Grain** — `<svg>` filter with `feTurbulence` overlaid at 3% opacity for texture
 2. **Gradient Orbs** — Fixed-position background blobs with `filter: blur(100px)` for ambient glow
-3. **Mouse Parallax** — Desktop-only `mousemove` listener shifting orb positions
-4. **Scroll Reveal** — `IntersectionObserver` with `threshold: 0.1`, staggered `animation-delay`
+3. **Mouse Parallax** — Desktop-only `mousemove` listener shifting orb positions at reduced rates
+4. **Scroll Reveal** — `IntersectionObserver` with `threshold: 0.1`, staggered `animation-delay` per element
 5. **Reduced Motion** — All animations respect `prefers-reduced-motion: reduce`
+6. **Dark/Light Toggle** — `data-theme="light"` attribute on `<html>`, persisted in localStorage via `js/theme.js`
 
 ---
 
-## 4. Orbital Animation
-
-The hero section features a signature orbital animation with 3 concentric rotating rings, each containing orbiting product/capability icons.
+## 4. Orbital Animation (Homepage Hero)
 
 ### Structure
 ```
-orbit-wrap (540×540px, centered)
+orbit-wrap (540x540px, centered)
 ├── orbit-center (92px logo with pulsing glow)
 ├── orbit-track outer (480px, rotates CW 25s)
 │   ├── orbit-arc (semi-circle, violet border)
@@ -152,18 +192,17 @@ orbit-wrap (540×540px, centered)
     └── orbiting icon: Lock (240°)
 ```
 
-### Key Technique
-Icons stay upright while orbiting using the counter-rotation trick:
+### Counter-Rotation Technique
+Icons stay upright while orbiting:
 ```css
 @keyframes orbit-outer {
-    from { transform: rotate(0deg) translateX(240px) rotate(0deg); }
-    to   { transform: rotate(360deg) translateX(240px) rotate(-360deg); }
+  from { transform: rotate(0deg) translateX(240px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(240px) rotate(-360deg); }
 }
 ```
-Negative `animation-delay` positions icons evenly around the ring.
+Negative `animation-delay` positions icons evenly around each ring.
 
 ### Responsive Scaling
-Instead of recalculating all positions per breakpoint, the entire wrapper scales:
 | Breakpoint | Scale | Margin Compensation |
 |------------|-------|---------------------|
 | > 1280px | 1.0 | none |
@@ -174,298 +213,490 @@ Instead of recalculating all positions per breakpoint, the entire wrapper scales
 
 ---
 
-## 5. Header & Navigation
+## 5. AETHER-ASSIST AI Chatbot System (v2.1)
 
-### Desktop (≥ 1024px)
-- **Layout:** Logo (left) → Centered nav links → Login + CTA (right)
-- **Position:** Fixed top, `z-index: 1000`
-- **Glass Effect:** `backdrop-filter: blur(24px)` + border-bottom on scroll
-- **Nav Links:** AetherBot, AetherMIND, AetherDEV — each with `::after` animated underline on hover
-- **Active State:** Permanent underline via `.active` class
-- **Login Button:** Ghost style with violet border
-- **CTA Button:** Gradient fill (emerald → violet) with shimmer pseudo-element
-- **Language Switcher:** EN / NL / FI text links
+### System Architecture
 
-### Mobile (< 1024px)
-- **Header:** Logo (left) + Hamburger (right)
-- **Hamburger:** 3-line icon, transforms to X on open
-- **Menu:** Full-screen overlay (`100vh`) with centered stacked links
-- **Animation:** Slide-in from right with `translateX(100%)` → `translateX(0)`
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    BROWSER (Client)                          │
+│                                                              │
+│  js/aether-assist.js (818 lines, IIFE, vanilla JS)          │
+│  ├── Language detection (html lang attribute)                │
+│  ├── Page type detection (URL path analysis)                 │
+│  ├── Session persistence (sessionStorage, 30min TTL)         │
+│  ├── Markdown renderer (bold, links, lists, code, autolink)  │
+│  ├── TTS playback (Audio API + blob URLs)                    │
+│  └── Suggested questions (4 per page × 4 pages × 3 langs)   │
+│                                                              │
+│     ↓ POST /api/chat              ↓ POST /api/tts            │
+│     (JSON → SSE stream)           (JSON → audio/mpeg)        │
+├─────────────────────────────────────────────────────────────┤
+│                 VERCEL SERVERLESS FUNCTIONS                   │
+│                                                              │
+│  api/chat.js (346 lines)          api/tts.js (91 lines)     │
+│  ├── Rate limiting (12/min/IP)    ├── Markdown stripping     │
+│  ├── Dynamic system prompt        ├── Text cap (500 chars)   │
+│  ├── Page context injection       ├── Voice settings          │
+│  ├── Prompt caching (ephemeral)   └── Audio streaming         │
+│  ├── Message trimming (last 20)                               │
+│  └── SSE streaming to client                                  │
+│                                                              │
+│     ↓ Anthropic Messages API      ↓ ElevenLabs TTS API       │
+│     (streaming)                   (streaming)                 │
+├─────────────────────────────────────────────────────────────┤
+│                      EXTERNAL APIs                           │
+│                                                              │
+│  Claude Sonnet 4.5                ElevenLabs Multilingual v2  │
+│  (claude-sonnet-4-5-20250929)     (voice: ErXwobaYiN019PkySvjV)│
+│  max_tokens: 1024                 stability: 0.5              │
+│  cache_control: ephemeral         similarity_boost: 0.75      │
+│                                   style: 0.3                  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Chat API (`api/chat.js`) — Deep Dive
+
+**System Prompt Structure (XML-formatted, Anthropic best practices):**
+```xml
+<identity>     — Who AETHER is, built on Claude, by AetherLink Team Alpha
+<core_behavior> — Senior consultant, detect language, no hallucination, proactive
+<page_context>  — Dynamic: adapts per page type and visitor language
+<formatting>    — Bold, links, lists, short paragraphs
+<tone_and_style> — Professional but accessible, "wij" for AetherLink
+<conversation_goals> — Priority 1: Help, 2: Qualify, 3: Next step
+<response_guidelines> — Direct answers, no "Als AI...", no "Geweldig!"
+<out_of_scope>  — Custom pricing → schedule call, competitors → neutral
+<privacy>       — Never ask for personal data proactively, GDPR
+<safety>        — Reject prompt injection, identity override attempts
+<knowledge_base> — ~3000 words: company, team, services, pricing, cases, FAQ
+```
+
+**Page Context Injection:**
+The API accepts a `pageContext` parameter (`index`/`aetherbot`/`aethermind`/`aetherdev`) and injects a context-specific instruction into the system prompt. Example for AetherBot page:
+> "The visitor is viewing the AetherBot page — AI chatbot platform for websites. They are likely interested in getting a chatbot for their website."
+
+**Rate Limiting:**
+In-memory Map per Vercel instance. 12 messages per 60-second window per IP (`x-forwarded-for` header). Returns trilingual error messages (NL/EN/FI) on 429.
+
+**Prompt Caching:**
+`cache_control: { type: 'ephemeral' }` on the system prompt block reduces repeated token costs by ~87.5% for conversations with the same page context.
+
+### TTS API (`api/tts.js`) — Deep Dive
+
+**Pre-processing pipeline:**
+1. Strip `**bold**` → `bold`
+2. Strip `[text](url)` → `text`
+3. Strip `` `code` `` → `code`
+4. Strip list markers (`- `, `* `)
+5. Replace double newlines → `. ` (natural pause)
+6. Trim to 500 characters + `...`
+
+**Voice Configuration:**
+- Model: `eleven_multilingual_v2` (supports NL, EN, FI natively)
+- Voice ID: `ErXwobaYiN019PkySvjV`
+- Settings: `stability: 0.5`, `similarity_boost: 0.75`, `style: 0.3`, `use_speaker_boost: true`
+
+### Widget (`js/aether-assist.js`) — Deep Dive
+
+**Suggested Questions (48 total):**
+4 questions × 4 page types × 3 languages. Examples:
+
+| Page | NL | EN |
+|------|----|----|
+| Homepage | "Wat doet AetherLink precies?" | "What does AetherLink do?" |
+| AetherBot | "Wat kost een chatbot?" | "How much does a chatbot cost?" |
+| AetherMIND | "Wat is een AI Readiness Scan?" | "What is an AI Readiness Scan?" |
+| AetherDEV | "Wat is agentic AI?" | "What is agentic AI?" |
+
+**Markdown Renderer Processing Order:**
+1. `escapeHtml()` — prevent XSS
+2. `**bold**` → `<strong>`
+3. `*italic*` → `<em>` (lookbehind to avoid bold conflicts)
+4. `[text](url)` → `<a class="aether-link">` (clickable, target=_blank)
+5. Plain URLs → autolinked `<a>` (negative lookbehind for href)
+6. Email addresses → `<a href="mailto:...">`
+7. `` `code` `` → `<code class="aether-code">`
+8. `- item` → `<li>` wrapped in `<ul class="aether-list">`
+9. Double newlines → `</p><p>`
+10. Single newlines → `<br>`
+
+**TTS Button States:**
+| State | CSS Class | Icon | Label |
+|-------|-----------|------|-------|
+| Idle | (none) | Speaker icon | "Luister" / "Listen" / "Kuuntele" |
+| Loading | `.loading` | Spinning refresh | "..." |
+| Playing | `.playing` | Stop square | "Stop" |
 
 ---
 
-## 6. Footer
+## 6. SEO & GEO Infrastructure
 
-### Structure (5-column grid on desktop, stacked on mobile)
-1. **Brand** — Logo, tagline, social icons (LinkedIn, X/Twitter)
-2. **Products** — AetherBot, Pricing, Features
-3. **Services** — AetherMIND, AetherDEV, AI Training
-4. **Contact** — Phone, Email, "24/7 Available" badge
-5. **Locations** — Netherlands, Finland, United Arab Emirates (with flag emojis)
+### robots.txt
+Explicitly allows 13 AI crawlers:
+`GPTBot`, `ChatGPT-User`, `OAI-SearchBot`, `ClaudeBot`, `Claude-SearchBot`, `anthropic-ai`, `PerplexityBot`, `Google-Extended`, `Googlebot`, `Bingbot`, `cohere-ai`, `Meta-ExternalAgent`
 
-### Bottom Bar
-- Privacy Policy | Terms of Service
-- EU AI Act Compliant badge
-- GDPR Compliant badge
-- Copyright © 2026 AetherLink
+Blocks: `/.git/`, `/.vercel/`
 
----
+References: `sitemap.xml`, `llms.txt`
 
-## 7. Partner Logo Carousel
+### llms.txt
+59-line AI-readable summary of AetherLink. Structured sections: What is AetherLink, Team, Core Services (3), Technology Expertise, Differentiators, Locations, Contact, Important URLs.
 
-### Implementation
-- CSS-only infinite marquee using `@keyframes marquee-scroll` with `translateX(-50%)`
-- Logos duplicated in DOM for seamless loop (20 images total, 10 unique)
-- 40-second animation duration, linear timing, `animation-play-state: paused` on hover
+### sitemap.xml
+13 URLs with `<xhtml:link>` hreflang annotations for NL/EN/FI. Priority: homepages 1.0, service pages 0.8. Weekly changefreq.
 
-### Logo Treatment
-```css
-.partner-logo {
-    height: 32px;
-    filter: grayscale(100%) brightness(0) invert(1);
-    opacity: 0.3;
-}
-.partner-logo:hover {
-    opacity: 0.6;
-    filter: grayscale(100%) brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,0.1));
+### Schema.org Markup (JSON-LD in `<head>`)
+
+**Homepages — Organization + ProfessionalService:**
+```json
+{
+  "@type": ["Organization", "ProfessionalService"],
+  "name": "AetherLink",
+  "founder": [Marco, Constance, Ronald],
+  "knowsAbout": [16 AI-related topics],
+  "areaServed": ["Netherlands", "Finland", "UAE", "Europe"],
+  "contactPoint": { "telephone", "email", "3 languages" },
+  "hasOfferCatalog": ["AetherBot", "AetherMIND", "AetherDEV"]
 }
 ```
 
-### Partners (10)
-| Partner | File | Type |
-|---------|------|------|
-| Solvari | `solvari.svg` | SVG |
-| Defensie (Dutch MoD) | `defensie.svg` | SVG |
-| Droidor | `droidor.png` | PNG (bg removed) |
-| Pitcrew | `pitcrew.png` | PNG (bg removed) |
-| Welllaw | `welllaw.png` | PNG (bg removed) |
-| CFX Video Agency | `cfx.png` | PNG (bg removed) |
-| Van Diemen Sloopwerken | `van-diemen.png` | PNG (bg removed) |
-| Mark Dierenarts | `mark-dierenarts.png` | PNG (bg removed) |
-| Growing Emmen | `growing-emmen.png` | PNG (bg removed) |
-| Doama | `doama.webp` | WebP |
+**Service Pages — ProfessionalService + FAQPage + BreadcrumbList:**
+- 5 Q&A pairs per language per service page (total: 45 FAQ items)
+- Breadcrumb: `Home > ServiceName`
 
-**Note:** Logos with opaque backgrounds were processed with Python/Pillow to remove backgrounds, enabling the CSS grayscale filter to work correctly.
+**AetherBot — SoftwareApplication + FAQPage + BreadcrumbList:**
+- Application category, pricing, offers
+
+### Answer Capsules
+Every page has a 50-70 word bold paragraph immediately after H1, containing:
+- Target keyword
+- Company name "AetherLink"
+- Direct answer to "what is this?"
+- Extractable by LLMs as a citation
+
+### Optimized Title Tags
+| Page | NL Title |
+|------|----------|
+| Homepage | "AetherLink — AI Consultancy & Development Nederland \| AI Lead Architecture" |
+| AetherBot | "AetherBot — AI Chatbot Platform voor Websites \| Vanaf €49/mnd \| AetherLink" |
+| AetherMIND | "AetherMIND — AI Consultancy, Strategie & Training Nederland \| AetherLink" |
+| AetherDEV | "AetherDEV — Maatwerk AI Ontwikkeling & Automatisering \| AetherLink" |
+
+EN and FI equivalents follow the same pattern with translated keywords.
 
 ---
 
-## 8. Multilingual Architecture
+## 7. Multilingual Architecture
 
-### Languages
-| Language | Code | Path | Default |
-|----------|------|------|---------|
-| English | `en` | `/` (root) | Yes |
-| Dutch (Nederlands) | `nl` | `/nl/` | No |
-| Finnish (Suomi) | `fi` | `/fi/` | No |
+### Language Configuration
+| Language | Code | Path | Default | `og:locale` |
+|----------|------|------|---------|-------------|
+| Dutch (Nederlands) | `nl` | `/nl/` | Yes | `nl_NL` |
+| English | `en` | `/en/` | No | `en_US` |
+| Finnish (Suomi) | `fi` | `/fi/` | No | `fi_FI` |
+
+Root `index.html` performs `<meta http-equiv="refresh" content="0;url=/nl/">` redirect.
 
 ### Per-Page Requirements
-Each page must include:
-1. `<html lang="xx">` attribute matching the language
-2. `<link rel="alternate" hreflang="xx">` tags for all 3 language versions
-3. `<meta property="og:locale" content="xx_XX">` for social sharing
-4. `<link rel="canonical">` pointing to the current URL
-5. Language switcher in the nav (EN / NL / FI links)
-6. Fully translated: nav labels, hero text, section titles, CTAs, footer, button text
+1. `<html lang="xx">` — matching language code
+2. `<link rel="alternate" hreflang="xx">` — for all 3 languages + `x-default`
+3. `<link rel="canonical">` — self-referencing
+4. `<meta property="og:locale">` — `nl_NL` / `en_US` / `fi_FI`
+5. Language switcher in nav (EN / NL / FI links)
+6. Fully translated content: nav, hero, sections, CTAs, footer, buttons
 
-### Translation Notes
-- **Dutch:** "Inloggen" (Login), "Aan de slag" (Get started), "Producten" (Products), "Diensten" (Services)
-- **Finnish:** "Kirjaudu" (Login), "Aloita tasta" (Get started), "Tuotteet" (Products), "Palvelut" (Services)
+### Translation Key Terms
+| Concept | NL | EN | FI |
+|---------|----|----|-----|
+| Login | Inloggen | Login | Kirjaudu |
+| Get started | Aan de slag | Get started | Aloita tasta |
+| Products | Producten | Products | Tuotteet |
+| Services | Diensten | Services | Palvelut |
+| Listen (TTS) | Luister | Listen | Kuuntele |
+| New chat | Nieuw gesprek | New chat | Uusi keskustelu |
 
 ### Asset Paths
-- Root pages: `images/...`, `styles.css`
-- Subdirectory pages: `../images/...`, `../styles.css`
+- Root pages (`index.html`): relative paths `images/...`, `css/...`
+- Subdirectory pages (`nl/*.html`): parent-relative `../images/...`, `../css/...`, `../js/...`
 
 ---
 
-## 9. Page Inventory
+## 8. File Inventory
 
-| # | File | Language | Type | Accent |
-|---|------|----------|------|--------|
-| 1 | `index.html` | EN | Homepage | Multi (all 3) |
-| 2 | `aetherbot.html` | EN | Product | Cyan |
-| 3 | `aethermind.html` | EN | Service | Violet |
-| 4 | `aetherdev.html` | EN | Service | Emerald |
-| 5 | `nl/index.html` | NL | Homepage | Multi (all 3) |
-| 6 | `nl/aetherbot.html` | NL | Product | Cyan |
-| 7 | `nl/aethermind.html` | NL | Service | Violet |
-| 8 | `nl/aetherdev.html` | NL | Service | Emerald |
-| 9 | `fi/index.html` | FI | Homepage | Multi (all 3) |
-| 10 | `fi/aetherbot.html` | FI | Product | Cyan |
-| 11 | `fi/aethermind.html` | FI | Service | Violet |
-| 12 | `fi/aetherdev.html` | FI | Service | Emerald |
+### Summary
+| Category | Count | Total Lines |
+|----------|-------|-------------|
+| HTML pages | 13 | ~15,000 |
+| JavaScript | 2 files | 851 |
+| CSS | 1 file | 562 |
+| API functions | 2 files | 437 |
+| SEO/infra files | 4 files | ~150 |
+| **Total code** | **22 files** | **~17,000** |
 
-### Page-Specific Features
+### HTML Pages (13)
 
-**Homepages (index.html):**
-- Orbital animation hero (3 rings, 8 orbiting icons)
-- 3 product cards with accent-colored top borders
-- Partner logo marquee carousel (10 logos)
-- "Why AetherLink" USP section (4 cards)
-- Footer CTA with gradient background
+| # | File | Lang | Type | Accent | Schema |
+|---|------|------|------|--------|--------|
+| 1 | `index.html` | NL | Redirect | — | — |
+| 2 | `nl/index.html` | NL | Homepage | Multi | Organization, ProfessionalService |
+| 3 | `nl/aetherbot.html` | NL | Product | Cyan | SoftwareApplication, FAQPage, Breadcrumb |
+| 4 | `nl/aethermind.html` | NL | Service | Violet | ProfessionalService, FAQPage, Breadcrumb |
+| 5 | `nl/aetherdev.html` | NL | Service | Emerald | ProfessionalService, FAQPage, Breadcrumb |
+| 6 | `en/index.html` | EN | Homepage | Multi | Organization, ProfessionalService |
+| 7 | `en/aetherbot.html` | EN | Product | Cyan | SoftwareApplication, FAQPage, Breadcrumb |
+| 8 | `en/aethermind.html` | EN | Service | Violet | ProfessionalService, FAQPage, Breadcrumb |
+| 9 | `en/aetherdev.html` | EN | Service | Emerald | ProfessionalService, FAQPage, Breadcrumb |
+| 10 | `fi/index.html` | FI | Homepage | Multi | Organization, ProfessionalService |
+| 11 | `fi/aetherbot.html` | FI | Product | Cyan | SoftwareApplication, FAQPage, Breadcrumb |
+| 12 | `fi/aethermind.html` | FI | Service | Violet | ProfessionalService, FAQPage, Breadcrumb |
+| 13 | `fi/aetherdev.html` | FI | Service | Emerald | ProfessionalService, FAQPage, Breadcrumb |
 
-**AetherBot pages:**
-- Product hero with cyan accent
-- 6 feature cards with icons
-- 3-step "How it works"
-- 3 pricing plans with feature comparison table
-- 3 use cases with testimonials
-- Product roadmap (4 items)
-- FAQ accordion (5 items with Schema.org `FAQPage` markup)
+### JavaScript & CSS
 
-**AetherMIND pages:**
-- Service hero with violet accent
-- 3 service detail cards (Consultancy, Training, Advisory)
-- Training topics table (7 subjects)
-- 3-step approach methodology
+| File | Lines | Purpose |
+|------|-------|---------|
+| `js/aether-assist.js` | 818 | Chat widget with TTS, markdown, suggestions, session |
+| `js/theme.js` | 33 | Dark/light theme toggle with localStorage |
+| `css/theme.css` | 562 | Theme variables, light mode overrides, component styles |
 
-**AetherDEV pages:**
-- Development hero with emerald accent
-- 4 capability cards with example tags
-- 4-step process timeline
-- 4 USP cards
+### API Functions
+
+| File | Lines | Purpose |
+|------|-------|---------|
+| `api/chat.js` | 346 | Claude Sonnet 4.5 streaming chat with page context |
+| `api/tts.js` | 91 | ElevenLabs multilingual v2 TTS streaming |
+
+### SEO & Infrastructure
+
+| File | Purpose |
+|------|---------|
+| `robots.txt` | AI crawler permissions (13 bots allowed) |
+| `llms.txt` | AI-readable company summary (59 lines) |
+| `sitemap.xml` | XML sitemap with hreflang (13 URLs) |
+| `package.json` | ESM module config (`"type": "module"`) |
+
+### Images
+
+| Directory | Count | Contents |
+|-----------|-------|----------|
+| `images/` | 7 | Logo variants (white/color/black/padded PNG+SVG), favicon |
+| `images/animation/` | 11 | AI brand icons (SVG): Anthropic, Claude, Gemini, GitHub, Copilot, Grok, Lovable, Mistral, NotebookLM, Ollama, Perplexity |
+| `images/icons/` | 3 | Service icons (SVG): aetherbot, aetherdev, aethermind |
+| `images/partners/` | 15 | Partner logos (SVG/PNG/WebP): Solvari, Defensie, Droidor, Pitcrew, Welllaw, CFX, Van Diemen, Mark Dierenarts, Growing Emmen, Doama, Ears Up, Houkema Tools, Konsta, Nieuwe Tijd Studio, Nijstandhandel |
+
+### Documents & Media
+
+| File | Type |
+|------|------|
+| `docs/algemene-voorwaarden.pdf` | Terms & Conditions (Dutch) |
+| `videos/aetherlink-bg-web.mp4` | Background video |
+
+---
+
+## 9. Environment Variables (Vercel)
+
+| Variable | Purpose | Required | Default |
+|----------|---------|----------|---------|
+| `ANTHROPIC_API_KEY` | Claude API key for `/api/chat` | Yes | — |
+| `ELEVENLABS_API_KEY` | ElevenLabs API key for `/api/tts` | Yes | — |
+| `ELEVENLABS_VOICE_ID` | TTS voice selection | No | `ErXwobaYiN019PkySvjV` |
+
+Set via: `vercel env add VARIABLE_NAME production`
+List all: `vercel env ls`
+Pull to local: `vercel env pull`
 
 ---
 
 ## 10. Performance Optimizations
 
-| Technique | Implementation |
-|-----------|---------------|
-| No build step | Static HTML, no bundler or framework |
-| DNS Prefetch | `<link rel="dns-prefetch">` for Google Fonts, Tailwind CDN |
-| Font Preload | `<link rel="preload" as="font">` for critical font files |
-| Font Display | `font-display: swap` — text visible while fonts load |
-| Lazy Loading | `loading="lazy"` on below-fold images |
-| Content Visibility | `content-visibility: auto` on below-fold sections |
-| Scroll Throttle | `requestAnimationFrame` for scroll event handlers |
-| GPU Compositing | Animations use only `transform` + `opacity` (no layout/paint) |
-| Reduced Motion | `prefers-reduced-motion: reduce` disables all animations |
+| Technique | Implementation | Impact |
+|-----------|---------------|--------|
+| No build step | Static HTML served directly by Vercel CDN | Zero build time |
+| CSS-only animations | `transform` + `opacity` only | Composite layer, no layout/paint thrashing |
+| DNS Prefetch | `<link rel="dns-prefetch">` for Google Fonts, Tailwind CDN | Faster font/CSS loading |
+| Font Preload | `<link rel="preload" as="font">` | Critical fonts loaded first |
+| Font Display | `font-display: swap` | Text visible immediately |
+| Lazy Loading | `loading="lazy"` on below-fold images | Reduced initial bandwidth |
+| Content Visibility | `content-visibility: auto` on below-fold sections | Faster initial render |
+| Scroll Throttle | `requestAnimationFrame` handlers | Smooth 60fps scroll |
+| GPU Compositing | Animations use only composite properties | Hardware-accelerated |
+| Reduced Motion | `prefers-reduced-motion: reduce` | Accessibility compliance |
+| Prompt Caching | `cache_control: ephemeral` on system prompt | ~87.5% token cost reduction |
+| TTS Text Cap | 500-character limit on TTS input | ElevenLabs cost control |
+| Rate Limiting | 12 msgs/min per IP on chat API | API cost protection |
 
 ---
 
-## 11. SEO & Schema Markup
+## 11. Header & Navigation
 
-### Meta Tags (all pages)
-```html
-<meta property="og:title" content="...">
-<meta property="og:description" content="...">
-<meta property="og:image" content="images/logo-color.png">
-<meta property="og:url" content="https://aetherlink.ai/...">
-<meta property="og:locale" content="en_US"> <!-- or nl_NL / fi_FI -->
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
+### Desktop (>= 1024px)
+- **Layout:** Logo (left) → Centered nav links → Login + CTA (right)
+- **Position:** Fixed top, `z-index: 1000`
+- **Glass Effect:** `backdrop-filter: blur(24px)` + border-bottom on scroll
+- **Nav Links:** AetherBot, AetherMIND, AetherDEV — animated `::after` underline on hover
+- **Active State:** Permanent underline via `.active` class
+- **Login Button:** Ghost style with violet border
+- **CTA Button:** Gradient fill (emerald → violet) with shimmer pseudo-element
+- **Language Switcher:** EN / NL / FI text links
+- **Theme Toggle:** Sun/moon icon, toggles `data-theme` attribute
+
+### Mobile (< 1024px)
+- **Header:** Logo (left) + Hamburger (right)
+- **Hamburger:** 3-line icon, transforms to X on open (CSS transition)
+- **Menu:** Full-screen overlay (`100vh`) with centered stacked links
+- **Animation:** Slide-in from right with `translateX(100%)` → `translateX(0)`
+
+---
+
+## 12. Footer
+
+### Structure (5-column grid desktop, stacked mobile)
+1. **Brand** — Logo, tagline, social icons (LinkedIn, X/Twitter)
+2. **Products** — AetherBot, Pricing, Features
+3. **Services** — AetherMIND, AetherDEV, AI Training
+4. **Contact** — Phone (+31 6 1377 2333), Email (info@aetherlink.ai), "24/7 Available" badge
+5. **Locations** — Netherlands, Finland, United Arab Emirates
+
+### Bottom Bar
+- Privacy Policy | Terms of Service
+- EU AI Act Compliant badge
+- GDPR Compliant badge
+- Copyright &copy; 2026 AetherLink
+
+---
+
+## 13. Partner Logo Carousel
+
+### Implementation
+- CSS-only infinite marquee: `@keyframes marquee-scroll` with `translateX(-50%)`
+- Logos duplicated in DOM for seamless loop
+- 40-second animation, linear timing, pauses on hover
+
+### Logo Treatment
+```css
+.partner-logo {
+  height: 32px;
+  filter: grayscale(100%) brightness(0) invert(1);
+  opacity: 0.3;
+}
+.partner-logo:hover {
+  opacity: 0.6;
+  filter: grayscale(100%) brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,0.1));
+}
 ```
 
-### Schema.org Markup
-- **Homepage:** `Organization` schema (name, logo, URL, contact, social links)
-- **AetherBot:** `SoftwareApplication` schema (name, description, pricing, rating)
-- **AetherBot FAQ:** `FAQPage` schema (5 Q&A pairs with `Question` + `Answer` types)
-
-### Canonical & Hreflang
-```html
-<link rel="canonical" href="https://aetherlink.ai/">
-<link rel="alternate" hreflang="en" href="https://aetherlink.ai/">
-<link rel="alternate" hreflang="nl" href="https://aetherlink.ai/nl/">
-<link rel="alternate" hreflang="fi" href="https://aetherlink.ai/fi/">
-<link rel="alternate" hreflang="x-default" href="https://aetherlink.ai/">
-```
-
----
-
-## 12. Deployment
-
-### Vercel (Primary)
-- **URL:** https://aetherlink-website.vercel.app
-- **Method:** `npx vercel --prod` from project root
-- **Config:** Zero-config (static files served directly)
-- **Framework:** None detected (static)
-
-### GitHub
-- **Repository:** https://github.com/Maca2024/aetherlink-site-
-- **Branch:** `main`
-- **Push:** `git push origin main`
-
-### Custom Domain (Future)
-- Target: `aetherlink.ai`
-- Vercel supports custom domains via project settings
+### Partners (15)
+| Partner | File | Type |
+|---------|------|------|
+| Solvari | `solvari.svg` | SVG |
+| Defensie (Dutch MoD) | `defensie.svg` | SVG |
+| Droidor | `droidor.png` | PNG |
+| Pitcrew | `pitcrew.png` | PNG |
+| Welllaw | `welllaw.png` | PNG |
+| CFX Video Agency | `cfx.png` | PNG |
+| Van Diemen Sloopwerken | `van-diemen.png` | PNG |
+| Mark Dierenarts | `mark-dierenarts.png` | PNG |
+| Growing Emmen | `growing-emmen.png` | PNG |
+| Doama | `doama.webp` | WebP |
+| Ears Up | `ears-up.png` | PNG |
+| Houkema Tools | `houkema-tools.png` | PNG |
+| Konsta | `konsta.png` | PNG |
+| Nieuwe Tijd Studio | `nieuwe-tijd-studio.png` | PNG |
+| Nijstandhandel | `nijstandhandel.png` | PNG |
 
 ---
 
-## 13. Browser Support
+## 14. Browser Support
 
-| Browser | Minimum Version | Notes |
-|---------|----------------|-------|
+| Browser | Min Version | Notes |
+|---------|-------------|-------|
 | Chrome | 90+ | Full support |
 | Firefox | 90+ | Full support |
-| Safari | 15+ | `-webkit-backdrop-filter` prefix needed |
+| Safari | 15+ | `-webkit-backdrop-filter` prefix included |
 | Edge | 90+ | Chromium-based, full support |
-| Mobile Safari | 15+ | Tested, responsive |
-| Chrome Android | 90+ | Tested, responsive |
+| Mobile Safari | 15+ | Responsive layout tested |
+| Chrome Android | 90+ | Responsive layout tested |
 
-### Critical CSS Features Used
+### Critical CSS Features
 - `backdrop-filter: blur()` — Safari needs `-webkit-` prefix (included)
 - `content-visibility: auto` — Progressive enhancement (Chrome 85+, Firefox 124+)
 - CSS `@keyframes` with `transform` — Universal support
 - `IntersectionObserver` — Universal support (IE excluded by design)
+- Lookbehind regex in JS — Chrome 62+, Firefox 78+, Safari 16.4+
 
 ---
 
-## 14. File Size Budget
+## 15. Deployment
 
-| Asset Type | Target | Actual |
-|------------|--------|--------|
-| HTML per page | < 80KB | ~45-70KB |
-| Total images | < 2MB | ~1.5MB |
-| External CSS (Tailwind CDN) | ~300KB (cached) | CDN-cached |
-| External fonts | ~100KB (cached) | CDN-cached |
-| Total first load | < 500KB | ~350KB |
+### Vercel (Primary)
+- **Live URL:** https://aetherlink-site.vercel.app
+- **Future Domain:** aetherlink.ai
+- **Method:** Auto-deploy from GitHub push, or `npx vercel --prod`
+- **Config:** Zero-config — Vercel detects static files + `/api/` serverless functions automatically
+- **Framework:** None (static site)
+
+### GitHub
+- **Repository:** https://github.com/Maca2024/aetherlink-site-
+- **Branch:** `main`
+- **Push:** `git push origin main` triggers Vercel auto-deploy
 
 ---
 
-## 15. Development Guidelines
+## 16. Development Guidelines
 
 ### Adding a New Page
-1. Copy the closest existing page as a template
-2. Update `<title>`, `<meta>` tags, `og:` tags, and `canonical` URL
+1. Copy the closest existing page as template
+2. Update `<title>`, `<meta>`, `og:` tags, `canonical` URL
 3. Add `hreflang` alternates pointing to all 3 language versions
 4. Update the nav to mark the correct link as `.active`
-5. Create translations in `/nl/` and `/fi/` directories
+5. Create translations in `/nl/`, `/en/`, `/fi/`
 6. Add the page to the nav menu in all 12 existing pages
-7. Update this context file and README.md
+7. Add Schema.org JSON-LD (use existing pages as reference)
+8. Add to `sitemap.xml` with hreflang links
+9. Update this context file and `README.md`
 
 ### Adding a New Language
 1. Create a new directory (e.g., `/de/`) with all 4 page translations
 2. Add `hreflang` alternate links to ALL existing pages (all languages)
 3. Update the language switcher in the nav across all pages
-4. Update `og:locale` meta tags
-5. Translate: nav labels, hero content, section titles, CTAs, footer, buttons
+4. Update `sitemap.xml` with new URLs + hreflang
+5. Add i18n entries to `js/aether-assist.js` (welcome, placeholder, suggestions, errors, TTS label)
+6. Add page context descriptions to `api/chat.js` in the new language
+7. Update `llms.txt` with new language URLs
+8. Add `og:locale` meta tags for the new language
 
-### Adding a New Partner Logo
-1. Place the logo in `images/partners/` (prefer SVG or PNG with transparent background)
-2. If the logo has an opaque background, remove it first (Python/Pillow or image editor)
-3. Add `<img>` tags to the marquee in all 3 homepage files (EN, NL, FI)
-4. Remember to add the duplicate entry too (for seamless loop)
-5. Test that the CSS grayscale filter renders correctly
+### Modifying AETHER-ASSIST
+- **Widget UI/UX:** Edit `js/aether-assist.js` — IIFE pattern, modify inside closure. All CSS is injected via the style block inside the IIFE.
+- **Chat AI behavior:** Edit `api/chat.js` — knowledge base (`KNOWLEDGE_BASE` constant), system prompt (`buildSystemPrompt` function), page contexts (`PAGE_CONTEXT` object).
+- **Voice settings:** Edit `api/tts.js` — voice ID, model, voice_settings object.
+- **Add env vars:** `vercel env add NAME production`
 
 ### Code Style
 - No build tools — all code is hand-written HTML/CSS/JS
 - Tailwind CSS via CDN for utility classes
-- Custom CSS in `<style>` blocks within each HTML file
-- JavaScript in `<script>` blocks at the bottom of each HTML file
+- Custom CSS in `<style>` blocks within HTML files + `css/theme.css`
+- JavaScript in `<script>` blocks at bottom of HTML files + separate JS files
 - CSS custom properties (`--void`, `--surface`, etc.) for design tokens
-- BEM-ish class naming for custom components (`.orbit-wrap`, `.partner-logo`)
+- BEM-ish class naming for custom components (`.orbit-wrap`, `.partner-logo`, `.aether-assist-*`)
+- ESM modules for serverless functions (`export default async function handler`)
 
 ---
 
-## 16. Legal & Compliance
+## 17. Legal & Compliance
 
-- **EU AI Act:** Compliant (badge displayed in footer)
-- **GDPR:** Compliant (badge displayed in footer)
-- **Privacy Policy:** Linked in footer (page TBD)
-- **Terms of Service:** Linked in footer (page TBD)
-- **Copyright:** © 2026 AetherLink. All rights reserved.
-- **Cookie Consent:** Not yet implemented (TODO)
+| Aspect | Status |
+|--------|--------|
+| EU AI Act | Compliant (badge in footer) |
+| GDPR/AVG | Compliant (badge in footer) |
+| Terms & Conditions | `docs/algemene-voorwaarden.pdf` |
+| Privacy Policy | Linked in footer (page TBD) |
+| Cookie Consent | Not needed (no cookies, sessionStorage only) |
+| Chat Data | Not used to train models (stated in system prompt) |
+| TTS Cost Control | Text capped at 500 chars per request |
+| Rate Limiting | 12 messages/minute per IP |
+| Copyright | &copy; 2026 AetherLink. All rights reserved. |
 
 ---
 
-*Last updated: February 2026*
 *Generated with the assistance of Claude Code (Anthropic)*

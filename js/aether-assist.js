@@ -517,7 +517,7 @@
     /* ── Walking Robot v2 — Smooth & Polished ── */
     .aether-assist-btn {
       position: fixed; bottom: 14px; z-index: 99999;
-      width: 72px; height: 106px; border: none; cursor: pointer;
+      width: 82px; height: 140px; border: none; cursor: pointer;
       background: none; padding: 0;
       display: flex; align-items: flex-start; justify-content: center;
       -webkit-tap-highlight-color: transparent;
@@ -532,7 +532,7 @@
 
     /* Robot container */
     .aether-robo {
-      position: relative; width: 62px; height: 98px;
+      position: relative; width: 70px; height: 128px;
       transform-style: preserve-3d;
       transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
@@ -587,8 +587,8 @@
 
     /* ── Head ── */
     .aether-robo-head {
-      position: absolute; top: 10px; left: 5px;
-      width: 52px; height: 44px;
+      position: absolute; top: 10px; left: 9px;
+      width: 52px; height: 42px;
       border-radius: 18px 18px 14px 14px;
       background: linear-gradient(175deg, #1e2550 0%, #0f1428 40%, #141a38 70%, #1a2248 100%);
       border: 1.5px solid rgba(0,212,255,0.2);
@@ -614,8 +614,8 @@
 
     /* ── Close X (backface) ── */
     .aether-robo-close {
-      position: absolute; top: 10px; left: 5px;
-      width: 52px; height: 44px;
+      position: absolute; top: 10px; left: 9px;
+      width: 52px; height: 42px;
       border-radius: 18px 18px 14px 14px;
       background: linear-gradient(175deg, #2a1040 0%, #180828 40%, #251240 100%);
       border: 1.5px solid rgba(139,92,246,0.25);
@@ -715,14 +715,14 @@
 
     /* ── Ears ── */
     .aether-robo-ear {
-      position: absolute; top: 24px; width: 6px; height: 14px;
+      position: absolute; top: 24px; width: 6px; height: 13px;
       border-radius: 3px;
       background: linear-gradient(to bottom, #1a2248, #0e1225);
       border: 1px solid rgba(0,212,255,0.15);
       backface-visibility: hidden;
     }
-    .aether-robo-ear.left { left: 0; border-radius: 4px 1px 1px 4px; }
-    .aether-robo-ear.right { right: 0; border-radius: 1px 4px 4px 1px; }
+    .aether-robo-ear.left { left: 4px; border-radius: 4px 1px 1px 4px; }
+    .aether-robo-ear.right { right: 4px; border-radius: 1px 4px 4px 1px; }
     /* Ear glow strips */
     .aether-robo-ear::after {
       content: ''; position: absolute; top: 3px; width: 2px; height: 8px;
@@ -732,9 +732,122 @@
     .aether-robo-ear.left::after { right: 1px; }
     .aether-robo-ear.right::after { left: 1px; }
 
+    /* ── Torso ── */
+    .aether-robo-torso {
+      position: absolute; top: 50px; left: 50%; transform: translateX(-50%);
+      width: 40px; height: 30px;
+      background: linear-gradient(175deg, #1a2248 0%, #0e1428 50%, #141a38 100%);
+      border: 1.5px solid rgba(0,212,255,0.15);
+      border-top: none;
+      border-radius: 4px 4px 8px 8px;
+      box-shadow:
+        0 6px 18px rgba(0,0,0,0.4),
+        0 0 16px rgba(0,212,255,0.05),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+      backface-visibility: hidden;
+    }
+
+    /* ── Chest Panel ── */
+    .aether-robo-chest {
+      position: absolute; left: 50%; top: 6px; transform: translateX(-50%);
+      width: 22px; height: 12px;
+      background: rgba(0,212,255,0.05);
+      border: 1px solid rgba(0,212,255,0.18);
+      border-radius: 3px;
+      display: flex; gap: 3px; align-items: center; justify-content: center;
+    }
+    .aether-robo-chest span {
+      width: 3px; height: 3px; border-radius: 50%;
+      animation: aether-chest-blink 1.6s ease-in-out infinite;
+    }
+    .aether-robo-chest span:nth-child(1) { background: #00d4ff; animation-delay: 0s; }
+    .aether-robo-chest span:nth-child(2) { background: #8b5cf6; animation-delay: 0.3s; }
+    .aether-robo-chest span:nth-child(3) { background: #00dfa2; animation-delay: 0.6s; }
+    @keyframes aether-chest-blink {
+      0%, 100% { opacity: 0.3; box-shadow: none; }
+      50% { opacity: 1; box-shadow: 0 0 4px currentColor; }
+    }
+
+    /* ── Arms ── */
+    .aether-robo-arm {
+      position: absolute; top: 52px;
+      width: 8px; height: 18px;
+      background: linear-gradient(175deg, #1a2248, #0e1428);
+      border: 1px solid rgba(0,212,255,0.12);
+      border-radius: 3px 3px 2px 2px;
+      transform-origin: top center;
+      backface-visibility: hidden;
+      z-index: 1;
+    }
+    .aether-robo-arm.left { left: 4px; }
+    .aether-robo-arm.right { right: 4px; }
+
+    /* Forearm */
+    .aether-robo-forearm {
+      position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
+      width: 7px; height: 14px;
+      background: linear-gradient(175deg, #131936, #0a0e1e);
+      border: 1px solid rgba(0,212,255,0.08);
+      border-radius: 2px 2px 3px 3px;
+      transform-origin: top center;
+    }
+
+    /* Hand */
+    .aether-robo-hand {
+      position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%);
+      width: 9px; height: 5px;
+      background: #151d38;
+      border: 1px solid rgba(0,212,255,0.12);
+      border-radius: 2px 2px 4px 4px;
+    }
+
+    /* Arm walking animation */
+    .aether-assist-btn.walking .aether-robo-arm.left {
+      animation: aether-arm-l 0.48s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+    }
+    .aether-assist-btn.walking .aether-robo-arm.right {
+      animation: aether-arm-r 0.48s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+    }
+    @keyframes aether-arm-l {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(18deg); }
+      75% { transform: rotate(-18deg); }
+    }
+    @keyframes aether-arm-r {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-18deg); }
+      75% { transform: rotate(18deg); }
+    }
+    /* Forearm swing (slightly delayed from arm) */
+    .aether-assist-btn.walking .aether-robo-arm.left .aether-robo-forearm {
+      animation: aether-forearm-l 0.48s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+    }
+    .aether-assist-btn.walking .aether-robo-arm.right .aether-robo-forearm {
+      animation: aether-forearm-r 0.48s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+    }
+    @keyframes aether-forearm-l {
+      0%, 100% { transform: translateX(-50%) rotate(0deg); }
+      20% { transform: translateX(-50%) rotate(12deg); }
+      70% { transform: translateX(-50%) rotate(-8deg); }
+    }
+    @keyframes aether-forearm-r {
+      0%, 100% { transform: translateX(-50%) rotate(0deg); }
+      20% { transform: translateX(-50%) rotate(-8deg); }
+      70% { transform: translateX(-50%) rotate(12deg); }
+    }
+    /* Idle arms straight */
+    .aether-assist-btn:not(.walking):not(.open) .aether-robo-arm {
+      animation: none; transform: rotate(0);
+      transition: transform 0.3s ease;
+    }
+    .aether-assist-btn:not(.walking):not(.open) .aether-robo-forearm {
+      animation: none; transform: translateX(-50%) rotate(0);
+      transition: transform 0.3s ease;
+    }
+
     /* ── Legs — Articulated (thigh + knee + shin + foot) ── */
     .aether-robo-legs {
-      position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+      position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
       display: flex; gap: 10px;
       backface-visibility: hidden;
     }
@@ -886,7 +999,7 @@
     /* ── Speech Bubble ── */
     .aether-speech-bubble {
       position: fixed; z-index: 99998; pointer-events: none;
-      bottom: 110px;
+      bottom: 146px;
       max-width: 200px; padding: 10px 14px;
       background: rgba(15, 18, 40, 0.92);
       border: 1.5px solid rgba(0,212,255,0.25);
@@ -1357,11 +1470,19 @@
         width: calc(100vw - 16px); left: 8px !important; right: auto !important; bottom: 88px;
         height: calc(100vh - 120px); max-height: none; border-radius: 16px;
       }
-      .aether-assist-btn { width: 62px; height: 92px; bottom: 8px; }
-      .aether-robo { width: 52px; height: 82px; }
-      .aether-robo-head { width: 44px; height: 38px; top: 8px; left: 4px; }
+      .aether-assist-btn { width: 68px; height: 118px; bottom: 8px; }
+      .aether-robo { width: 58px; height: 108px; }
+      .aether-robo-head { width: 44px; height: 36px; top: 8px; left: 7px; }
+      .aether-robo-close { width: 44px; height: 36px; top: 8px; left: 7px; }
       .aether-robo-eye { width: 9px; height: 9px; }
       .aether-robo-eyes { top: 17px; gap: 11px; }
+      .aether-robo-torso { width: 34px; height: 24px; top: 42px; }
+      .aether-robo-chest { width: 18px; height: 10px; }
+      .aether-robo-arm { width: 6px; height: 14px; top: 44px; }
+      .aether-robo-arm.left { left: 3px; }
+      .aether-robo-arm.right { right: 3px; }
+      .aether-robo-forearm { width: 5px; height: 11px; top: 12px; }
+      .aether-robo-hand { width: 7px; height: 4px; }
       .aether-robo-leg { width: 7px; height: 10px; }
       .aether-robo-knee { width: 5px; height: 5px; }
       .aether-robo-shin { width: 6px; height: 9px; }
@@ -1381,6 +1502,9 @@
     <div class="aether-robo-head"></div>
     <div class="aether-robo-eyes"><div class="aether-robo-eye"></div><div class="aether-robo-eye"></div></div>
     <div class="aether-robo-mouth"><span></span><span></span><span></span><span></span></div>
+    <div class="aether-robo-torso"><div class="aether-robo-chest"><span></span><span></span><span></span></div></div>
+    <div class="aether-robo-arm left"><div class="aether-robo-forearm"><div class="aether-robo-hand"></div></div></div>
+    <div class="aether-robo-arm right"><div class="aether-robo-forearm"><div class="aether-robo-hand"></div></div></div>
     <div class="aether-robo-legs"><div class="aether-robo-leg left"><div class="aether-robo-knee"></div><div class="aether-robo-shin"></div></div><div class="aether-robo-leg right"><div class="aether-robo-knee"></div><div class="aether-robo-shin"></div></div></div>
     <div class="aether-robo-shadow"></div>
     <div class="aether-robo-close"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></div>

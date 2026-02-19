@@ -1042,7 +1042,14 @@
     robot.classList.remove('rc-happy-bounce');
     robot.style.transition = 'transform 1s ease';
     robot.style.transform = 'scale(0.8)';
-    await wait(500);
+    await wait(1500);
+
+    // ── ACT 13: Fade out — laser bot disappears ──
+    robot.style.transition = 'opacity 2s ease, transform 2s ease';
+    robot.style.opacity = '0';
+    robot.style.transform = 'scale(0.5) translateY(20px)';
+    await wait(2200);
+    robot.style.display = 'none';
 
     // Show replay button
     const replay = stage.querySelector('.rc-replay');
@@ -1060,6 +1067,8 @@
     // Reset robot state
     robot.className = 'rc-robot';
     robot.style.cssText = '';
+    robot.style.display = '';
+    robot.style.opacity = '1';
     const head = $('.rc-head', robot);
     if (head) head.style.transform = '';
     $$('.rc-eye', robot).forEach(e => { e.className = e.className.replace(/rc-(charging|happy)/g, '').trim(); });

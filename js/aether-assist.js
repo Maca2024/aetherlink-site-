@@ -416,227 +416,329 @@
   style.textContent = `
     /* ═══════ AETHER-ASSIST v3.0 Widget Styles ═══════ */
 
-    /* ── Walking Robot FAB ── */
+    /* ── Walking Robot v2 — Smooth & Polished ── */
     .aether-assist-btn {
-      position: fixed; bottom: 12px; z-index: 99999;
-      width: 68px; height: 90px; border: none; cursor: pointer;
-      background: none;
+      position: fixed; bottom: 14px; z-index: 99999;
+      width: 72px; height: 92px; border: none; cursor: pointer;
+      background: none; padding: 0;
       display: flex; align-items: flex-start; justify-content: center;
-      perspective: 200px;
       -webkit-tap-highlight-color: transparent;
-      /* position controlled by JS — right: auto, left via transform */
       right: auto; left: 0;
-      transition: none;
+      will-change: transform;
+      filter: drop-shadow(0 2px 12px rgba(0,212,255,0.15));
+      transition: filter 0.3s ease;
     }
-    .aether-assist-btn.walking {
-      animation: aether-bob 0.5s ease-in-out infinite;
-    }
-    .aether-assist-btn.open { animation: none; }
-
-    @keyframes aether-bob {
-      0%, 100% { padding-top: 0; }
-      50% { padding-top: 3px; }
+    .aether-assist-btn:hover {
+      filter: drop-shadow(0 4px 20px rgba(0,212,255,0.35));
     }
 
     /* Robot container */
     .aether-robo {
-      position: relative; width: 58px; height: 80px;
+      position: relative; width: 62px; height: 84px;
       transform-style: preserve-3d;
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
+
+    /* Body bob while walking */
+    .aether-assist-btn.walking .aether-robo {
+      animation: aether-bob 0.44s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+    }
+    @keyframes aether-bob {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-2.5px) rotate(-1deg); }
+      75% { transform: translateY(-2.5px) rotate(1deg); }
+    }
+
     .aether-assist-btn:hover .aether-robo {
-      transform: rotateY(-12deg) rotateX(8deg) scale(1.08);
+      transform: scale(1.1) translateY(-2px);
     }
     .aether-assist-btn.open .aether-robo {
       transform: rotateY(180deg);
+      animation: none;
     }
-    /* Flip robot body when walking left */
+    /* Flip when walking left */
     .aether-assist-btn.facing-left .aether-robo {
-      transform: scaleX(-1);
+      animation-name: aether-bob-flip;
     }
-    .aether-assist-btn.facing-left:hover .aether-robo {
-      transform: scaleX(-1) rotateY(-12deg) rotateX(8deg) scale(1.08);
+    @keyframes aether-bob-flip {
+      0%, 100% { transform: scaleX(-1) translateY(0) rotate(0deg); }
+      25% { transform: scaleX(-1) translateY(-2.5px) rotate(-1deg); }
+      75% { transform: scaleX(-1) translateY(-2.5px) rotate(1deg); }
+    }
+    .aether-assist-btn.facing-left:not(.walking) .aether-robo {
+      transform: scaleX(-1);
     }
     .aether-assist-btn.open.facing-left .aether-robo {
       transform: rotateY(180deg);
     }
 
-    /* Shadow on ground */
-    .aether-robo::after {
-      content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%);
-      width: 40px; height: 8px; border-radius: 50%;
-      background: radial-gradient(ellipse, rgba(0,212,255,0.25) 0%, transparent 70%);
+    /* Ground shadow */
+    .aether-robo-shadow {
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 42px; height: 6px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(0,212,255,0.22) 0%, transparent 70%);
+      transition: all 0.3s ease;
     }
-    .aether-assist-btn.walking .aether-robo::after {
-      animation: aether-shadow 0.5s ease-in-out infinite;
+    .aether-assist-btn.walking .aether-robo-shadow {
+      animation: aether-shadow-walk 0.44s cubic-bezier(0.37, 0, 0.63, 1) infinite;
     }
-    @keyframes aether-shadow {
-      0%, 100% { width: 40px; opacity: 0.5; }
-      50% { width: 34px; opacity: 0.3; }
-    }
-
-    /* ── Legs ── */
-    .aether-robo-legs {
-      position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 10px;
-      backface-visibility: hidden;
-    }
-    .aether-robo-leg {
-      width: 8px; height: 16px; border-radius: 0 0 4px 4px;
-      background: linear-gradient(to bottom, #161d3a, #0e1225);
-      border: 1px solid rgba(0,212,255,0.15);
-      border-top: none;
-      transform-origin: top center;
-    }
-    /* Walking animation on legs */
-    .aether-assist-btn.walking .aether-robo-leg.left {
-      animation: aether-leg-l 0.5s ease-in-out infinite;
-    }
-    .aether-assist-btn.walking .aether-robo-leg.right {
-      animation: aether-leg-r 0.5s ease-in-out infinite;
-    }
-    @keyframes aether-leg-l {
-      0%, 100% { transform: rotate(-18deg); }
-      50% { transform: rotate(18deg); }
-    }
-    @keyframes aether-leg-r {
-      0%, 100% { transform: rotate(18deg); }
-      50% { transform: rotate(-18deg); }
-    }
-    /* When stopped (not walking, not open) - legs neutral */
-    .aether-assist-btn:not(.walking):not(.open) .aether-robo-leg {
-      animation: none; transform: rotate(0);
-    }
-    /* Feet */
-    .aether-robo-leg::after {
-      content: ''; position: absolute; bottom: -3px; left: -2px;
-      width: 12px; height: 4px; border-radius: 3px;
-      background: #0e1225;
-      border: 1px solid rgba(0,212,255,0.12);
+    @keyframes aether-shadow-walk {
+      0%, 100% { width: 42px; opacity: 0.7; }
+      25%, 75% { width: 36px; opacity: 0.4; }
     }
 
-    /* Head */
+    /* ── Head ── */
     .aether-robo-head {
-      position: absolute; top: 12px; left: 3px;
-      width: 52px; height: 42px;
-      border-radius: 16px 16px 12px 12px;
-      background: linear-gradient(170deg, #1a2040 0%, #0e1225 50%, #161d3a 100%);
-      border: 1.5px solid rgba(0,212,255,0.25);
+      position: absolute; top: 10px; left: 5px;
+      width: 52px; height: 44px;
+      border-radius: 18px 18px 14px 14px;
+      background: linear-gradient(175deg, #1e2550 0%, #0f1428 40%, #141a38 70%, #1a2248 100%);
+      border: 1.5px solid rgba(0,212,255,0.2);
       box-shadow:
-        0 6px 20px rgba(0,0,0,0.5),
-        0 0 20px rgba(0,212,255,0.1),
-        inset 0 1px 0 rgba(255,255,255,0.08),
-        inset 0 -4px 12px rgba(0,0,0,0.3);
+        0 8px 24px rgba(0,0,0,0.5),
+        0 0 24px rgba(0,212,255,0.08),
+        inset 0 2px 0 rgba(255,255,255,0.06),
+        inset 0 -6px 16px rgba(0,0,0,0.25);
       backface-visibility: hidden;
+      overflow: hidden;
+    }
+    /* Visor shine */
+    .aether-robo-head::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%;
+      border-radius: 18px 18px 0 0;
+      background: linear-gradient(175deg, rgba(255,255,255,0.06) 0%, transparent 60%);
+    }
+    /* Chin highlight */
+    .aether-robo-head::after {
+      content: ''; position: absolute; bottom: 4px; left: 14px; right: 14px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,212,255,0.15), transparent);
     }
 
-    /* Close X (backface of robot head) */
+    /* ── Close X (backface) ── */
     .aether-robo-close {
-      position: absolute; top: 12px; left: 3px;
-      width: 52px; height: 42px;
-      border-radius: 16px 16px 12px 12px;
-      background: linear-gradient(170deg, #2a1030 0%, #1a0820 50%, #2d1540 100%);
-      border: 1.5px solid rgba(139,92,246,0.3);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.5), 0 0 15px rgba(139,92,246,0.1);
+      position: absolute; top: 10px; left: 5px;
+      width: 52px; height: 44px;
+      border-radius: 18px 18px 14px 14px;
+      background: linear-gradient(175deg, #2a1040 0%, #180828 40%, #251240 100%);
+      border: 1.5px solid rgba(139,92,246,0.25);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 16px rgba(139,92,246,0.08);
       backface-visibility: hidden;
       transform: rotateY(180deg);
       display: flex; align-items: center; justify-content: center;
     }
     .aether-robo-close svg { width: 20px; height: 20px; }
 
-    /* Eyes */
+    /* ── Eyes ── */
     .aether-robo-eyes {
       position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 12px;
+      display: flex; gap: 14px;
       backface-visibility: hidden;
     }
     .aether-robo-eye {
-      width: 10px; height: 10px; border-radius: 3px;
-      background: #00d4ff;
-      box-shadow: 0 0 8px rgba(0,212,255,0.8), 0 0 20px rgba(0,212,255,0.3), inset 0 0 3px rgba(255,255,255,0.5);
-      animation: aether-blink 4s ease-in-out infinite;
+      width: 11px; height: 11px; border-radius: 3.5px;
+      background: radial-gradient(circle at 35% 35%, #5cefff 0%, #00d4ff 60%, #0099cc 100%);
+      box-shadow:
+        0 0 10px rgba(0,212,255,0.9),
+        0 0 24px rgba(0,212,255,0.35),
+        inset 0 1px 2px rgba(255,255,255,0.6);
+      animation: aether-blink 5s ease-in-out infinite;
+      transition: all 0.2s;
     }
-    .aether-robo-eye:nth-child(2) { animation-delay: 0.1s; }
+    .aether-robo-eye:nth-child(2) { animation-delay: 0.05s; }
+    .aether-assist-btn:hover .aether-robo-eye {
+      box-shadow: 0 0 14px rgba(0,212,255,1), 0 0 32px rgba(0,212,255,0.5), inset 0 1px 2px rgba(255,255,255,0.6);
+      height: 13px;
+    }
     @keyframes aether-blink {
-      0%, 42%, 46%, 100% { height: 10px; opacity: 1; }
-      44% { height: 2px; opacity: 0.8; }
+      0%, 38%, 44%, 100% { height: 11px; opacity: 1; border-radius: 3.5px; }
+      41% { height: 2px; opacity: 0.7; border-radius: 3.5px 3.5px 2px 2px; }
     }
 
-    /* Mouth / grille */
+    /* Eye pupils — tiny white dots */
+    .aether-robo-eye::after {
+      content: ''; position: absolute; top: 2px; left: 3px;
+      width: 3px; height: 3px; border-radius: 50%;
+      background: rgba(255,255,255,0.7);
+    }
+
+    /* ── Mouth ── */
     .aether-robo-mouth {
-      position: absolute; top: 36px; left: 50%; transform: translateX(-50%);
-      width: 18px; height: 5px; border-radius: 2px;
-      background: rgba(0,212,255,0.12);
-      border: 1px solid rgba(0,212,255,0.2);
-      display: flex; gap: 2px; align-items: center; justify-content: center; padding: 0 2px;
+      position: absolute; top: 38px; left: 50%; transform: translateX(-50%);
+      width: 20px; height: 6px; border-radius: 1px 1px 3px 3px;
+      background: rgba(0,212,255,0.06);
+      border: 1px solid rgba(0,212,255,0.15);
+      display: flex; gap: 2px; align-items: center; justify-content: center; padding: 0 3px;
       backface-visibility: hidden;
+      transition: all 0.3s ease;
     }
     .aether-robo-mouth span {
       width: 2px; height: 3px; border-radius: 1px;
-      background: rgba(0,212,255,0.5);
+      background: rgba(0,212,255,0.35);
+      transition: all 0.3s ease;
     }
     .aether-assist-btn:hover .aether-robo-mouth {
-      background: rgba(0,212,255,0.2);
-      box-shadow: 0 0 6px rgba(0,212,255,0.15);
+      background: rgba(0,212,255,0.12);
+      border-color: rgba(0,212,255,0.3);
+      height: 7px; border-radius: 1px 1px 4px 4px;
+    }
+    .aether-assist-btn:hover .aether-robo-mouth span {
+      background: rgba(0,212,255,0.7);
+      box-shadow: 0 0 3px rgba(0,212,255,0.3);
     }
 
-    /* Antenna */
+    /* ── Antenna ── */
     .aether-robo-antenna {
-      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-      width: 2px; height: 12px;
-      background: linear-gradient(to top, rgba(0,212,255,0.3), rgba(139,92,246,0.6));
+      position: absolute; top: -2px; left: 50%; transform: translateX(-50%);
+      width: 2px; height: 14px;
+      background: linear-gradient(to top, rgba(0,212,255,0.2), rgba(139,92,246,0.5));
       border-radius: 2px;
       backface-visibility: hidden;
     }
     .aether-robo-antenna::after {
-      content: ''; position: absolute; top: -4px; left: 50%; transform: translateX(-50%);
-      width: 8px; height: 8px; border-radius: 50%;
-      background: radial-gradient(circle, #8b5cf6 30%, #6d3bef 100%);
-      box-shadow: 0 0 8px rgba(139,92,246,0.6), 0 0 20px rgba(139,92,246,0.2);
-      animation: aether-antenna-glow 2s ease-in-out infinite alternate;
+      content: ''; position: absolute; top: -5px; left: 50%; transform: translateX(-50%);
+      width: 9px; height: 9px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #a78bfa, #8b5cf6 60%, #6d28d9);
+      box-shadow: 0 0 10px rgba(139,92,246,0.7), 0 0 24px rgba(139,92,246,0.25);
+      animation: aether-antenna-glow 3s ease-in-out infinite alternate;
+    }
+    .aether-assist-btn.walking .aether-robo-antenna {
+      animation: aether-antenna-sway 0.44s ease-in-out infinite;
+    }
+    @keyframes aether-antenna-sway {
+      0%, 100% { transform: translateX(-50%) rotate(0deg); }
+      25% { transform: translateX(-50%) rotate(3deg); }
+      75% { transform: translateX(-50%) rotate(-3deg); }
     }
     @keyframes aether-antenna-glow {
-      from { box-shadow: 0 0 8px rgba(139,92,246,0.6), 0 0 20px rgba(139,92,246,0.2); }
-      to { box-shadow: 0 0 12px rgba(0,212,255,0.8), 0 0 30px rgba(0,212,255,0.3); background: radial-gradient(circle, #00d4ff 30%, #0099cc 100%); }
+      0% { box-shadow: 0 0 10px rgba(139,92,246,0.7), 0 0 24px rgba(139,92,246,0.25); }
+      100% { box-shadow: 0 0 14px rgba(0,212,255,0.9), 0 0 32px rgba(0,212,255,0.3);
+             background: radial-gradient(circle at 35% 35%, #67e8f9, #00d4ff 60%, #0099cc); }
     }
 
-    /* Ear accents */
+    /* ── Ears ── */
     .aether-robo-ear {
-      position: absolute; top: 24px; width: 5px; height: 12px;
+      position: absolute; top: 24px; width: 6px; height: 14px;
       border-radius: 3px;
-      background: linear-gradient(to bottom, rgba(0,212,255,0.3), rgba(139,92,246,0.3));
+      background: linear-gradient(to bottom, #1a2248, #0e1225);
+      border: 1px solid rgba(0,212,255,0.15);
       backface-visibility: hidden;
     }
-    .aether-robo-ear.left { left: 0; border-radius: 3px 0 0 3px; }
-    .aether-robo-ear.right { right: 0; border-radius: 0 3px 3px 0; }
+    .aether-robo-ear.left { left: 0; border-radius: 4px 1px 1px 4px; }
+    .aether-robo-ear.right { right: 0; border-radius: 1px 4px 4px 1px; }
+    /* Ear glow strips */
+    .aether-robo-ear::after {
+      content: ''; position: absolute; top: 3px; width: 2px; height: 8px;
+      border-radius: 1px;
+      background: linear-gradient(to bottom, rgba(0,212,255,0.4), rgba(139,92,246,0.3));
+    }
+    .aether-robo-ear.left::after { right: 1px; }
+    .aether-robo-ear.right::after { left: 1px; }
 
-    /* Visor shine */
-    .aether-robo-head::before {
-      content: ''; position: absolute; top: 3px; left: 8px; right: 8px; height: 8px;
-      border-radius: 8px 8px 0 0;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.08), transparent);
+    /* ── Legs ── */
+    .aether-robo-legs {
+      position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 12px;
+      backface-visibility: hidden;
+    }
+    .aether-robo-leg {
+      width: 9px; height: 17px; border-radius: 2px 2px 4px 4px;
+      background: linear-gradient(to bottom, #161d3a 0%, #0e1225 80%);
+      border: 1px solid rgba(0,212,255,0.12);
+      border-top: none;
+      transform-origin: top center;
+      position: relative;
+    }
+    .aether-assist-btn.walking .aether-robo-leg.left {
+      animation: aether-leg-l 0.44s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+    }
+    .aether-assist-btn.walking .aether-robo-leg.right {
+      animation: aether-leg-r 0.44s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+    }
+    @keyframes aether-leg-l {
+      0% { transform: rotate(-20deg); }
+      50% { transform: rotate(20deg); }
+      100% { transform: rotate(-20deg); }
+    }
+    @keyframes aether-leg-r {
+      0% { transform: rotate(20deg); }
+      50% { transform: rotate(-20deg); }
+      100% { transform: rotate(20deg); }
+    }
+    .aether-assist-btn:not(.walking):not(.open) .aether-robo-leg {
+      animation: none; transform: rotate(0);
+      transition: transform 0.3s ease;
+    }
+    /* Feet — rounded boots */
+    .aether-robo-leg::after {
+      content: ''; position: absolute; bottom: -4px; left: -3px;
+      width: 14px; height: 5px;
+      border-radius: 3px 4px 3px 3px;
+      background: linear-gradient(to bottom, #0e1225, #080c1a);
+      border: 1px solid rgba(0,212,255,0.1);
+    }
+
+    /* ── Smoke / Cloud Puffs ── */
+    .aether-puff {
+      position: absolute; pointer-events: none;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, rgba(0,212,255,0.25), rgba(139,92,246,0.12) 60%, transparent 80%);
+      animation: aether-puff-rise 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      will-change: transform, opacity;
+    }
+    @keyframes aether-puff-rise {
+      0% {
+        opacity: 0.7;
+        transform: translate(0, 0) scale(0.3);
+      }
+      30% {
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--puff-dx), -40px) scale(1.2);
+      }
+    }
+
+    /* ── Idle sparkle on antenna ── */
+    .aether-sparkle {
+      position: absolute; pointer-events: none;
+      width: 4px; height: 4px; border-radius: 50%;
+      background: #a78bfa;
+      box-shadow: 0 0 6px rgba(139,92,246,0.8);
+      animation: aether-sparkle 0.8s ease-out forwards;
+      will-change: transform, opacity;
+    }
+    @keyframes aether-sparkle {
+      0% { opacity: 1; transform: translate(0, 0) scale(1); }
+      100% { opacity: 0; transform: translate(var(--spark-dx), var(--spark-dy)) scale(0); }
     }
 
     /* Light mode adjustments */
     [data-theme="light"] .aether-robo-head {
-      background: linear-gradient(170deg, #2a2f52 0%, #1a1f3a 50%, #252b50 100%);
-      border-color: rgba(0,212,255,0.35);
-      box-shadow: 0 6px 24px rgba(0,0,0,0.25), 0 0 20px rgba(0,212,255,0.15),
-                  inset 0 1px 0 rgba(255,255,255,0.12);
+      background: linear-gradient(175deg, #2d3460 0%, #1e2345 40%, #282f58 70%, #2d3460 100%);
+      border-color: rgba(0,212,255,0.3);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2), 0 0 24px rgba(0,212,255,0.12),
+                  inset 0 2px 0 rgba(255,255,255,0.1), inset 0 -6px 16px rgba(0,0,0,0.15);
     }
-    [data-theme="light"] .aether-robo::after {
-      background: radial-gradient(ellipse, rgba(0,0,0,0.12) 0%, transparent 70%);
+    [data-theme="light"] .aether-assist-btn {
+      filter: drop-shadow(0 3px 16px rgba(0,0,0,0.15));
     }
     [data-theme="light"] .aether-robo-close {
-      background: linear-gradient(170deg, #352040 0%, #251030 50%, #3d1850 100%);
+      background: linear-gradient(175deg, #3a1850 0%, #281035 40%, #341550 100%);
     }
     [data-theme="light"] .aether-robo-leg {
-      background: linear-gradient(to bottom, #252b50, #1a1f3a);
-      border-color: rgba(0,212,255,0.25);
+      background: linear-gradient(to bottom, #282f58, #1e2345);
+      border-color: rgba(0,212,255,0.2);
     }
     [data-theme="light"] .aether-robo-leg::after {
-      background: #1a1f3a;
-      border-color: rgba(0,212,255,0.2);
+      background: linear-gradient(to bottom, #1e2345, #161b38);
+      border-color: rgba(0,212,255,0.15);
+    }
+    [data-theme="light"] .aether-robo-ear {
+      background: linear-gradient(to bottom, #282f58, #1e2345);
+    }
+    [data-theme="light"] .aether-puff {
+      background: radial-gradient(circle at 40% 40%, rgba(139,92,246,0.2), rgba(100,80,160,0.08) 60%, transparent 80%);
     }
 
     .aether-assist-panel {
@@ -902,12 +1004,12 @@
         width: calc(100vw - 16px); left: 8px !important; right: auto !important; bottom: 88px;
         height: calc(100vh - 120px); max-height: none; border-radius: 16px;
       }
-      .aether-assist-btn { width: 60px; height: 80px; bottom: 8px; }
-      .aether-robo { width: 50px; height: 70px; }
-      .aether-robo-head { width: 44px; height: 36px; top: 10px; left: 3px; }
-      .aether-robo-eye { width: 8px; height: 8px; }
-      .aether-robo-eyes { top: 18px; gap: 10px; }
-      .aether-robo-leg { width: 7px; height: 13px; }
+      .aether-assist-btn { width: 62px; height: 82px; bottom: 8px; }
+      .aether-robo { width: 52px; height: 72px; }
+      .aether-robo-head { width: 44px; height: 38px; top: 8px; left: 4px; }
+      .aether-robo-eye { width: 9px; height: 9px; }
+      .aether-robo-eyes { top: 17px; gap: 11px; }
+      .aether-robo-leg { width: 8px; height: 14px; }
       .aether-suggest-chip { font-size: 11px; padding: 5px 11px; }
     }
   `;
@@ -925,6 +1027,7 @@
     <div class="aether-robo-eyes"><div class="aether-robo-eye"></div><div class="aether-robo-eye"></div></div>
     <div class="aether-robo-mouth"><span></span><span></span><span></span><span></span></div>
     <div class="aether-robo-legs"><div class="aether-robo-leg left"></div><div class="aether-robo-leg right"></div></div>
+    <div class="aether-robo-shadow"></div>
     <div class="aether-robo-close"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></div>
   </div>`;
 
@@ -1071,67 +1174,136 @@
     sendBtn.disabled = !inputEl.value.trim() || isStreaming;
   });
 
-  // ─── Walking Logic ───
-  let walkX = window.innerWidth - 90; // Start position (right side)
-  let walkDir = -1; // -1 = walking left, 1 = walking right
-  let walkSpeed = 0.6; // pixels per frame
+  // ─── Walking Logic v2 — Smooth subpixel movement ───
+  let walkX = window.innerWidth - 100;
+  let walkDir = -1;
+  const WALK_SPEED = 0.45; // slower = smoother
   let walkPaused = false;
   let walkTimer = null;
   let idleTimeout = null;
+  let lastWalkTime = 0;
+  let puffTimer = 0;
+  let sparkleTimer = 0;
 
-  // Initial position
   btn.style.transform = `translateX(${walkX}px)`;
   btn.classList.add('walking');
 
-  function walkStep() {
+  function walkStep(timestamp) {
     if (isOpen || walkPaused) return;
 
-    walkX += walkDir * walkSpeed;
-    const maxX = window.innerWidth - 76;
+    // Delta time for consistent speed regardless of frame rate
+    if (!lastWalkTime) lastWalkTime = timestamp;
+    const delta = Math.min(timestamp - lastWalkTime, 32); // cap at ~30fps minimum
+    lastWalkTime = timestamp;
+
+    const speed = WALK_SPEED * (delta / 16.67); // normalize to 60fps
+    walkX += walkDir * speed;
+
+    const maxX = window.innerWidth - 80;
     const minX = 8;
 
-    // Bounce at edges
     if (walkX <= minX) {
       walkX = minX;
       walkDir = 1;
       btn.classList.remove('facing-left');
+      spawnPuff(walkX + 50, true); // puff on turn
     } else if (walkX >= maxX) {
       walkX = maxX;
       walkDir = -1;
       btn.classList.add('facing-left');
+      spawnPuff(walkX + 10, false); // puff on turn
     }
 
     btn.style.transform = `translateX(${walkX}px)`;
+
+    // Periodic smoke puffs while walking
+    puffTimer += delta;
+    if (puffTimer > 1200) {
+      puffTimer = 0;
+      const puffX = walkDir === -1 ? walkX + 56 : walkX + 6;
+      spawnPuff(puffX, walkDir === 1);
+    }
+
+    // Antenna sparkles
+    sparkleTimer += delta;
+    if (sparkleTimer > 2500) {
+      sparkleTimer = 0;
+      spawnSparkle();
+    }
+
     walkTimer = requestAnimationFrame(walkStep);
   }
 
-  // Start walking
   walkTimer = requestAnimationFrame(walkStep);
 
-  // Random idle stops: pause for 2-4s, then continue
+  // ─── Smoke Puffs ───
+  function spawnPuff(x, fromLeft) {
+    const puff = document.createElement('div');
+    puff.className = 'aether-puff';
+    const size = 10 + Math.random() * 12;
+    const dx = (fromLeft ? -1 : 1) * (8 + Math.random() * 14);
+    puff.style.cssText = `
+      left: ${x}px; bottom: 22px;
+      width: ${size}px; height: ${size}px;
+      --puff-dx: ${dx}px;
+    `;
+    document.body.appendChild(puff);
+    setTimeout(() => puff.remove(), 1800);
+  }
+
+  // ─── Antenna Sparkles ───
+  function spawnSparkle() {
+    const robo = btn.querySelector('.aether-robo');
+    if (!robo) return;
+    const rect = btn.getBoundingClientRect();
+    const count = 2 + Math.floor(Math.random() * 2);
+    for (let i = 0; i < count; i++) {
+      const spark = document.createElement('div');
+      spark.className = 'aether-sparkle';
+      const dx = -10 + Math.random() * 20;
+      const dy = -14 - Math.random() * 18;
+      spark.style.cssText = `
+        left: ${rect.left + rect.width / 2 - 2}px;
+        bottom: ${window.innerHeight - rect.top + 2}px;
+        --spark-dx: ${dx}px; --spark-dy: ${dy}px;
+        animation-delay: ${i * 0.12}s;
+      `;
+      document.body.appendChild(spark);
+      setTimeout(() => spark.remove(), 1000);
+    }
+  }
+
+  // Random idle stops with personality
   function scheduleIdleStop() {
-    const nextPause = 6000 + Math.random() * 10000; // 6-16s between stops
+    const nextPause = 8000 + Math.random() * 12000;
     idleTimeout = setTimeout(() => {
       if (isOpen) { scheduleIdleStop(); return; }
       walkPaused = true;
       btn.classList.remove('walking');
-      // Resume after 2-4s
+      lastWalkTime = 0;
+
+      // Spawn a small sparkle burst when stopping
+      spawnSparkle();
+
       setTimeout(() => {
         if (!isOpen) {
           walkPaused = false;
           btn.classList.add('walking');
+          lastWalkTime = 0;
           walkTimer = requestAnimationFrame(walkStep);
+          // Puff on start
+          const puffX = walkDir === -1 ? walkX + 56 : walkX + 6;
+          spawnPuff(puffX, walkDir === 1);
         }
         scheduleIdleStop();
-      }, 2000 + Math.random() * 2000);
+      }, 2500 + Math.random() * 2500);
     }, nextPause);
   }
   scheduleIdleStop();
 
-  // Adjust on resize
   window.addEventListener('resize', () => {
-    const maxX = window.innerWidth - 76;
-    if (walkX > maxX) walkX = maxX;
+    const maxX = window.innerWidth - 80;
+    if (walkX > maxX) { walkX = maxX; btn.style.transform = `translateX(${walkX}px)`; }
   });
 
   // ─── Toggle Panel ───
@@ -1144,7 +1316,12 @@
       // Stop walking, park the robot
       walkPaused = true;
       btn.classList.remove('walking');
+      lastWalkTime = 0;
       if (walkTimer) { cancelAnimationFrame(walkTimer); walkTimer = null; }
+      // Big puff burst on opening
+      for (let i = 0; i < 3; i++) {
+        setTimeout(() => spawnPuff(walkX + 20 + i * 12, Math.random() > 0.5), i * 100);
+      }
 
       // Position panel near the robot
       const btnRect = btn.getBoundingClientRect();
@@ -1158,12 +1335,15 @@
 
       setTimeout(() => inputEl.focus(), 400);
     } else {
-      // Resume walking
+      // Resume walking with a puff
       walkPaused = false;
+      lastWalkTime = 0;
       btn.classList.add('walking');
       btn.classList.remove('facing-left');
       walkDir = walkX > window.innerWidth / 2 ? -1 : 1;
       if (walkDir === -1) btn.classList.add('facing-left');
+      const puffX = walkDir === -1 ? walkX + 56 : walkX + 6;
+      spawnPuff(puffX, walkDir === 1);
       walkTimer = requestAnimationFrame(walkStep);
     }
   });

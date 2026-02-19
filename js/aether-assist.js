@@ -1,7 +1,8 @@
 /**
- * AETHER-ASSIST v4.0 — Premium AI Chat Widget
+ * AETHER-ASSIST v4.1 — Premium AI Chat Widget
  * Features: ElevenLabs TTS, voice input (STT), streaming without flicker,
- *           markdown + autolinks, suggested questions, page context, session persistence
+ *           markdown + autolinks, suggested questions, page context, session persistence,
+ *           articulated legs with knee joints, depth walking, tricks, rap lines
  * Vanilla JS — no dependencies
  */
 (function () {
@@ -468,7 +469,7 @@
     /* ── Walking Robot v2 — Smooth & Polished ── */
     .aether-assist-btn {
       position: fixed; bottom: 14px; z-index: 99999;
-      width: 72px; height: 92px; border: none; cursor: pointer;
+      width: 72px; height: 106px; border: none; cursor: pointer;
       background: none; padding: 0;
       display: flex; align-items: flex-start; justify-content: center;
       -webkit-tap-highlight-color: transparent;
@@ -483,7 +484,7 @@
 
     /* Robot container */
     .aether-robo {
-      position: relative; width: 62px; height: 84px;
+      position: relative; width: 62px; height: 98px;
       transform-style: preserve-3d;
       transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
@@ -683,47 +684,119 @@
     .aether-robo-ear.left::after { right: 1px; }
     .aether-robo-ear.right::after { left: 1px; }
 
-    /* ── Legs ── */
+    /* ── Legs — Articulated (thigh + knee + shin + foot) ── */
     .aether-robo-legs {
-      position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 12px;
+      position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 10px;
       backface-visibility: hidden;
     }
+    /* Thigh (upper leg) */
     .aether-robo-leg {
-      width: 9px; height: 17px; border-radius: 2px 2px 4px 4px;
+      width: 8px; height: 12px; border-radius: 2px 2px 1px 1px;
       background: linear-gradient(to bottom, #161d3a 0%, #0e1225 80%);
       border: 1px solid rgba(0,212,255,0.12);
       border-top: none;
       transform-origin: top center;
       position: relative;
     }
+    /* Knee joint */
+    .aether-robo-knee {
+      position: absolute; bottom: -3px; left: 50%; transform: translateX(-50%);
+      width: 6px; height: 6px; border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #1e2550, #0e1225);
+      border: 1px solid rgba(0,212,255,0.18);
+      box-shadow: 0 0 4px rgba(0,212,255,0.08);
+      z-index: 1;
+    }
+    /* Shin (lower leg) */
+    .aether-robo-shin {
+      position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      width: 7px; height: 11px; border-radius: 1px 1px 3px 3px;
+      background: linear-gradient(to bottom, #131936 0%, #0a0e1e 80%);
+      border: 1px solid rgba(0,212,255,0.10);
+      border-top: none;
+      transform-origin: top center;
+    }
+    /* Foot / boot */
+    .aether-robo-shin::after {
+      content: ''; position: absolute; bottom: -4px; left: -3px;
+      width: 13px; height: 5px;
+      border-radius: 3px 4px 3px 3px;
+      background: linear-gradient(to bottom, #0e1225, #080c1a);
+      border: 1px solid rgba(0,212,255,0.1);
+    }
+
+    /* Walking — thigh swing */
     .aether-assist-btn.walking .aether-robo-leg.left {
-      animation: aether-leg-l 0.44s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+      animation: aether-thigh-l 0.48s cubic-bezier(0.37, 0, 0.63, 1) infinite;
     }
     .aether-assist-btn.walking .aether-robo-leg.right {
-      animation: aether-leg-r 0.44s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+      animation: aether-thigh-r 0.48s cubic-bezier(0.37, 0, 0.63, 1) infinite;
     }
-    @keyframes aether-leg-l {
-      0% { transform: rotate(-20deg); }
-      50% { transform: rotate(20deg); }
-      100% { transform: rotate(-20deg); }
+    @keyframes aether-thigh-l {
+      0% { transform: rotate(-22deg); }
+      50% { transform: rotate(22deg); }
+      100% { transform: rotate(-22deg); }
     }
-    @keyframes aether-leg-r {
-      0% { transform: rotate(20deg); }
-      50% { transform: rotate(-20deg); }
-      100% { transform: rotate(20deg); }
+    @keyframes aether-thigh-r {
+      0% { transform: rotate(22deg); }
+      50% { transform: rotate(-22deg); }
+      100% { transform: rotate(22deg); }
     }
+
+    /* Walking — shin swing (knee bend, offset from thigh) */
+    .aether-assist-btn.walking .aether-robo-leg.left .aether-robo-shin {
+      animation: aether-shin-l 0.48s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+    }
+    .aether-assist-btn.walking .aether-robo-leg.right .aether-robo-shin {
+      animation: aether-shin-r 0.48s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+    }
+    @keyframes aether-shin-l {
+      0% { transform: translateX(-50%) rotate(10deg); }
+      25% { transform: translateX(-50%) rotate(35deg); }
+      50% { transform: translateX(-50%) rotate(5deg); }
+      75% { transform: translateX(-50%) rotate(-8deg); }
+      100% { transform: translateX(-50%) rotate(10deg); }
+    }
+    @keyframes aether-shin-r {
+      0% { transform: translateX(-50%) rotate(5deg); }
+      25% { transform: translateX(-50%) rotate(-8deg); }
+      50% { transform: translateX(-50%) rotate(10deg); }
+      75% { transform: translateX(-50%) rotate(35deg); }
+      100% { transform: translateX(-50%) rotate(5deg); }
+    }
+
+    /* Knee glow pulse while walking */
+    .aether-assist-btn.walking .aether-robo-knee {
+      animation: aether-knee-glow 0.48s ease-in-out infinite;
+    }
+    @keyframes aether-knee-glow {
+      0%, 100% { box-shadow: 0 0 4px rgba(0,212,255,0.08); }
+      50% { box-shadow: 0 0 8px rgba(0,212,255,0.2); }
+    }
+
+    /* Idle — legs straight */
     .aether-assist-btn:not(.walking):not(.open) .aether-robo-leg {
       animation: none; transform: rotate(0);
       transition: transform 0.3s ease;
     }
-    /* Feet — rounded boots */
-    .aether-robo-leg::after {
-      content: ''; position: absolute; bottom: -4px; left: -3px;
-      width: 14px; height: 5px;
-      border-radius: 3px 4px 3px 3px;
-      background: linear-gradient(to bottom, #0e1225, #080c1a);
-      border: 1px solid rgba(0,212,255,0.1);
+    .aether-assist-btn:not(.walking):not(.open) .aether-robo-shin {
+      animation: none; transform: translateX(-50%) rotate(0);
+      transition: transform 0.3s ease;
+    }
+
+    /* ── Depth Turn — robot turns to walk away/toward viewer ── */
+    .aether-assist-btn.depth-turning .aether-robo {
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .aether-assist-btn.walking-away .aether-robo {
+      /* Show "back" of robot — slightly squished horizontal, darker */
+      filter: brightness(0.7);
+      transition: filter 1.5s ease;
+    }
+    .aether-assist-btn.walking-toward .aether-robo {
+      filter: brightness(1);
+      transition: filter 1.5s ease;
     }
 
     /* ── Smoke / Cloud Puffs ── */
@@ -935,7 +1008,15 @@
       background: linear-gradient(to bottom, #282f58, #1e2345);
       border-color: rgba(0,212,255,0.2);
     }
-    [data-theme="light"] .aether-robo-leg::after {
+    [data-theme="light"] .aether-robo-knee {
+      background: radial-gradient(circle at 40% 35%, #2e3568, #1e2345);
+      border-color: rgba(0,212,255,0.25);
+    }
+    [data-theme="light"] .aether-robo-shin {
+      background: linear-gradient(to bottom, #242b52, #1a2040);
+      border-color: rgba(0,212,255,0.18);
+    }
+    [data-theme="light"] .aether-robo-shin::after {
       background: linear-gradient(to bottom, #1e2345, #161b38);
       border-color: rgba(0,212,255,0.15);
     }
@@ -1209,12 +1290,14 @@
         width: calc(100vw - 16px); left: 8px !important; right: auto !important; bottom: 88px;
         height: calc(100vh - 120px); max-height: none; border-radius: 16px;
       }
-      .aether-assist-btn { width: 62px; height: 82px; bottom: 8px; }
-      .aether-robo { width: 52px; height: 72px; }
+      .aether-assist-btn { width: 62px; height: 92px; bottom: 8px; }
+      .aether-robo { width: 52px; height: 82px; }
       .aether-robo-head { width: 44px; height: 38px; top: 8px; left: 4px; }
       .aether-robo-eye { width: 9px; height: 9px; }
       .aether-robo-eyes { top: 17px; gap: 11px; }
-      .aether-robo-leg { width: 8px; height: 14px; }
+      .aether-robo-leg { width: 7px; height: 10px; }
+      .aether-robo-knee { width: 5px; height: 5px; }
+      .aether-robo-shin { width: 6px; height: 9px; }
       .aether-suggest-chip { font-size: 11px; padding: 5px 11px; }
     }
   `;
@@ -1231,7 +1314,7 @@
     <div class="aether-robo-head"></div>
     <div class="aether-robo-eyes"><div class="aether-robo-eye"></div><div class="aether-robo-eye"></div></div>
     <div class="aether-robo-mouth"><span></span><span></span><span></span><span></span></div>
-    <div class="aether-robo-legs"><div class="aether-robo-leg left"></div><div class="aether-robo-leg right"></div></div>
+    <div class="aether-robo-legs"><div class="aether-robo-leg left"><div class="aether-robo-knee"></div><div class="aether-robo-shin"></div></div><div class="aether-robo-leg right"><div class="aether-robo-knee"></div><div class="aether-robo-shin"></div></div></div>
     <div class="aether-robo-shadow"></div>
     <div class="aether-robo-close"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></div>
   </div>`;
@@ -1390,10 +1473,12 @@
   let puffTimer = 0;
   let sparkleTimer = 0;
 
-  // Z-depth (scale) for forward/backward illusion
+  // Z-depth walk state
   let depthScale = 1;
   let depthTarget = 1;
-  let depthTimer = 0;
+  let depthPhase = 'normal'; // 'normal' | 'turning-away' | 'walking-away' | 'turning-back' | 'walking-toward'
+  let depthCooldown = 0;
+  const DEPTH_WALK_INTERVAL = 15000 + Math.random() * 10000;
 
   // Speech bubble state
   let activeBubble = null;
@@ -1435,17 +1520,15 @@
       spawnPuff(walkX + 10, false);
     }
 
-    // Smooth depth interpolation (forward/backward)
-    depthTimer += delta;
-    if (depthTimer > 6000) {
-      depthTimer = 0;
-      depthTarget = 0.75 + Math.random() * 0.5; // 0.75 – 1.25
-    }
-    depthScale += (depthTarget - depthScale) * 0.005 * (delta / 16.67);
+    // Smooth depth interpolation
+    depthScale += (depthTarget - depthScale) * 0.008 * (delta / 16.67);
 
-    // Update depth classes for shadow adjustment
+    // Depth classes for shadow
     btn.classList.toggle('depth-near', depthScale > 1.1);
-    btn.classList.toggle('depth-far', depthScale < 0.85);
+    btn.classList.toggle('depth-far', depthScale < 0.82);
+
+    // Depth walk cooldown
+    depthCooldown -= delta;
 
     updateBtnTransform();
 
@@ -1620,6 +1703,84 @@
   }
   scheduleIdleStop();
 
+  // ─── Depth Walk — Turn around and walk into/out of the screen ───
+  function scheduleDepthWalk() {
+    const nextDepth = 12000 + Math.random() * 15000;
+    setTimeout(() => {
+      if (isOpen || walkPaused || trickActive || depthPhase !== 'normal') {
+        scheduleDepthWalk();
+        return;
+      }
+
+      // Phase 1: Stop, turn away from viewer
+      walkPaused = true;
+      btn.classList.remove('walking');
+      lastWalkTime = 0;
+      depthPhase = 'turning-away';
+      btn.classList.add('depth-turning', 'walking-away');
+
+      // Small puff on turn
+      spawnPuff(walkX + 30, Math.random() > 0.5);
+
+      setTimeout(() => {
+        if (isOpen) { resetDepthWalk(); scheduleDepthWalk(); return; }
+
+        // Phase 2: Walk away — shrink down
+        depthPhase = 'walking-away';
+        depthTarget = 0.55;
+        walkPaused = false;
+        btn.classList.add('walking');
+        btn.classList.remove('depth-turning');
+        lastWalkTime = 0;
+        walkTimer = requestAnimationFrame(walkStep);
+
+        // After shrinking, turn back
+        setTimeout(() => {
+          if (isOpen) { resetDepthWalk(); scheduleDepthWalk(); return; }
+
+          // Phase 3: Stop at small size, turn back toward viewer
+          walkPaused = true;
+          btn.classList.remove('walking');
+          lastWalkTime = 0;
+          depthPhase = 'turning-back';
+          btn.classList.add('depth-turning');
+          btn.classList.remove('walking-away');
+          btn.classList.add('walking-toward');
+
+          spawnSparkle();
+
+          setTimeout(() => {
+            if (isOpen) { resetDepthWalk(); scheduleDepthWalk(); return; }
+
+            // Phase 4: Walk back toward viewer — grow
+            depthPhase = 'walking-toward';
+            depthTarget = 1;
+            walkPaused = false;
+            btn.classList.add('walking');
+            btn.classList.remove('depth-turning');
+            lastWalkTime = 0;
+            walkTimer = requestAnimationFrame(walkStep);
+
+            // After reaching normal size, done
+            setTimeout(() => {
+              depthPhase = 'normal';
+              depthTarget = 1;
+              btn.classList.remove('walking-away', 'walking-toward', 'depth-turning');
+              scheduleDepthWalk();
+            }, 4000);
+          }, 600);
+        }, 3500);
+      }, 500);
+    }, nextDepth);
+  }
+  scheduleDepthWalk();
+
+  function resetDepthWalk() {
+    depthPhase = 'normal';
+    depthTarget = 1;
+    btn.classList.remove('walking-away', 'walking-toward', 'depth-turning');
+  }
+
   // Initial greeting — show speech bubble after 3s
   setTimeout(() => {
     if (!isOpen) showRandomHelp();
@@ -1642,8 +1803,10 @@
       btn.classList.remove('walking');
       lastWalkTime = 0;
       if (walkTimer) { cancelAnimationFrame(walkTimer); walkTimer = null; }
-      // Dismiss speech bubble
+      // Dismiss speech bubble + reset depth
       if (activeBubble) { activeBubble.remove(); activeBubble = null; }
+      resetDepthWalk();
+      depthScale = 1;
       // Big puff burst on opening
       for (let i = 0; i < 3; i++) {
         setTimeout(() => spawnPuff(walkX + 20 + i * 12, Math.random() > 0.5), i * 100);

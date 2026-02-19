@@ -2,6 +2,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@vercel/og": "^0.8.6"
+    "@resvg/resvg-js": "^2.6.2",
+    "satori": "^0.19.2"
   }
 }

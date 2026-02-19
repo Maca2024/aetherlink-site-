@@ -695,7 +695,115 @@ Pull to local: `vercel env pull`
 
 ---
 
-## 16. Development Guidelines
+## 16. AI-Assisted Development Workflow
+
+This project is built and maintained using **Claude Code** — Anthropic's autonomous CLI agent. Claude Code can decompose complex requests into independent subtasks and dispatch multiple background agents that work in parallel.
+
+### Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  DEVELOPER                                                    │
+│  Natural language request (e.g. "update docs, audit SEO")     │
+│                                                               │
+│     ↓  Claude Code (main process)                             │
+│     ↓  Analyzes request → decomposes → dispatches             │
+├───────────┬───────────┬───────────┬──────────────────────────┤
+│  Agent 1  │  Agent 2  │  Agent 3  │  ... up to N parallel    │
+│  (background subprocess, fully autonomous)                    │
+│                                                               │
+│  Each agent has:                                              │
+│  • Independent context window                                 │
+│  • Full tool access (Read, Write, Edit, Glob, Grep, Bash)     │
+│  • Web access (WebFetch, WebSearch)                           │
+│  • No human input required                                    │
+│  • Returns structured result on completion                    │
+├───────────┴───────────┴───────────┴──────────────────────────┤
+│  RESULT AGGREGATION                                           │
+│  Claude Code collects all agent outputs → summarizes          │
+│  → developer reviews → approves → commit + push              │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Agent Types
+
+| Agent Type | Capabilities | Use Case |
+|------------|-------------|----------|
+| **Explore** | Glob, Grep, Read — fast codebase search | Find files, search patterns, understand architecture |
+| **General-purpose** | All tools (Read, Write, Edit, Glob, Grep, WebFetch, WebSearch) | Documentation updates, bulk file edits, SEO analysis, code review |
+| **Bash** | Shell command execution | Git operations, npm scripts, deployments, test runners |
+| **Plan** | All read tools — designs implementation strategies | Architecture planning, multi-file change strategies |
+| **Playwright (webapp-testing)** | Python + Playwright headless Chromium | Visual testing, screenshot capture, DOM inspection, console error checking |
+
+### How Agents Work
+
+1. **Dispatch** — Claude Code creates an agent with a task description and tool access
+2. **Execution** — Agent runs autonomously: reads files, searches code, makes edits, fetches web content
+3. **Tool calls** — Each agent can make dozens of tool calls (file reads, edits, searches) per session
+4. **Completion** — Agent returns a structured result with all findings/changes
+5. **Background mode** — Agents can run in background while Claude Code continues other work
+
+### Parallelization Example
+
+For the request: *"Update README, audit SEO, test the R2-D2 robot"*
+
+```
+t=0s   ┌─ Agent 1: Update README.md + CONTEXT.md ─────────────────┐
+       │  Reads 32 files, makes 39 edits, updates line counts,    │
+       │  adds new sections, fixes version numbers                 │
+       │  Duration: ~4 min                                         │
+       └──────────────────────────────────────────────── t=240s ───┘
+
+t=0s   ┌─ Agent 2: SEO + HTML Analysis ───────────────────────────┐
+       │  Reads 12 HTML files + sitemap + robots.txt + llms.txt,  │
+       │  checks Schema.org coverage, meta tags, hreflang,        │
+       │  image optimization, resource loading                     │
+       │  Duration: ~1 min                                         │
+       └──────────────────────────────────────────────── t=60s ────┘
+
+t=0s   ┌─ Agent 3: Playwright Visual Test ────────────────────────┐
+       │  Launches headless Chromium, navigates to Vercel URL,    │
+       │  waits for animations, captures screenshots,             │
+       │  checks console errors, measures element positions       │
+       │  Duration: ~2 min                                         │
+       └──────────────────────────────────────────────── t=120s ──┘
+
+t=240s  All agents complete → Results merged → Developer review
+```
+
+### Key Properties
+
+| Property | Description |
+|----------|-------------|
+| **Fully automatic** | No human input needed during agent execution |
+| **Parallel** | Independent tasks run simultaneously |
+| **Tool-equipped** | Agents can read/write files, search code, execute commands, fetch web pages |
+| **Scoped** | Each agent gets a focused task with clear boundaries |
+| **Auditable** | All operations logged; full transcript available for review |
+| **Composable** | Agent results can trigger follow-up agents |
+| **Development-only** | Not deployed with the site — these are dev-time tools |
+
+### Skills System
+
+Claude Code is extended with **27 global skills** providing specialized capabilities:
+
+| Skill | Purpose |
+|-------|---------|
+| `webapp-testing` | Playwright test scripts with server management |
+| `frontend-design` | Production-grade UI/UX design patterns |
+| `ui-ux-pro-max` | 50 styles, 21 palettes, 50 font pairings |
+| `pdf` / `docx` / `xlsx` / `pptx` | Document creation and manipulation |
+| `mcp-builder` | MCP server development (Python/Node) |
+| `skill-creator` | Creating new Claude Code skills |
+| `next-best-practices` | Next.js patterns and conventions |
+| `vercel-react-best-practices` | React/Vercel performance optimization |
+| `supabase-postgres` | Database optimization and best practices |
+
+Skills are installed globally at `~/.claude/skills/` and provide domain-specific knowledge and workflows to any Claude Code session.
+
+---
+
+## 17. Development Guidelines
 
 ### Adding a New Page
 1. Copy the closest existing page as template
@@ -735,7 +843,7 @@ Pull to local: `vercel env pull`
 
 ---
 
-## 17. Legal & Compliance
+## 18. Legal & Compliance
 
 | Aspect | Status |
 |--------|--------|

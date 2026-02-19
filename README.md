@@ -33,6 +33,7 @@ Europe's AI One-Stop-Shop — AI Chatbots, Consultancy, Training & Custom Develo
 - [Deployment](#deployment)
 - [Environment Variables](#environment-variables)
 - [Browser Support](#browser-support)
+- [AI-Assisted Development Workflow](#ai-assisted-development-workflow)
 - [Development Guidelines](#development-guidelines)
 - [Partners](#partners)
 - [Team](#team)
@@ -410,6 +411,71 @@ Set via Vercel CLI (`vercel env add NAME production`):
 | Edge | 90+ | Chromium-based, full support |
 | Mobile Safari | 15+ | Responsive, tested |
 | Chrome Android | 90+ | Responsive, tested |
+
+---
+
+## AI-Assisted Development Workflow
+
+This project is developed and maintained with **Claude Code** (Anthropic's CLI agent). Claude Code uses autonomous background agents to parallelize complex tasks.
+
+### How It Works
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  Developer (you)                                        │
+│  "Update docs, audit SEO, test the robot"               │
+│                                                         │
+│     ↓ Claude Code interprets and delegates              │
+├──────────┬──────────┬──────────┬───────────────────────┤
+│ Agent 1  │ Agent 2  │ Agent 3  │  (parallel execution) │
+│ Update   │ SEO/HTML │ Playwright│                       │
+│ README + │ analysis │ visual   │                       │
+│ CONTEXT  │ (12 HTML │ testing  │                       │
+│ (39 ops) │ files)   │ (browser)│                       │
+├──────────┴──────────┴──────────┴───────────────────────┤
+│  Results merged → Review → Commit → Push → Vercel      │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Agent Types Used
+
+| Agent | Purpose | Tools | Autonomous |
+|-------|---------|-------|------------|
+| **Explore** | Codebase search, file discovery, pattern matching | Glob, Grep, Read | Yes |
+| **General-purpose** | Multi-step tasks: doc updates, bulk edits, analysis | Read, Edit, Write, Grep, Glob, WebFetch | Yes |
+| **Bash** | Git operations, test execution, deployments | Shell commands | Yes |
+| **Playwright (webapp-testing)** | Visual testing, screenshot capture, DOM inspection | Python + Playwright headless browser | Yes |
+
+### Workflow
+
+1. **Task decomposition** — Claude Code breaks a request into independent subtasks
+2. **Parallel dispatch** — Multiple agents launch simultaneously (e.g., 3 agents for docs + SEO + testing)
+3. **Autonomous execution** — Each agent works independently with full tool access (file read/write, search, web fetch)
+4. **Result aggregation** — Agent outputs are collected and reviewed
+5. **Human review** — Developer approves changes before commit
+6. **Deploy** — `git push origin main` → Vercel auto-deploys
+
+### Example Session
+
+```
+User: "Update docs, audit SEO, test the R2-D2 robot"
+
+Claude Code launches 3 agents in parallel:
+  → Agent 1: Reads all 32 files, updates README.md + CONTEXT.md (39 file operations, ~4 min)
+  → Agent 2: Analyzes 12 HTML files for SEO gaps, Schema.org coverage, meta tags (12 operations, ~1 min)
+  → Agent 3: Runs Playwright headless browser test on live Vercel URL, captures screenshots (~2 min)
+
+All 3 complete → Claude Code summarizes results → Developer reviews → Commit + push
+```
+
+### Key Characteristics
+
+- **Fully automatic** once launched — no human input needed during execution
+- **Parallel** — independent tasks run simultaneously for speed
+- **Tool-equipped** — agents can read/write files, search code, fetch web pages, run shell commands
+- **Scoped** — each agent gets a focused task with clear boundaries
+- **Auditable** — all operations are logged and results are returned for review
+- **Not part of the website** — these are development-time tools, not deployed with the site
 
 ---
 

@@ -1684,7 +1684,7 @@
   const tricks = ['trick-spin', 'trick-jump', 'trick-flip', 'trick-dance', 'trick-wave', 'trick-moonwalk'];
   const trickDurations = { 'trick-spin': 800, 'trick-jump': 700, 'trick-flip': 1000, 'trick-dance': 1200, 'trick-wave': 900, 'trick-moonwalk': 1400 };
 
-  // ─── Gated Entrance: on homepages, wait for cinema to finish ───
+  // ─── Gated Entrance: on homepages, reveal right after the fold ───
   const isHomepage = /\/(nl|en|fi)\/(index\.html)?$/.test(location.pathname);
   let chatbotRevealed = !isHomepage; // sub-pages: show immediately
 
@@ -1694,20 +1694,25 @@
     btn.style.pointerEvents = 'none';
     btn.style.transition = 'opacity 1s ease, transform 0.15s ease';
 
-    const isMobile = window.innerWidth < 1024;
-
-    if (isMobile) {
-      // Mobile: no cinema runs, show chatbot after 3s
-      setTimeout(tryRevealChatbot, 3000);
-    } else {
-      // Desktop: show after cinema ends
-      window.addEventListener('rc-cinema-done', () => {
-        tryRevealChatbot();
-      }, { once: true });
-
-      // Fallback: if cinema crashes or takes too long, reveal after 12s
-      setTimeout(tryRevealChatbot, 12000);
+    // Reveal as soon as user scrolls past the hero (the fold)
+    const heroEl = document.getElementById('hero');
+    if (heroEl) {
+      const foldObserver = new IntersectionObserver((entries) => {
+        if (!entries[0].isIntersecting) {
+          foldObserver.disconnect();
+          tryRevealChatbot();
+        }
+      }, { threshold: 0.1 });
+      foldObserver.observe(heroEl);
     }
+
+    // Also reveal when cinema ends (user may not scroll during cinema)
+    window.addEventListener('rc-cinema-done', () => {
+      tryRevealChatbot();
+    }, { once: true });
+
+    // Fallback: reveal after 8s regardless (e.g. mobile, no cinema, no scroll)
+    setTimeout(tryRevealChatbot, 8000);
   }
 
   function tryRevealChatbot() {

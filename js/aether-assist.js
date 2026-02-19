@@ -1679,11 +1679,9 @@
   const tricks = ['trick-spin', 'trick-jump', 'trick-flip', 'trick-dance', 'trick-wave', 'trick-moonwalk'];
   const trickDurations = { 'trick-spin': 800, 'trick-jump': 700, 'trick-flip': 1000, 'trick-dance': 1200, 'trick-wave': 900, 'trick-moonwalk': 1400 };
 
-  // ─── Gated Entrance: on homepages, wait for cinema done + scroll ───
+  // ─── Gated Entrance: on homepages, wait for cinema to finish ───
   const isHomepage = /\/(nl|en|fi)\/(index\.html)?$/.test(location.pathname);
   let chatbotRevealed = !isHomepage; // sub-pages: show immediately
-  let cinemaDone = !isHomepage;      // sub-pages: no cinema to wait for
-  let hasScrolledPastHero = !isHomepage;
 
   if (isHomepage) {
     // Start hidden
@@ -1691,47 +1689,24 @@
     btn.style.pointerEvents = 'none';
     btn.style.transition = 'opacity 1s ease, transform 0.15s ease';
 
-    // Listen for cinema end
-    window.addEventListener('rc-cinema-done', () => {
-      cinemaDone = true;
-      tryRevealChatbot();
-    }, { once: true });
+    const isMobile = window.innerWidth < 1024;
 
-    // Fallback: if cinema never fires (e.g. reduced motion, mobile), reveal after 45s
-    setTimeout(() => {
-      if (!cinemaDone) {
-        cinemaDone = true;
-        tryRevealChatbot();
-      }
-    }, 45000);
-
-    // Listen for scroll past hero
-    const heroEl = document.getElementById('hero');
-    if (heroEl) {
-      const scrollObserver = new IntersectionObserver((entries) => {
-        // Hero is out of view = user scrolled past
-        if (!entries[0].isIntersecting) {
-          hasScrolledPastHero = true;
-          scrollObserver.disconnect();
-          tryRevealChatbot();
-        }
-      }, { threshold: 0.1 });
-      scrollObserver.observe(heroEl);
+    if (isMobile) {
+      // Mobile: no cinema runs, show chatbot after 3s
+      setTimeout(tryRevealChatbot, 3000);
     } else {
-      // No hero? fallback: scroll listener
-      const onScroll = () => {
-        if (window.scrollY > window.innerHeight * 0.5) {
-          hasScrolledPastHero = true;
-          window.removeEventListener('scroll', onScroll);
-          tryRevealChatbot();
-        }
-      };
-      window.addEventListener('scroll', onScroll, { passive: true });
+      // Desktop: show after cinema ends
+      window.addEventListener('rc-cinema-done', () => {
+        tryRevealChatbot();
+      }, { once: true });
+
+      // Fallback: if cinema crashes or takes too long, reveal after 12s
+      setTimeout(tryRevealChatbot, 12000);
     }
   }
 
   function tryRevealChatbot() {
-    if (chatbotRevealed || !cinemaDone || !hasScrolledPastHero) return;
+    if (chatbotRevealed) return;
     chatbotRevealed = true;
     // Fade in the chatbot
     btn.style.opacity = '1';

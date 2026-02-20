@@ -1,0 +1,32 @@
+name: IndexNow Submit
+on:
+  push:
+    branches: [main]
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract URLs from sitemap and submit to IndexNow
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: |
+          if [ -z "$INDEXNOW_KEY" ]; then
+            echo "INDEXNOW_KEY not set, skipping"
+            exit 0
+          fi
+
+          URLS=$(grep -oP '<loc>\K[^<]+' sitemap.xml | jq -R -s 'split("\n") | map(select(. != ""))')
+
+          curl -s -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -w "\nIndexNow response: %{http_code}\n" \
+            -d "{
+              \"host\": \"aetherlink.ai\",
+              \"key\": \"$INDEXNOW_KEY\",
+              \"keyLocation\": \"https://aetherlink.ai/$INDEXNOW_KEY.txt\",
+              \"urlList\": $URLS
+            }"

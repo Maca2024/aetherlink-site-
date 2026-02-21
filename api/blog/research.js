@@ -1,5 +1,5 @@
 // POST /api/blog/research — AI trend research via Perplexity Sonar
-import { getAuthClientFromReq, getTokenFromReq, handleCors } from '../_lib/supabase.js';
+import { verifyAdmin, handleCors } from '../_lib/supabase.js';
 
 const PERPLEXITY_API_KEY = process.env.PERPLEXITY_API_KEY;
 
@@ -10,12 +10,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Verify authentication
-  const token = getTokenFromReq(req);
-  if (!token) return res.status(401).json({ error: 'Unauthorized' });
-  const authClient = getAuthClientFromReq(req);
-  const { data: { user }, error: authError } = await authClient.auth.getUser();
-  if (authError || !user) return res.status(401).json({ error: 'Unauthorized' });
+  const user = await verifyAdmin(req);
+  if (!user) return res.status(401).json({ error: 'Unauthorized' });
 
   const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
   const { topic, keywords = [] } = body;

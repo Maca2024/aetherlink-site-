@@ -1,16 +1,7 @@
 // GET /api/blog/posts — List all posts (admin)
 // POST /api/blog/posts — Create new post (admin)
 // PUT /api/blog/posts?id=uuid — Update post (admin)
-import { getAdminClient, getAuthClientFromReq, getTokenFromReq, handleCors, CORS } from '../_lib/supabase.js';
-
-async function verifyAdmin(req) {
-  const token = getTokenFromReq(req);
-  if (!token) return null;
-  const supabase = getAuthClientFromReq(req);
-  const { data: { user }, error } = await supabase.auth.getUser();
-  if (error || !user) return null;
-  return user;
-}
+import { getAdminClient, verifyAdmin, handleCors, CORS } from '../_lib/supabase.js';
 
 export default async function handler(req, res) {
   if (handleCors(req, res)) return;

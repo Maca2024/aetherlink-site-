@@ -31,6 +31,23 @@ export function getAuthClientFromReq(req) {
   });
 }
 
+/** Verify admin: accepts user JWT or service role key */
+export async function verifyAdmin(req) {
+  const token = getTokenFromReq(req);
+  if (!token) return null;
+
+  // Allow service role key as auth (for GitHub Actions / cron)
+  if (SUPABASE_SERVICE_KEY && token === SUPABASE_SERVICE_KEY) {
+    return { id: 'service-role', email: 'system@aetherlink.ai', role: 'service_role' };
+  }
+
+  // Otherwise verify as user JWT
+  const supabase = getAuthClientFromReq(req);
+  const { data: { user }, error } = await supabase.auth.getUser();
+  if (error || !user) return null;
+  return user;
+}
+
 /** CORS headers */
 export const CORS = {
   'Access-Control-Allow-Origin': '*',

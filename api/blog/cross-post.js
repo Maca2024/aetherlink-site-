@@ -1,5 +1,5 @@
 // POST /api/blog/cross-post?id=uuid — Cross-post to LinkedIn and/or Medium
-import { getAdminClient, getAuthClientFromReq, getTokenFromReq, handleCors } from '../_lib/supabase.js';
+import { getAdminClient, verifyAdmin, handleCors } from '../_lib/supabase.js';
 
 export default async function handler(req, res) {
   if (handleCors(req, res)) return;
@@ -8,12 +8,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Verify authentication
-  const token = getTokenFromReq(req);
-  if (!token) return res.status(401).json({ error: 'Unauthorized' });
-  const authClient = getAuthClientFromReq(req);
-  const { data: { user }, error: authError } = await authClient.auth.getUser();
-  if (authError || !user) return res.status(401).json({ error: 'Unauthorized' });
+  const user = await verifyAdmin(req);
+  if (!user) return res.status(401).json({ error: 'Unauthorized' });
 
   const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
   const id = req.query.id || body.id;

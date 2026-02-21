@@ -41,7 +41,7 @@ export default async function handler(req, res) {
     // List all posts (summary)
     const { data, error } = await admin
       .from('blog_posts')
-      .select('id, slug_nl, slug_en, slug_fi, title_nl, title_en, title_fi, description_nl, description_en, description_fi, category, status, author, published_at, created_at, updated_at, word_count, read_time, generation_topic, research_data, linkedin_posted_at, medium_posted_at')
+      .select('id, slug_nl, slug_en, slug_fi, title_nl, title_en, title_fi, description_nl, description_en, description_fi, category, status, author, published_at, created_at, updated_at, word_count, read_time, generation_topic, research_data, linkedin_posted_at, medium_posted_at, quality_score, feedback_score, feedback_comments, learning_notes')
       .order('created_at', { ascending: false });
 
     if (error) return res.status(500).json({ error: error.message });

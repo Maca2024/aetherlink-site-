@@ -854,6 +854,38 @@
                         <div id="keywords-list" class="flex flex-wrap gap-2"></div>
                     </div>
 
+                    <!-- Quality & Feedback -->
+                    <div class="glass rounded-2xl p-5 space-y-4">
+                        <h3 class="font-display font-semibold text-sm text-light">Quality & Feedback</h3>
+                        <div>
+                            <label class="block text-xs text-muted font-medium mb-2">Quality Score (auto)</label>
+                            <div id="editor-quality-score" class="input bg-white/[0.02] text-muted text-sm cursor-default">—</div>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-muted font-medium mb-2">Feedback Score (0-100)</label>
+                            <input type="range" id="editor-feedback-score" min="0" max="100" value="0" class="w-full accent-accent-violet" oninput="document.getElementById('feedback-score-val').textContent=this.value">
+                            <div class="flex justify-between text-xs text-muted mt-1">
+                                <span>0</span>
+                                <span id="feedback-score-val" class="text-light font-semibold">0</span>
+                                <span>100</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-muted font-medium mb-2">Learning Notes</label>
+                            <textarea id="editor-learning-notes" class="input text-sm" rows="3" placeholder="What should future articles learn from this one? E.g. 'More examples', 'Too long', 'Good humor'"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-muted font-medium mb-2">Add Comment</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="feedback-comment-input" class="input flex-1 text-sm" placeholder="Feedback comment..." onkeydown="if(event.key==='Enter'){event.preventDefault();addFeedbackComment()}">
+                                <button onclick="addFeedbackComment()" class="btn-secondary btn-sm px-3">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                                </button>
+                            </div>
+                            <div id="feedback-comments-list" class="mt-2 space-y-1 text-xs text-muted max-h-32 overflow-y-auto"></div>
+                        </div>
+                    </div>
+
                     <!-- Danger Zone -->
                     <div class="glass rounded-2xl p-5 space-y-4 border-red-500/10">
                         <h3 class="font-display font-semibold text-sm text-red-400">Danger Zone</h3>
@@ -1016,6 +1048,7 @@
             editorLang: 'nl',
             previewLang: 'nl',
             keywords: [],
+            feedbackComments: [],
             researchData: null,
             loading: false,
         };
@@ -1190,6 +1223,19 @@
             return res.json();
         }
 
+        async function apiPut(path, body) {
+            const res = await fetch(`${API_BASE}${path}`, {
+                method: 'PUT',
+                headers: getAuthHeaders(),
+                body: JSON.stringify(body),
+            });
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({ error: res.statusText }));
+                throw new Error(err.error || `Request failed (${res.status})`);
+            }
+            return res.json();
+        }
+
         async function apiDelete(path) {
             const res = await fetch(`${API_BASE}${path}`, {
                 method: 'DELETE',
@@ -1350,6 +1396,15 @@
             updateWordCount();
             switchEditorLang('nl');
 
+            // Quality & Feedback
+            document.getElementById('editor-quality-score').textContent = p.quality_score != null ? `${p.quality_score}/100` : '—';
+            const fbScore = p.feedback_score || 0;
+            document.getElementById('editor-feedback-score').value = fbScore;
+            document.getElementById('feedback-score-val').textContent = fbScore;
+            document.getElementById('editor-learning-notes').value = p.learning_notes || '';
+            state.feedbackComments = Array.isArray(p.feedback_comments) ? [...p.feedback_comments] : [];
+            renderFeedbackComments();
+
             // Show/hide delete button
             document.getElementById('btn-delete').style.display = p.id ? 'flex' : 'none';
         }
@@ -1377,6 +1432,9 @@
                 seo_keywords: state.keywords,
                 word_count: countWords(),
                 read_time: Math.max(1, Math.ceil(countWords() / 200)),
+                feedback_score: parseInt(document.getElementById('editor-feedback-score').value) || null,
+                learning_notes: document.getElementById('editor-learning-notes').value.trim() || null,
+                feedback_comments: state.feedbackComments || [],
             };
         }
 
@@ -1398,8 +1456,13 @@
                 if (!data.slug_en) data.slug_en = slugify(data.title_en || data.title_nl);
                 if (!data.slug_fi) data.slug_fi = slugify(data.title_fi || data.title_nl);
 
-                const result = await apiPost('/api/blog/posts', data);
-                const savedPost = result.post || result;
+                let savedPost;
+                if (data.id) {
+                    savedPost = await apiPut(`/api/blog/posts?id=${data.id}`, data);
+                } else {
+                    savedPost = await apiPost('/api/blog/posts', data);
+                }
+                savedPost = savedPost.post || savedPost;
 
                 if (savedPost.id && !state.currentPost.id) {
                     state.currentPost.id = savedPost.id;
@@ -1443,11 +1506,17 @@
                 if (!data.slug_en) data.slug_en = slugify(data.title_en || data.title_nl);
                 if (!data.slug_fi) data.slug_fi = slugify(data.title_fi || data.title_nl);
 
-                await apiPost('/api/blog/posts', data);
+                if (data.id) {
+                    await apiPut(`/api/blog/posts?id=${data.id}`, data);
+                } else {
+                    const saved = await apiPost('/api/blog/posts', data);
+                    data.id = (saved.post || saved).id;
+                    state.currentPost.id = data.id;
+                }
 
                 // Then publish (IndexNow etc.)
                 try {
-                    await apiPost('/api/blog/publish', { id: state.currentPost.id || data.id });
+                    await apiPost(`/api/blog/publish?id=${state.currentPost.id || data.id}`, {});
                 } catch (pubErr) {
                     // Publish-specific actions might fail but post is saved
                     console.warn('Publish notification failed:', pubErr);
@@ -1583,6 +1652,44 @@
             ).join('');
         }
 
+        // ── Feedback Comments ──
+        function addFeedbackComment() {
+            const input = document.getElementById('feedback-comment-input');
+            const text = input.value.trim();
+            if (text) {
+                if (!state.feedbackComments) state.feedbackComments = [];
+                state.feedbackComments.push({
+                    text,
+                    date: new Date().toISOString().split('T')[0],
+                    author: 'admin',
+                });
+                renderFeedbackComments();
+            }
+            input.value = '';
+            input.focus();
+        }
+        window.addFeedbackComment = addFeedbackComment;
+
+        function removeFeedbackComment(index) {
+            state.feedbackComments.splice(index, 1);
+            renderFeedbackComments();
+        }
+        window.removeFeedbackComment = removeFeedbackComment;
+
+        function renderFeedbackComments() {
+            const container = document.getElementById('feedback-comments-list');
+            if (!state.feedbackComments?.length) {
+                container.innerHTML = '<p class="text-muted italic">No comments yet</p>';
+                return;
+            }
+            container.innerHTML = state.feedbackComments.map((c, i) =>
+                `<div class="flex items-start gap-2 p-2 rounded-lg bg-white/[0.02]">
+                    <span class="flex-1">${escapeHtml(typeof c === 'string' ? c : c.text)} <span class="text-muted/60">${c.date || ''}</span></span>
+                    <button onclick="removeFeedbackComment(${i})" class="text-red-400/60 hover:text-red-400 shrink-0">&times;</button>
+                </div>`
+            ).join('');
+        }
+
         // ── AI Generator ──
         async function handleResearch() {
             const topic = document.getElementById('gen-topic').value.trim();
@@ -1674,14 +1781,39 @@
                 textEl.textContent = 'Article generated!';
 
                 const post = data.post || data;
-                showToast('Article generated successfully!', 'success');
+                const qualityScore = data.quality_score || post.quality_score;
+                const autoPublishable = data.auto_publishable;
+
+                if (qualityScore != null) {
+                    const scoreMsg = autoPublishable
+                        ? `Quality: ${qualityScore}/100 — Auto-publishable!`
+                        : `Quality: ${qualityScore}/100 — Needs review (< 85)`;
+                    showToast(scoreMsg, qualityScore >= 85 ? 'success' : 'info');
+                } else {
+                    showToast('Article generated successfully!', 'success');
+                }
+
+                // Save the generated article to Supabase
+                let savedPost = post;
+                if (!post.id) {
+                    try {
+                        savedPost = await apiPost('/api/blog/posts', post);
+                    } catch (saveErr) {
+                        showToast(`Generated but failed to save: ${saveErr.message}`, 'error');
+                    }
+                }
 
                 // Navigate to editor with the new post
                 setTimeout(() => {
-                    if (post.id) {
-                        navigateTo('editor', post.id);
+                    const id = savedPost.id || post.id;
+                    if (id) {
+                        navigateTo('editor', id);
                     } else {
-                        navigateTo('dashboard');
+                        // Load the generated content directly into editor
+                        state.currentPost = post;
+                        state.keywords = Array.isArray(post.seo_keywords) ? [...post.seo_keywords] : [];
+                        populateEditor();
+                        showScreen('editor');
                     }
                 }, 1000);
             } catch (err) {

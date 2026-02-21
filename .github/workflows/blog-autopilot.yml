@@ -1,0 +1,105 @@
+name: Blog Autopilot — Generate & Publish
+
+on:
+  schedule:
+    # Mon/Wed/Fri at 06:00 UTC (07:00 CET)
+    - cron: '0 6 * * 1,3,5'
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: 'Article topic (leave empty for auto-selection)'
+        required: false
+      category:
+        description: 'Category: aetherbot, aethermind, or aetherdev'
+        required: false
+        default: 'aethermind'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Research trending AI topic
+        id: research
+        run: |
+          # Auto-select category based on day rotation if not specified
+          CATEGORY="${{ github.event.inputs.category }}"
+          if [ -z "$CATEGORY" ]; then
+            DOW=$(date +%u)
+            case $DOW in
+              1) CATEGORY="aethermind" ;;
+              3) CATEGORY="aetherbot" ;;
+              5) CATEGORY="aetherdev" ;;
+              *) CATEGORY="aethermind" ;;
+            esac
+          fi
+          echo "category=$CATEGORY" >> $GITHUB_OUTPUT
+
+          # Determine topic
+          TOPIC="${{ github.event.inputs.topic }}"
+          if [ -z "$TOPIC" ]; then
+            # Auto-research via Perplexity
+            RESEARCH=$(curl -s -X POST "${{ secrets.SITE_URL }}/api/blog/research" \
+              -H "Authorization: Bearer ${{ secrets.SUPABASE_AUTH_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              -d "{
+                \"topic\": \"latest AI trends for European businesses $CATEGORY\",
+                \"keywords\": [\"AI\", \"enterprise\", \"Europe\", \"2026\"]
+              }")
+            echo "research<<EOF" >> $GITHUB_OUTPUT
+            echo "$RESEARCH" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+
+            # Extract a suggested angle from research
+            TOPIC=$(echo "$RESEARCH" | jq -r '.research.suggested_angles[0] // "AI Trends for European Businesses in 2026"')
+          fi
+          echo "topic=$TOPIC" >> $GITHUB_OUTPUT
+
+      - name: Generate article
+        id: generate
+        run: |
+          RESULT=$(curl -s -X POST "${{ secrets.SITE_URL }}/api/blog/generate" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_AUTH_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"topic\": \"${{ steps.research.outputs.topic }}\",
+              \"category\": \"${{ steps.research.outputs.category }}\",
+              \"research\": ${{ steps.research.outputs.research || 'null' }}
+            }")
+
+          SCORE=$(echo "$RESULT" | jq -r '.quality_score // 0')
+          AUTO_PUBLISH=$(echo "$RESULT" | jq -r '.auto_publishable // false')
+          echo "quality_score=$SCORE" >> $GITHUB_OUTPUT
+          echo "auto_publishable=$AUTO_PUBLISH" >> $GITHUB_OUTPUT
+          echo "result<<EOF" >> $GITHUB_OUTPUT
+          echo "$RESULT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          echo "Quality score: $SCORE/100 (auto-publishable: $AUTO_PUBLISH)"
+
+      - name: Save to Supabase
+        id: save
+        run: |
+          POST=$(curl -s -X POST "${{ secrets.SITE_URL }}/api/blog/posts" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_AUTH_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '${{ steps.generate.outputs.result }}')
+
+          POST_ID=$(echo "$POST" | jq -r '.id')
+          echo "post_id=$POST_ID" >> $GITHUB_OUTPUT
+          echo "Saved post: $POST_ID"
+
+      - name: Auto-publish if quality gate passes
+        if: steps.generate.outputs.auto_publishable == 'true'
+        run: |
+          curl -s -X POST "${{ secrets.SITE_URL }}/api/blog/publish?id=${{ steps.save.outputs.post_id }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_AUTH_TOKEN }}" \
+            -H "Content-Type: application/json"
+          echo "Published post ${{ steps.save.outputs.post_id }}"
+
+      - name: Report result
+        run: |
+          echo "## Blog Autopilot Report" >> $GITHUB_STEP_SUMMARY
+          echo "- **Topic:** ${{ steps.research.outputs.topic }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Category:** ${{ steps.research.outputs.category }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Quality Score:** ${{ steps.generate.outputs.quality_score }}/100" >> $GITHUB_STEP_SUMMARY
+          echo "- **Auto-published:** ${{ steps.generate.outputs.auto_publishable }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Post ID:** ${{ steps.save.outputs.post_id }}" >> $GITHUB_STEP_SUMMARY

@@ -55,6 +55,12 @@ CREATE TABLE IF NOT EXISTS blog_posts (
   research_data JSONB,
   generation_topic TEXT,
 
+  -- Quality & Feedback
+  quality_score INTEGER DEFAULT 0 CHECK (quality_score >= 0 AND quality_score <= 100),
+  feedback_score INTEGER CHECK (feedback_score >= 0 AND feedback_score <= 100),
+  feedback_comments JSONB DEFAULT '[]',
+  learning_notes TEXT,
+
   -- Timestamps
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()

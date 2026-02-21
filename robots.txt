@@ -6,6 +6,8 @@ User-agent: *
 Allow: /
 Disallow: /.git/
 Disallow: /.vercel/
+Disallow: /admin/
+Disallow: /api/blog/
 
 # AI Search Crawlers — Explicitly Allowed
 User-agent: GPTBot

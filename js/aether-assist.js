@@ -1515,9 +1515,8 @@
     <div class="aether-robo-close"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></div>
   </div>`;
 
-  // Resolve logo path (works from /nl/, /en/, /fi/ subdirs)
-  const basePath = window.location.pathname.includes('/nl/') || window.location.pathname.includes('/en/') || window.location.pathname.includes('/fi/')
-    ? '../' : '';
+  // Use absolute path for logo (works from any depth)
+  const basePath = '/';
 
   const panel = document.createElement('div');
   panel.className = 'aether-assist-panel';

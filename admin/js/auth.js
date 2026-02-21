@@ -69,6 +69,23 @@ export async function handleLogin(email, password) {
 }
 
 /**
+ * Handle Google OAuth login
+ * @returns {Promise<void>}
+ */
+export async function handleGoogleLogin() {
+    const sb = getSupabase();
+
+    const { data, error } = await sb.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+            redirectTo: window.location.origin + '/admin',
+        },
+    });
+    if (error) throw error;
+    // Browser will redirect to Google — no further action needed
+}
+
+/**
  * Handle logout
  */
 export async function handleLogout() {

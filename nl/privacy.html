@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacybeleid — AetherLink.ai</title>
+    <meta name="description" content="Privacybeleid van AetherLink.ai. Lees hoe wij omgaan met uw persoonsgegevens, welke gegevens wij verzamelen en welke rechten u heeft onder de AVG.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aetherlink.ai/nl/privacy">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+
+    <meta property="og:title" content="Privacybeleid — AetherLink.ai">
+    <meta property="og:description" content="Privacybeleid van AetherLink.ai. Lees hoe wij omgaan met uw persoonsgegevens en welke rechten u heeft.">
+    <meta property="og:url" content="https://aetherlink.ai/nl/privacy">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="nl_NL">
+    <meta property="og:site_name" content="AetherLink.ai">
+
+    <link rel="alternate" hreflang="nl" href="https://aetherlink.ai/nl/privacy">
+    <link rel="alternate" hreflang="en" href="https://aetherlink.ai/en/privacy">
+    <link rel="alternate" hreflang="fi" href="https://aetherlink.ai/fi/tietosuoja">
+    <link rel="alternate" hreflang="x-default" href="https://aetherlink.ai/nl/privacy">
+
+    <link rel="preload" href="../fonts/syne-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="../css/fonts.css">
+
+    <link rel="preload" href="../images/logo-white.svg" as="image" type="image/svg+xml">
+    <link rel="stylesheet" href="../css/tailwind.css">
+    <style>
+        *,*::before,*::after{box-sizing:border-box}html{scroll-behavior:smooth}
+        body{font-family:'Plus Jakarta Sans',sans-serif;background:#05060f;color:#e4e8f1;overflow-x:hidden;-webkit-text-size-adjust:100%;margin:0}
+        section:not(:first-of-type){content-visibility:auto;contain-intrinsic-size:auto 800px}.font-display{font-family:'Syne',sans-serif}
+        body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.4}
+        .grid-bg{background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);background-size:72px 72px}
+        .glass-card{background:rgba(255,255,255,0.025);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.06);border-radius:20px;transition:all .5s cubic-bezier(.16,1,.3,1)}
+        .glass-card:hover{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.12)}
+        .reveal{opacity:0;transform:translateY(40px);transition:all .9s cubic-bezier(.16,1,.3,1)}
+        .reveal.revealed{opacity:1;transform:translateY(0)}
+        .reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}.reveal-delay-4{transition-delay:.4s}
+        .nav-glass{background:rgba(5,6,15,0.75);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,0.05);box-shadow:0 4px 30px rgba(0,0,0,0.2)}
+        .nav-link{font-family:'Syne',sans-serif;font-weight:500;font-size:.85rem;color:#8892a8;text-decoration:none;padding:8px 16px;border-radius:8px;transition:color .3s ease;position:relative;letter-spacing:.02em}
+        .nav-link::after{content:'';position:absolute;bottom:2px;left:50%;right:50%;height:2px;background:linear-gradient(90deg,#00d4ff,#8b5cf6);border-radius:1px;transition:all .35s cubic-bezier(.16,1,.3,1);opacity:0}
+        .nav-link:hover{color:#e4e8f1}.nav-link:hover::after{left:16px;right:16px;opacity:1}
+        .nav-link.active{color:#8b5cf6}.nav-link.active::after{left:16px;right:16px;opacity:1}
+        .btn-login{font-family:'Syne',sans-serif;font-weight:500;font-size:.85rem;color:#b8bfcf;padding:9px 20px;border-radius:10px;border:1px solid rgba(140,79,218,0.2);background:rgba(140,79,218,0.06);text-decoration:none;transition:all .3s ease}
+        .btn-login:hover{border-color:rgba(140,79,218,0.4);background:rgba(140,79,218,0.12);color:#e4e8f1}
+        .btn-cta-nav{font-family:'Syne',sans-serif;font-weight:600;font-size:.85rem;color:#fff;padding:9px 22px;border-radius:10px;background:linear-gradient(135deg,#00C2CB,#8C4FDA);text-decoration:none;transition:all .35s cubic-bezier(.16,1,.3,1);box-shadow:0 0 20px rgba(0,194,203,0.15)}
+        .btn-cta-nav:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(0,194,203,0.25),0 8px 24px -8px rgba(140,79,218,0.3)}
+        .mobile-overlay{position:fixed;inset:0;z-index:45;background:rgba(5,6,15,0.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;pointer-events:none;transition:opacity .4s ease}
+        .mobile-overlay.open{opacity:1;pointer-events:auto}
+        .mobile-overlay .nav-link{font-size:1.4rem;padding:12px 24px}
+        .mobile-overlay .nav-link::after{display:none}
+        .gradient-text-violet{background:linear-gradient(135deg,#8b5cf6,#a78bfa,#7c3aed);-webkit-background-clip:text;background-clip:text;color:transparent}
+        ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#05060f}::-webkit-scrollbar-thumb{background:#1e2444;border-radius:3px}
+    </style>
+    <link rel="stylesheet" href="../css/theme.css">
+    <script src="../js/theme.js"></script>
+</head>
+
+<body class="grid-bg">
+
+    <!-- NAV -->
+    <nav id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+        <div class="max-w-[1400px] mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-[72px]">
+                <a href="index.html" class="flex items-center group relative z-50">
+                    <img src="../images/logo-white.svg" alt="AetherLink" width="112" height="32" fetchpriority="high" class="h-8 lg:h-9 w-auto transition-transform duration-300 group-hover:scale-105">
+                </a>
+                <div class="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+                    <a href="aetherbot.html" class="nav-link">AetherBot</a>
+                    <a href="aethermind.html" class="nav-link">AetherMIND</a>
+                    <a href="aetherdev.html" class="nav-link">AetherDEV</a>
+                    <div class="relative group">
+                        <button class="nav-link cursor-pointer">Expertise <svg class="inline w-3 h-3 ml-0.5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-surface-2 border border-white/8 rounded-xl p-2 min-w-[220px] shadow-2xl backdrop-blur-xl">
+                                <a href="ai-lead-architect.html" class="block px-4 py-2.5 text-sm text-muted hover:text-light hover:bg-white/5 rounded-lg transition-colors font-body">AI Lead Architect</a>
+                                <a href="ai-consultancy.html" class="block px-4 py-2.5 text-sm text-muted hover:text-light hover:bg-white/5 rounded-lg transition-colors font-body">AI Consultancy</a>
+                                <a href="ai-verandermanagement.html" class="block px-4 py-2.5 text-sm text-muted hover:text-light hover:bg-white/5 rounded-lg transition-colors font-body">AI Verandermanagement</a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="index.html#why" class="nav-link">Over ons</a>
+                </div>
+                <div class="hidden lg:flex items-center gap-3 relative z-50">
+                    <div class="flex items-center gap-0.5 text-xs text-muted mr-1">
+                        <a href="privacy.html" class="text-light font-semibold px-2 py-1 rounded-md bg-white/[0.07]">NL</a>
+                        <a href="../en/privacy.html" class="hover:text-light px-2 py-1 rounded-md transition-colors">EN</a>
+                        <a href="../fi/tietosuoja.html" class="hover:text-light px-2 py-1 rounded-md transition-colors">FI</a>
+                    </div>
+                    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    </button>
+                    <a href="https://app.aetherlink.ai/auth/login" class="btn-login">Inloggen</a>
+                    <a href="https://calendly.com/aetherlink" class="btn-cta-nav">Plan een gesprek</a>
+                </div>
+                <button id="mobile-toggle" class="lg:hidden flex flex-col gap-1.5 p-2 relative z-50" aria-label="Menu">
+                    <span class="w-6 h-0.5 bg-light rounded-full transition-all duration-300 origin-center" id="bar1"></span>
+                    <span class="w-6 h-0.5 bg-light rounded-full transition-all duration-300" id="bar2"></span>
+                    <span class="w-4 h-0.5 bg-light rounded-full transition-all duration-300 origin-center" id="bar3"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div id="mobile-menu" class="mobile-overlay lg:hidden">
+        <a href="aetherbot.html" class="nav-link">AetherBot</a>
+        <a href="aethermind.html" class="nav-link">AetherMIND</a>
+        <a href="aetherdev.html" class="nav-link">AetherDEV</a>
+        <div class="w-full max-w-xs border-t border-white/5 my-2 mx-auto"></div>
+        <a href="ai-lead-architect.html" class="nav-link text-accent-violet/80">AI Lead Architect</a>
+        <a href="ai-consultancy.html" class="nav-link text-accent-violet/80">AI Consultancy</a>
+        <a href="ai-verandermanagement.html" class="nav-link text-accent-violet/80">AI Verandermanagement</a>
+        <div class="w-full max-w-xs border-t border-white/5 my-2 mx-auto"></div>
+        <a href="index.html#why" class="nav-link" data-close-menu>Over ons</a>
+        <div class="flex items-center gap-3 mt-6">
+            <a href="privacy.html" class="text-light font-semibold text-sm px-3 py-1.5 rounded-md bg-white/[0.07]">NL</a>
+            <a href="../en/privacy.html" class="text-muted hover:text-light text-sm px-3 py-1.5 rounded-md transition-colors">EN</a>
+            <a href="../fi/tietosuoja.html" class="text-muted hover:text-light text-sm px-3 py-1.5 rounded-md transition-colors">FI</a>
+        </div>
+        <div class="flex flex-col items-center gap-3 mt-4 w-full max-w-xs">
+            <a href="https://app.aetherlink.ai/auth/login" class="btn-login w-full text-center">Inloggen</a>
+            <a href="https://calendly.com/aetherlink" class="btn-cta-nav w-full text-center">Plan een gesprek</a>
+        </div>
+    </div>
+
+    <main>
+
+        <!-- HEADER -->
+        <section class="pt-32 pb-16">
+            <div class="max-w-4xl mx-auto px-6 lg:px-8">
+                <h1 class="font-display font-800 text-4xl md:text-5xl text-light mb-4 reveal">Privacybeleid</h1>
+                <p class="text-muted text-sm reveal reveal-delay-1">Laatst bijgewerkt: 13 februari 2026</p>
+            </div>
+        </section>
+
+        <!-- CONTENT -->
+        <section class="pb-32">
+            <div class="max-w-4xl mx-auto px-6 lg:px-8 space-y-8">
+
+                <div class="glass-card p-8 md:p-10 reveal">
+                    <h2 class="font-display font-700 text-xl text-light mb-4">1. Wie wij zijn</h2>
+                    <p class="text-muted leading-relaxed">AetherLink.ai is een AI-consultancy en technologiebedrijf gevestigd in Nederland. Wij bieden AI-oplossingen, consultancy en ontwikkeling aan voor bedrijven in Europa. AetherLink is verantwoordelijk voor de verwerking van persoonsgegevens zoals beschreven in dit privacybeleid.</p>
+                    <p class="text-muted leading-relaxed mt-3">KVK-nummer: [wordt aangevuld]</p>
+                </div>
+
+                <div class="glass-card p-8 md:p-10 reveal reveal-delay-1">
+                    <h2 class="font-display font-700 text-xl text-light mb-4">2. Welke gegevens wij verzamelen</h2>
+                    <p class="text-muted leading-relaxed mb-4">Wij kunnen de volgende persoonsgegevens verzamelen:</p>
+                    <ul class="space-y-3 text-muted">
+                        <li class="flex items-start gap-3"><span class="w-1.5 h-1.5 rounded-full bg-accent-violet/60 mt-2 flex-shrink-0"></span><span><strong class="text-light">Contactgegevens:</strong> naam en e-mailadres wanneer u ons contactformulier invult of ons mailt.</span></li>
+                        <li class="flex items-start gap-3"><span class="w-1.5 h-1.5 rounded-full bg-accent-violet/60 mt-2 flex-shrink-0"></span><span><strong class="text-light">Chatgegevens:</strong> berichten die u stuurt via AetherAssist, onze AI-chatassistent op de website.</span></li>
+                        <li class="flex items-start gap-3"><span class="w-1.5 h-1.5 rounded-full bg-accent-violet/60 mt-2 flex-shrink-0"></span><span><strong class="text-light">Technische gegevens:</strong> IP-adres, browsertype, apparaatinformatie en paginabezoeken via analytics.</span></li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-8 md:p-10 reveal reveal-delay-2">
+                    <h2 class="font-display font-700 text-xl text-light mb-4">3. Doel van gegevensverwerking</h2>
+                    <p class="text-muted leading-relaxed mb-4">Wij verwerken uw gegevens voor de volgende doeleinden:</p>
+                    <ul class="space-y-3 text-muted">
+                        <li class="flex items-start gap-3"><span class="w-1.5 h-1.5 rounded-full bg-accent-violet/60 mt-2 flex-shrink-0"></span><span><strong class="text-light">Dienstverlening:</strong> om uw vragen te beantwoorden en onze diensten te leveren.</span></li>
+                        <li class="flex items-start gap-3"><span class="w-1.5 h-1.5 rounded-full bg-accent-violet/60 mt-2 flex-shrink-0"></span><span><strong class="text-light">Communicatie:</strong> om contact met u op te nemen naar aanleiding van uw verzoek.</span></li>
+                        <li class="flex items-start gap-3"><span class="w-1.5 h-1.5 rounded-full bg-accent-violet/60 mt-2 flex-shrink-0"></span><span><strong class="text-light">Verbetering:</strong> om onze website en diensten te analyseren en verbeteren.</span></li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-8 md:p-10 reveal">
+                    <h2 class="font-display font-700 text-xl text-light mb-4">4. Bewaartermijn</h2>
+                    <p class="text-muted leading-relaxed">Wij bewaren uw persoonsgegevens niet langer dan strikt noodzakelijk is voor de doeleinden waarvoor zij worden verzameld. Contactgegevens worden verwijderd zodra de communicatie is afgerond, tenzij er een lopende zakelijke relatie is. Technische gegevens worden geanonimiseerd na maximaal 26 maanden.</p>
+                </div>
+
+                <div class="glass-card p-8 md:p-10 reveal reveal-delay-1">
+                    <h2 class="font-display font-700 text-xl text-light mb-4">5. Delen met derden</h2>
+                    <p class="text-muted leading-relaxed mb-4">Wij verkopen uw gegevens nooit aan derden. Wij maken uitsluitend gebruik van de volgende verwerkers voor het leveren van onze diensten:</p>
+                    <ul class="space-y-3 text-muted">
+                        <li class="flex items-start gap-3"><span class="w-1.5 h-1.5 rounded-full bg-accent-violet/60 mt-2 flex-shrink-0"></span><span><strong class="text-light">Vercel:</strong> hosting van onze website (VS, EU Standard Contractual Clauses).</span></li>
+                        <li class="flex items-start gap-3"><span class="w-1.5 h-1.5 rounded-full bg-accent-violet/60 mt-2 flex-shrink-0"></span><span><strong class="text-light">Anthropic:</strong> AI-verwerking voor AetherAssist chatfunctionaliteit (VS, EU Standard Contractual Clauses).</span></li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-8 md:p-10 reveal reveal-delay-2">
+                    <h2 class="font-display font-700 text-xl text-light mb-4">6. Cookies</h2>
+                    <p class="text-muted leading-relaxed">Onze website maakt uitsluitend gebruik van technisch noodzakelijke cookies die essentieel zijn voor het functioneren van de website (zoals sessiecookies en themavoorkeur). Wij plaatsen geen tracking cookies, marketing cookies of cookies van derden voor advertentiedoeleinden.</p>
+                </div>
+
+                <div class="glass-card p-8 md:p-10 reveal">
+                    <h2 class="font-display font-700 text-xl text-light mb-4">7. Uw rechten (AVG)</h2>
+                    <p class="text-muted leading-relaxed mb-4">Op grond van de Algemene Verordening Gegevensbescherming (AVG) heeft u de volgende rechten:</p>
+                    <ul class="space-y-3 text-muted">
+                        <li class="flex items-start gap-3"><span class="w-1.5 h-1.5 rounded-full bg-accent-violet/60 mt-2 flex-shrink-0"></span><span><strong class="text-light">Recht op inzage:</strong> u kunt opvragen welke gegevens wij van u verwerken.</span></li>
+                        <li class="flex items-start gap-3"><span class="w-1.5 h-1.5 rounded-full bg-accent-violet/60 mt-2 flex-shrink-0"></span><span><strong class="text-light">Recht op correctie:</strong> u kunt verzoeken onjuiste gegevens te laten corrigeren.</span></li>
+                        <li class="flex items-start gap-3"><span class="w-1.5 h-1.5 rounded-full bg-accent-violet/60 mt-2 flex-shrink-0"></span><span><strong class="text-light">Recht op verwijdering:</strong> u kunt verzoeken uw gegevens te laten verwijderen.</span></li>
+                        <li class="flex items-start gap-3"><span class="w-1.5 h-1.5 rounded-full bg-accent-violet/60 mt-2 flex-shrink-0"></span><span><strong class="text-light">Recht van bezwaar:</strong> u kunt bezwaar maken tegen de verwerking van uw gegevens.</span></li>
+                        <li class="flex items-start gap-3"><span class="w-1.5 h-1.5 rounded-full bg-accent-violet/60 mt-2 flex-shrink-0"></span><span><strong class="text-light">Recht op dataportabiliteit:</strong> u kunt verzoeken uw gegevens in een gestructureerd formaat te ontvangen.</span></li>
+                    </ul>
+                    <p class="text-muted leading-relaxed mt-4">U kunt uw rechten uitoefenen door contact met ons op te nemen via <a href="mailto:info@aetherlink.ai" class="text-accent-violet hover:text-light transition-colors">info@aetherlink.ai</a>. Wij reageren binnen 30 dagen op uw verzoek. U heeft ook het recht een klacht in te dienen bij de Autoriteit Persoonsgegevens.</p>
+                </div>
+
+                <div class="glass-card p-8 md:p-10 reveal reveal-delay-1">
+                    <h2 class="font-display font-700 text-xl text-light mb-4">8. Beveiliging</h2>
+                    <p class="text-muted leading-relaxed">Wij nemen de bescherming van uw gegevens serieus en nemen passende technische en organisatorische maatregelen om misbruik, verlies, onbevoegde toegang en ongewenste openbaarmaking tegen te gaan. Onze website maakt gebruik van HTTPS-versleuteling, alle data wordt versleuteld opgeslagen en toegang tot persoonsgegevens is beperkt tot geautoriseerde medewerkers.</p>
+                </div>
+
+                <div class="glass-card p-8 md:p-10 reveal reveal-delay-2">
+                    <h2 class="font-display font-700 text-xl text-light mb-4">9. Contact</h2>
+                    <p class="text-muted leading-relaxed">Heeft u vragen over dit privacybeleid of wilt u een van uw rechten uitoefenen? Neem dan contact met ons op:</p>
+                    <p class="text-muted leading-relaxed mt-3">
+                        <strong class="text-light">AetherLink.ai</strong><br>
+                        E-mail: <a href="mailto:info@aetherlink.ai" class="text-accent-violet hover:text-light transition-colors">info@aetherlink.ai</a>
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/5 py-16 lg:py-20">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-12 lg:gap-8 mb-16">
+                <div class="sm:col-span-2 lg:col-span-1">
+                    <a href="index.html" class="inline-block mb-6"><img src="../images/logo-white.svg" alt="AetherLink" class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity" loading="lazy"></a>
+                    <p class="text-muted text-sm leading-relaxed mb-6">De kracht van AI, toegankelijk voor elk bedrijf.</p>
+                    <div class="flex items-center gap-3">
+                        <a href="https://www.linkedin.com/company/aetherlink/" class="w-9 h-9 rounded-lg border border-white/8 flex items-center justify-center text-muted hover:text-light hover:border-white/15 transition-all" aria-label="LinkedIn"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                        <a href="https://twitter.com/aetherlink" class="w-9 h-9 rounded-lg border border-white/8 flex items-center justify-center text-muted hover:text-light hover:border-white/15 transition-all" aria-label="X / Twitter"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                        <a href="https://www.youtube.com/@Aetherlink" class="w-9 h-9 rounded-lg border border-white/8 flex items-center justify-center text-muted hover:text-light hover:border-white/15 transition-all" aria-label="YouTube">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-display font-600 text-sm text-light mb-5 tracking-wide">Producten</h4>
+                    <ul class="space-y-3">
+                        <li><a href="aetherbot.html" class="text-sm text-muted hover:text-light transition-colors">AetherBot</a></li>
+                        <li><a href="aetherbot.html#pricing" class="text-sm text-muted hover:text-light transition-colors">Prijzen</a></li>
+                        <li><a href="aetherbot.html#features" class="text-sm text-muted hover:text-light transition-colors">Functies</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-display font-600 text-sm text-light mb-5 tracking-wide">Diensten</h4>
+                    <ul class="space-y-3">
+                        <li><a href="aethermind.html" class="text-sm text-muted hover:text-light transition-colors">AetherMIND</a></li>
+                        <li><a href="aetherdev.html" class="text-sm text-muted hover:text-light transition-colors">AetherDEV</a></li>
+                        <li><a href="aethermind.html#training" class="text-sm text-muted hover:text-light transition-colors">AI Training</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-display font-600 text-sm text-light mb-5 tracking-wide">Expertise</h4>
+                    <ul class="space-y-3">
+                        <li><a href="ai-lead-architect.html" class="text-sm text-muted hover:text-light transition-colors">AI Lead Architect</a></li>
+                        <li><a href="ai-consultancy.html" class="text-sm text-muted hover:text-light transition-colors">AI Consultancy</a></li>
+                        <li><a href="ai-verandermanagement.html" class="text-sm text-muted hover:text-light transition-colors">AI Verandermanagement</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-display font-600 text-sm text-light mb-5 tracking-wide">Contact</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-2 text-sm text-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>+31 6 1377 2333</span></li>
+                        <li class="flex items-start gap-2 text-sm text-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><a href="mailto:info@aetherlink.ai" class="hover:text-light transition-colors">info@aetherlink.ai</a></li>
+                        <li class="flex items-start gap-2 text-sm text-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>24/7 beschikbaar</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-display font-600 text-sm text-light mb-5 tracking-wide">Locaties</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-2 text-sm text-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Nederland</span></li>
+                        <li class="flex items-start gap-2 text-sm text-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Finland</span></li>
+                        <li class="flex items-start gap-2 text-sm text-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mt-0.5 flex-shrink-0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Verenigde Arabische Emiraten</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-muted/60">&copy; 2026 AetherLink. Alle rechten voorbehouden.</p>
+                <div class="flex items-center gap-6">
+                    <a href="/nl/privacy" class="text-xs text-muted/50 hover:text-muted transition-colors">Privacybeleid</a>
+                    <a href="../docs/algemene-voorwaarden.pdf" target="_blank" class="text-xs text-muted/50 hover:text-muted transition-colors">Algemene voorwaarden</a>
+                    <span class="flex items-center gap-2 text-xs text-muted/50"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>EU AI Act &amp; AVG</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Reveal
+        const ro = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed'); });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+        // Nav Glass on Scroll
+        const nav = document.getElementById('nav');
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    nav.classList.toggle('nav-glass', window.scrollY > 50);
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+
+        // Mobile Menu Toggle
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const bar1 = document.getElementById('bar1');
+        const bar2 = document.getElementById('bar2');
+        const bar3 = document.getElementById('bar3');
+        let menuOpen = false;
+
+        function toggleMenu() {
+            menuOpen = !menuOpen;
+            mobileMenu.classList.toggle('open', menuOpen);
+            document.body.style.overflow = menuOpen ? 'hidden' : '';
+            nav.classList.toggle('nav-glass', menuOpen || window.scrollY > 50);
+
+            if (menuOpen) {
+                bar1.style.transform = 'rotate(45deg) translate(4px, 4px)';
+                bar2.style.opacity = '0';
+                bar3.style.transform = 'rotate(-45deg) translate(4px, -4px)';
+                bar3.style.width = '24px';
+            } else {
+                bar1.style.transform = '';
+                bar2.style.opacity = '';
+                bar3.style.transform = '';
+                bar3.style.width = '';
+            }
+        }
+
+        mobileToggle.addEventListener('click', toggleMenu);
+
+        document.querySelectorAll('#mobile-menu a[href^="#"], #mobile-menu [data-close-menu]').forEach(a => {
+            a.addEventListener('click', () => { if (menuOpen) toggleMenu(); });
+        });
+    </script>
+</body>
+</html>

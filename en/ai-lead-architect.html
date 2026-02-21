@@ -80,28 +80,10 @@
     }
     </script>
 
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
-    <link rel="preload" href="../images/logo-white.png" as="image">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { display: ['Syne','sans-serif'], body: ['Plus Jakarta Sans','sans-serif'] },
-                    colors: {
-                        void: '#05060f', surface: { DEFAULT:'#0a0d1a', 2:'#111527', 3:'#181d35' },
-                        accent: { cyan:'#00d4ff', violet:'#8b5cf6', emerald:'#00dfa2' },
-                        muted: '#6b7394', light: '#e4e8f1',
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="preload" href="../images/logo-white.svg" as="image" type="image/svg+xml">
+    <link rel="preload" href="../fonts/syne-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/tailwind.css">
     <style>
         *,*::before,*::after{box-sizing:border-box}html{scroll-behavior:smooth}
         body{font-family:'Plus Jakarta Sans',sans-serif;background:#05060f;color:#e4e8f1;overflow-x:hidden;-webkit-text-size-adjust:100%;margin:0}
@@ -182,7 +164,7 @@
         <div class="max-w-[1400px] mx-auto px-6 lg:px-8">
             <div class="flex items-center justify-between h-[72px]">
                 <a href="index.html" class="flex items-center group relative z-50">
-                    <img src="../images/logo-white.png" alt="AetherLink" width="112" height="32" fetchpriority="high" class="h-8 lg:h-9 w-auto transition-transform duration-300 group-hover:scale-105">
+                    <img src="../images/logo-white.svg" alt="AetherLink" width="112" height="32" fetchpriority="high" class="h-8 lg:h-9 w-auto transition-transform duration-300 group-hover:scale-105">
                 </a>
                 <div class="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
                     <a href="aetherbot.html" class="nav-link">AetherBot</a>
@@ -598,7 +580,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-12 lg:gap-8 mb-16">
                 <div class="sm:col-span-2 lg:col-span-1">
                     <a href="index.html" class="inline-block mb-6">
-                        <img src="../images/logo-white.png" alt="AetherLink" class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity" loading="lazy">
+                        <img src="../images/logo-white.svg" alt="AetherLink" class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity" loading="lazy">
                     </a>
                     <p class="text-muted text-sm leading-relaxed mb-6">The power of AI, accessible for every business.</p>
                     <div class="flex items-center gap-3">

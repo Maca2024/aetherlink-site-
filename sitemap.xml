@@ -77,6 +77,17 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- Dutch Privacy -->
+  <url>
+    <loc>https://aetherlink.ai/nl/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://aetherlink.ai/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aetherlink.ai/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fi" href="https://aetherlink.ai/fi/tietosuoja"/>
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
   <!-- English Pages -->
   <url>
     <loc>https://aetherlink.ai/en/</loc>
@@ -144,6 +155,17 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- English Privacy -->
+  <url>
+    <loc>https://aetherlink.ai/en/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://aetherlink.ai/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aetherlink.ai/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fi" href="https://aetherlink.ai/fi/tietosuoja"/>
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
   <!-- Finnish Pages -->
   <url>
     <loc>https://aetherlink.ai/fi/</loc>
@@ -209,6 +231,17 @@
     <lastmod>2026-02-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+
+  <!-- Finnish Privacy -->
+  <url>
+    <loc>https://aetherlink.ai/fi/tietosuoja</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://aetherlink.ai/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aetherlink.ai/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fi" href="https://aetherlink.ai/fi/tietosuoja"/>
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 
 </urlset>

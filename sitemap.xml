@@ -204,6 +204,91 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Blog Index Pages -->
+  <url>
+    <loc>https://aetherlink.ai/nl/blog/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://aetherlink.ai/nl/blog/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aetherlink.ai/en/blog/"/>
+    <xhtml:link rel="alternate" hreflang="fi" href="https://aetherlink.ai/fi/blog/"/>
+    <lastmod>2026-02-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://aetherlink.ai/en/blog/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://aetherlink.ai/nl/blog/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aetherlink.ai/en/blog/"/>
+    <xhtml:link rel="alternate" hreflang="fi" href="https://aetherlink.ai/fi/blog/"/>
+    <lastmod>2026-02-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://aetherlink.ai/fi/blog/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://aetherlink.ai/nl/blog/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aetherlink.ai/en/blog/"/>
+    <xhtml:link rel="alternate" hreflang="fi" href="https://aetherlink.ai/fi/blog/"/>
+    <lastmod>2026-02-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog Articles -->
+  <url>
+    <loc>https://aetherlink.ai/nl/blog/wat-is-ai-lead-architecture</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://aetherlink.ai/nl/blog/wat-is-ai-lead-architecture"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aetherlink.ai/en/blog/what-is-ai-lead-architecture"/>
+    <xhtml:link rel="alternate" hreflang="fi" href="https://aetherlink.ai/fi/blog/mita-on-ai-lead-architecture"/>
+    <lastmod>2026-02-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://aetherlink.ai/en/blog/what-is-ai-lead-architecture</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://aetherlink.ai/nl/blog/wat-is-ai-lead-architecture"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aetherlink.ai/en/blog/what-is-ai-lead-architecture"/>
+    <xhtml:link rel="alternate" hreflang="fi" href="https://aetherlink.ai/fi/blog/mita-on-ai-lead-architecture"/>
+    <lastmod>2026-02-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://aetherlink.ai/fi/blog/mita-on-ai-lead-architecture</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://aetherlink.ai/nl/blog/wat-is-ai-lead-architecture"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aetherlink.ai/en/blog/what-is-ai-lead-architecture"/>
+    <xhtml:link rel="alternate" hreflang="fi" href="https://aetherlink.ai/fi/blog/mita-on-ai-lead-architecture"/>
+    <lastmod>2026-02-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aetherlink.ai/nl/blog/ai-chatbot-website-kosten-roi</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://aetherlink.ai/nl/blog/ai-chatbot-website-kosten-roi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aetherlink.ai/en/blog/ai-chatbot-website-costs-roi"/>
+    <xhtml:link rel="alternate" hreflang="fi" href="https://aetherlink.ai/fi/blog/ai-chatbot-verkkosivuille-kustannukset"/>
+    <lastmod>2026-02-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://aetherlink.ai/en/blog/ai-chatbot-website-costs-roi</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://aetherlink.ai/nl/blog/ai-chatbot-website-kosten-roi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aetherlink.ai/en/blog/ai-chatbot-website-costs-roi"/>
+    <xhtml:link rel="alternate" hreflang="fi" href="https://aetherlink.ai/fi/blog/ai-chatbot-verkkosivuille-kustannukset"/>
+    <lastmod>2026-02-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://aetherlink.ai/fi/blog/ai-chatbot-verkkosivuille-kustannukset</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://aetherlink.ai/nl/blog/ai-chatbot-website-kosten-roi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aetherlink.ai/en/blog/ai-chatbot-website-costs-roi"/>
+    <xhtml:link rel="alternate" hreflang="fi" href="https://aetherlink.ai/fi/blog/ai-chatbot-verkkosivuille-kustannukset"/>
+    <lastmod>2026-02-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
   <!-- Finnish Pillar Pages -->
   <url>
     <loc>https://aetherlink.ai/fi/ai-lead-architect</loc>

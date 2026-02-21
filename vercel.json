@@ -4,7 +4,15 @@
     { "source": "/", "destination": "/nl/", "statusCode": 301 }
   ],
   "rewrites": [
-    { "source": "/api/:path*", "destination": "/api/:path*" }
+    { "source": "/api/:path*", "destination": "/api/:path*" },
+    { "source": "/sitemap.xml", "destination": "/api/sitemap" },
+    { "source": "/llms.txt", "destination": "/api/llms" },
+    { "source": "/nl/blog/:slug", "destination": "/api/blog/render?lang=nl&slug=:slug" },
+    { "source": "/en/blog/:slug", "destination": "/api/blog/render?lang=en&slug=:slug" },
+    { "source": "/fi/blog/:slug", "destination": "/api/blog/render?lang=fi&slug=:slug" },
+    { "source": "/nl/blog", "destination": "/api/blog/list?lang=nl" },
+    { "source": "/en/blog", "destination": "/api/blog/list?lang=en" },
+    { "source": "/fi/blog", "destination": "/api/blog/list?lang=fi" }
   ],
   "headers": [
     {
@@ -15,7 +23,14 @@
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(self), geolocation=()" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" }
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://qwqcstsafgiexhdzbpim.supabase.co; font-src 'self'; connect-src 'self' https://qwqcstsafgiexhdzbpim.supabase.co https://*.supabase.co; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" }
+      ]
+    },
+    {
+      "source": "/admin/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }
       ]
     },
     {

@@ -3,6 +3,7 @@
   "type": "module",
   "dependencies": {
     "@resvg/resvg-wasm": "^2.6.2",
+    "@supabase/supabase-js": "^2.97.0",
     "satori": "^0.19.2"
   },
   "devDependencies": {

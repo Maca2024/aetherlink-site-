@@ -1,0 +1,64 @@
+name: Blog Syndicate — Cross-post to Social
+
+on:
+  schedule:
+    # Daily at 08:00 UTC (09:00 CET)
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+    inputs:
+      post_id:
+        description: 'Post ID to syndicate (leave empty for auto-selection)'
+        required: false
+      platform:
+        description: 'Platform: linkedin, medium, or both'
+        required: false
+        default: 'both'
+
+jobs:
+  syndicate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Find un-syndicated posts
+        id: find
+        run: |
+          # Fetch published posts
+          POSTS=$(curl -s "${{ secrets.SITE_URL }}/api/blog/posts" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_AUTH_TOKEN }}")
+
+          POST_ID="${{ github.event.inputs.post_id }}"
+
+          if [ -z "$POST_ID" ]; then
+            # Find first published post that hasn't been syndicated to LinkedIn yet
+            POST_ID=$(echo "$POSTS" | jq -r '[.[] | select(.status == "published" and .linkedin_posted_at == null)] | .[0].id // empty')
+          fi
+
+          if [ -z "$POST_ID" ] || [ "$POST_ID" = "null" ]; then
+            echo "No posts to syndicate"
+            echo "has_post=false" >> $GITHUB_OUTPUT
+          else
+            echo "post_id=$POST_ID" >> $GITHUB_OUTPUT
+            echo "has_post=true" >> $GITHUB_OUTPUT
+            echo "Syndicating post: $POST_ID"
+          fi
+
+      - name: Cross-post to platforms
+        if: steps.find.outputs.has_post == 'true'
+        run: |
+          PLATFORM="${{ github.event.inputs.platform || 'both' }}"
+
+          if [ "$PLATFORM" = "both" ]; then
+            PLATFORMS='["linkedin", "medium"]'
+          else
+            PLATFORMS="[\"$PLATFORM\"]"
+          fi
+
+          RESULT=$(curl -s -X POST "${{ secrets.SITE_URL }}/api/blog/cross-post?id=${{ steps.find.outputs.post_id }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_AUTH_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"platforms\": $PLATFORMS, \"lang\": \"en\"}")
+
+          echo "$RESULT" | jq .
+          echo "## Syndication Report" >> $GITHUB_STEP_SUMMARY
+          echo "- **Post ID:** ${{ steps.find.outputs.post_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Platforms:** $PLATFORM" >> $GITHUB_STEP_SUMMARY
+          echo "- **Result:** $(echo $RESULT | jq -c .results)" >> $GITHUB_STEP_SUMMARY

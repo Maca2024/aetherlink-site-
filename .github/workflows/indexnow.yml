@@ -8,18 +8,19 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Extract URLs from sitemap and submit to IndexNow
+      - name: Fetch dynamic sitemap and submit to IndexNow
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+          SITE_URL: ${{ secrets.SITE_URL || 'https://aetherlink.ai' }}
         run: |
           if [ -z "$INDEXNOW_KEY" ]; then
             echo "INDEXNOW_KEY not set, skipping"
             exit 0
           fi
 
-          URLS=$(grep -oP '<loc>\K[^<]+' sitemap.xml | jq -R -s 'split("\n") | map(select(. != ""))')
+          # Fetch dynamic sitemap from the live site
+          SITEMAP=$(curl -s "$SITE_URL/sitemap.xml")
+          URLS=$(echo "$SITEMAP" | grep -oP '<loc>\K[^<]+' | jq -R -s 'split("\n") | map(select(. != ""))')
 
           curl -s -X POST "https://api.indexnow.org/indexnow" \
             -H "Content-Type: application/json; charset=utf-8" \
